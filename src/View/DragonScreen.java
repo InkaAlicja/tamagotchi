@@ -19,19 +19,18 @@ public class DragonScreen {
     VBox mainVBox, health, happiness;
     HBox status;
     ProgressBar healthProgress, happinessProgress;
-    Label healthText, happinessText;
     Dragon dragon;
     ImageView imageView;
     public DragonScreen(MainView mainView) throws FileNotFoundException {
         dragon = new Dragon();
-        button = new Button("back");
+        button = new Button("Back");
         imageView = new ImageView(dragon.image);
         healthProgress = new ProgressBar(dragon.health);
-        healthText = new Label("health");
-        health = new VBox(healthText, healthProgress);
+        health = new VBox(new Label("Health"), healthProgress);
         happinessProgress = new ProgressBar(dragon.happiness);
-        happinessText = new Label("happiness");
-        happiness = new VBox(happinessText, happinessProgress);
+        happiness = new VBox(new Label("Happiness"), happinessProgress);
+        health.setAlignment(Pos.CENTER);
+        happiness.setAlignment(Pos.CENTER);
         status = new HBox(health, happiness);
         status.setAlignment(Pos.CENTER);
         mainVBox = new VBox(imageView, status, button);
