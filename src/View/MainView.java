@@ -10,14 +10,13 @@ public class MainView extends Application {
     MainMenu menu;
     DragonScreen dragonScreen;
 
-    public MainView(){
-        menu = new MainMenu(this);
-        dragonScreen = new DragonScreen(this);
-    }
+    public MainView(){}
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage=primaryStage;
+        stage = primaryStage;
+        menu = new MainMenu(this);
+        dragonScreen = new DragonScreen(this);
         stage.setScene(menu.scene);
         stage.show();
     }
