@@ -14,5 +14,9 @@ public class DragonController {
         model.addHappiness(a);
         view.setHappiness(model.getHappiness());
     }
+    public void addHealth(float a){
+        model.addHealth(a);
+        view.setHealth(model.getHealth());
+    }
 
 }
