@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.concurrent.TimeUnit;
+
 public class MainView extends Application {
     Stage stage;
     MainMenu menu;

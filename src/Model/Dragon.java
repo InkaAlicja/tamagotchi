@@ -15,7 +15,7 @@ public class Dragon {
     public Dragon() throws FileNotFoundException {
         health=0.9f;
         happiness=0.8f;
-        input = new FileInputStream("resources/dragon-animated.gif");
+        input = new FileInputStream("Resources/dragon-animated.gif");
         image = new Image(input, 300, 300, true, false);
     }
 }
