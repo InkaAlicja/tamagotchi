@@ -9,16 +9,19 @@ import java.io.FileNotFoundException;
 
 public class DragonModel {
     public Image image;
+    public Image coinImage;
     private float health;
     private float happiness;
     private int money;
-    FileInputStream input;
+    FileInputStream input,inputCoin;
     public DragonModel() throws FileNotFoundException {
         money=100;
         health=0.9f;
         happiness=0.8f;
         input = new FileInputStream("Resources/dragon-animated.gif");
+        inputCoin = new FileInputStream("Resources/coin.png");
         image = new Image(input, 300, 300, true, false);
+        coinImage = new Image(inputCoin,20,20,true,false);
     }
     public static class DyingDragonException extends Exception{}
 

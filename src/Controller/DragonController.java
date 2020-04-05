@@ -48,13 +48,15 @@ public class DragonController {
         }
     }
 
-    public void addMoney(int a){
+    public boolean addMoney(int a){
         try{
             model.addMoney(a);
         }catch(DragonModel.BrokeException ex){
             AlertBox.display("You dont have enough money!","OK, lemme earn some!");
+            return false;
         }
         view.setMoney(model.getMoney());
+        return true;
     }
 
     public Thread getClockThread(){

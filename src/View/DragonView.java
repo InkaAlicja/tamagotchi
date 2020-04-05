@@ -20,7 +20,7 @@ public class DragonView {
     HBox status,backAd;
     ProgressBar healthProgress, happinessProgress;
     DragonModel model;
-    ImageView imageView;
+    ImageView imageView,imageCoin1,imageCoin2;
     DragonController controller;
     Label money;
     public DragonView(MainView mainView) throws FileNotFoundException {
@@ -29,16 +29,17 @@ public class DragonView {
         pet = new Button("Pet");
         play = new Button("Play!");
 
+        model = new DragonModel();
+        controller = new DragonController(this,model);
+        imageView = new ImageView(model.image);
+        imageCoin1 = new ImageView(model.coinImage);
+        imageCoin2 = new ImageView(model.coinImage);
+
         back = new Button("Back");
-        ad = new Button("ad");
+        ad = new Button("ad",imageCoin1);
         backAd=new HBox(back,ad);
         backAd.setSpacing(250);
         backAd.setAlignment(Pos.CENTER);
-
-        model = new DragonModel();
-        controller = new DragonController(this,model);
-
-        imageView = new ImageView(model.image);
 
         healthProgress = new ProgressBar(model.getHealth());
         health = new VBox(new Label("Health"), healthProgress,feed,clean);
@@ -50,7 +51,7 @@ public class DragonView {
         happiness.setAlignment(Pos.CENTER);
         happiness.setSpacing(5);
 
-        money = new Label(String.valueOf(model.getMoney()));
+        money = new Label(String.valueOf(model.getMoney()),imageCoin2);
 
         status = new HBox(health, happiness);
         status.setAlignment(Pos.CENTER);
@@ -64,11 +65,12 @@ public class DragonView {
             controller.addHappiness(0.05f);
         });
         feed.setOnAction(value->{
-            controller.addMoney(-10);
-            controller.addHealth(0.05f);
+                if(controller.addMoney(-10))
+                controller.addHealth(0.05f);
+
         });
         clean.setOnAction(value->{
-            controller.addMoney(-30);
+            if(controller.addMoney(-30))
             controller.addHealth(0.15f);
         });
         play.setOnAction(value->{

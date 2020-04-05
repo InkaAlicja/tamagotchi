@@ -34,6 +34,7 @@ public class MainMenuView{
         exitButton.setOnAction(value->controller.exit());
         vbox = new VBox(playButton, settingsButton, exitButton);
         vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(20);
         scene = new Scene(vbox, 400, 500);
     }
 
