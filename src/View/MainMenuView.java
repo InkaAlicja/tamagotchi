@@ -15,18 +15,18 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
-public class MainMenu{
+public class MainMenuView{
     Button playButton, settingsButton, exitButton;
     Scene scene;
     VBox vbox;
 
-    public MainMenu(MainView mainView){
+    public MainMenuView(MainView mainView){
         playButton = new Button("Play");
         settingsButton = new Button("Settings");
         exitButton = new Button("Exit");
         playButton.setOnAction(value-> {
             try {
-                mainView.stage.setScene(new DragonScreen(mainView).scene);
+                mainView.stage.setScene(new DragonView(mainView).scene);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

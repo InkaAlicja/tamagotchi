@@ -7,12 +7,12 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Dragon {
+public class DragonModel {
     public Image image;
     public float health;
     public float happiness;
     FileInputStream input;
-    public Dragon() throws FileNotFoundException {
+    public DragonModel() throws FileNotFoundException {
         health=0.9f;
         happiness=0.8f;
         input = new FileInputStream("Resources/dragon-animated.gif");

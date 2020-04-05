@@ -1,6 +1,6 @@
-import Model.Dragon;
+import Model.DragonModel;
 import Model.MainModel;
-import View.MainMenu;
+import View.MainMenuView;
 import View.MainView;
 import Controller.MainController;
 import javafx.application.Application;

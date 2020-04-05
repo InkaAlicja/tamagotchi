@@ -9,16 +9,16 @@ import java.util.concurrent.TimeUnit;
 
 public class MainView extends Application {
     Stage stage;
-    MainMenu menu;
-    DragonScreen dragonScreen;
+    MainMenuView menu;
+    DragonView dragonScreen;
 
     public MainView(){}
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        menu = new MainMenu(this);
-        dragonScreen = new DragonScreen(this);
+        menu = new MainMenuView(this);
+        dragonScreen = new DragonView(this);
         stage.setScene(menu.scene);
         stage.show();
     }

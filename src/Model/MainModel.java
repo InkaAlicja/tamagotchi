@@ -1,7 +1,7 @@
 package Model;
 
-import View.DragonScreen;
-import View.MainMenu;
+import View.DragonView;
+import View.MainMenuView;
 import View.MainView;
 
 public class MainModel {
