@@ -83,13 +83,12 @@ public class DragonView {
         });
         ad.setOnAction(value-> {
             try {
-                 if(AdBox.display("Resources/coin.png"))
+                 if(AdBox.display("Resources/socks.gif"))
                     controller.addMoney(20);
                  else AlertBox.display("Can't you even wait 10s?","sorry");
             } catch (FileNotFoundException e) {
                 AlertBox.display("No ads to show","OK");
             }
-
         });
         scene = new Scene(mainVBox, 400, 500);
     }
