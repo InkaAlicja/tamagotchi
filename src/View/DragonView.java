@@ -55,18 +55,22 @@ public class DragonView {
             controller.addHappiness(0.05f);
         });
         feed.setOnAction(value->{
-            controller.addHealth(0.05f);
             controller.addMoney(-10);
+            controller.addHealth(0.05f);
         });
         clean.setOnAction(value->{
-            controller.addHealth(0.15f);
             controller.addMoney(-30);
+            controller.addHealth(0.15f);
         });
         play.setOnAction(value->{
             controller.addHealth(-0.2f);
             controller.addHappiness(0.2f);
         });
         scene = new Scene(mainVBox, 400, 500);
+    }
+
+    public DragonController getController(){
+        return controller;
     }
 
     public void setHappiness(float a){happinessProgress.setProgress(a);}

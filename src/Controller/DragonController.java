@@ -14,9 +14,9 @@ import static java.lang.Thread.sleep;
 public class DragonController {
     DragonView view;
     DragonModel model;
-    Thread thread;
+    Thread clockThread;
 
-    public DragonController(DragonView view, DragonModel model){this.view=view; this.model=model; thread=new Thread(new ClockIsTicking()); thread.start();}
+    public DragonController(DragonView view, DragonModel model){this.view=view; this.model=model; clockThread=new Thread(new ClockIsTicking()); clockThread.start();}
 
     public void addHappiness(float a){
         model.addHappiness(a);
@@ -35,10 +35,15 @@ public class DragonController {
     class ClockIsTicking extends Task<Void> {
         @Override
         protected Void call() throws Exception {
-            while(true){
-                TimeUnit.MINUTES.sleep(5);
-                addHappiness(-0.01f);
-                addHealth(-0.005f);
+            try {
+                while (true) {
+                    TimeUnit.MINUTES.sleep(5);
+                    addHappiness(-0.01f);
+                    addHealth(-0.005f);
+                }
+            }
+            catch (InterruptedException e){
+                return null;
             }
         }
     }
@@ -50,6 +55,10 @@ public class DragonController {
             AlertBox.display("You dont have enough money!","OK, lemme earn some!");
         }
         view.setMoney(model.getMoney());
+    }
+
+    public Thread getClockThread(){
+        return clockThread;
     }
 
 }

@@ -23,6 +23,14 @@ public class MainView extends Application {
         stage.show();
     }
 
+    public DragonView getDragonView() {
+        return dragonView;
+    }
+
+    public Stage getStage(){
+        return stage;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

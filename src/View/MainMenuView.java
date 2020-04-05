@@ -1,5 +1,6 @@
 package View;
 
+import Controller.MainMenuController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,18 +20,25 @@ public class MainMenuView{
     Button playButton, settingsButton, exitButton;
     Scene scene;
     VBox vbox;
-
+    MainView mainView;
+    MainMenuController controller;
     public MainMenuView(MainView mainView){
+        this.mainView=mainView;
+        controller = new MainMenuController(this);
         playButton = new Button("Play");
         settingsButton = new Button("Settings");
         exitButton = new Button("Exit");
         playButton.setOnAction(value-> {
                 mainView.stage.setScene(mainView.dragonView.scene);
         });
-        exitButton.setOnAction(value->mainView.stage.close());
+        exitButton.setOnAction(value->controller.exit());
         vbox = new VBox(playButton, settingsButton, exitButton);
         vbox.setAlignment(Pos.CENTER);
         scene = new Scene(vbox, 400, 500);
+    }
+
+    public MainView getMainView(){
+        return mainView;
     }
 
 }
