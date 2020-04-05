@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class MainView extends Application {
     Stage stage;
     MainMenuView menu;
-    DragonView dragonScreen;
+    DragonView dragonView;
 
     public MainView(){}
 
@@ -18,7 +18,7 @@ public class MainView extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         menu = new MainMenuView(this);
-        dragonScreen = new DragonView(this);
+        dragonView = new DragonView(this);
         stage.setScene(menu.scene);
         stage.show();
     }
