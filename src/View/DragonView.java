@@ -1,5 +1,7 @@
 package View;
 
+import Additions.Delegate;
+import Controller.DragonController;
 import Model.DragonModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,16 +20,18 @@ public class DragonView {
     VBox mainVBox, health, happiness;
     HBox status;
     ProgressBar healthProgress, happinessProgress;
-    DragonModel dragon;
+    DragonModel model;
     ImageView imageView;
+    DragonController controller;
     public DragonView(MainView mainView) throws FileNotFoundException {
         pet = new Button("Pet");
-        dragon = new DragonModel();
+        model = new DragonModel();
+        controller=new DragonController(this,model);
         button = new Button("Back");
-        imageView = new ImageView(dragon.image);
-        healthProgress = new ProgressBar(dragon.health);
+        imageView = new ImageView(model.image);
+        healthProgress = new ProgressBar(model.getHealth());
         health = new VBox(new Label("Health"), healthProgress);
-        happinessProgress = new ProgressBar(dragon.happiness);
+        happinessProgress = new ProgressBar(model.getHappiness());
         happiness = new VBox(new Label("Happiness"), happinessProgress);
         health.setAlignment(Pos.CENTER);
         happiness.setAlignment(Pos.CENTER);
@@ -36,7 +40,10 @@ public class DragonView {
         mainVBox = new VBox(imageView, status, pet, button);
         mainVBox.setAlignment(Pos.CENTER);
         button.setOnAction(value->mainView.stage.setScene(new MainMenuView(mainView).scene));
-        pet.setOnAction(value->{dragon.happiness+=0.05f; happinessProgress.setProgress(dragon.happiness);});
+        pet.setOnAction(value->controller.addHappiness(0.05f));
         scene = new Scene(mainVBox, 400, 500);
     }
+
+    public void setHappiness(float a){happinessProgress.setProgress(a);}
+    public void setHealth(float a){healthProgress.setProgress(a);}
 }

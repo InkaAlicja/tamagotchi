@@ -9,5 +9,10 @@ public class DragonController {
     DragonView view;
     DragonModel model;
     public DragonController(DragonView view, DragonModel model){this.view=view; this.model=model;}
-    
+
+    public void addHappiness(float a){
+        model.addHappiness(a);
+        view.setHappiness(model.getHappiness());
+    }
+
 }
