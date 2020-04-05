@@ -25,11 +25,7 @@ public class MainMenuView{
         settingsButton = new Button("Settings");
         exitButton = new Button("Exit");
         playButton.setOnAction(value-> {
-            try {
-                mainView.stage.setScene(new DragonView(mainView).scene);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+                mainView.stage.setScene(mainView.dragonView.scene);
         });
         exitButton.setOnAction(value->mainView.stage.close());
         vbox = new VBox(playButton, settingsButton, exitButton);
