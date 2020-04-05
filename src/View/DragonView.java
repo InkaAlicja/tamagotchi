@@ -17,11 +17,12 @@ public class DragonView {
     Button back, pet,play,feed,clean;
     Scene scene;
     VBox mainVBox, health, happiness;
-    HBox status,healthButtons;
+    HBox status;
     ProgressBar healthProgress, happinessProgress;
     DragonModel model;
     ImageView imageView;
     DragonController controller;
+    Label money;
     public DragonView(MainView mainView) throws FileNotFoundException {
         feed = new Button("Feed");
         clean = new Button("Clean");
@@ -42,15 +43,25 @@ public class DragonView {
         happiness = new VBox(new Label("Happiness"), happinessProgress,pet,play);
         happiness.setAlignment(Pos.CENTER);
 
+        money = new Label(String.valueOf(model.getMoney()));
+
         status = new HBox(health, happiness);
         status.setAlignment(Pos.CENTER);
-        mainVBox = new VBox(imageView, status,back);
+        mainVBox = new VBox(money,imageView, status,back);
         mainVBox.setAlignment(Pos.CENTER);
 
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
-        pet.setOnAction(value->controller.addHappiness(0.05f));
-        feed.setOnAction(value->controller.addHealth(0.05f));
-        clean.setOnAction(value->controller.addHealth(0.05f));
+        pet.setOnAction(value->{
+            controller.addHappiness(0.05f);
+        });
+        feed.setOnAction(value->{
+            controller.addHealth(0.05f);
+            controller.addMoney(-10);
+        });
+        clean.setOnAction(value->{
+            controller.addHealth(0.15f);
+            controller.addMoney(-30);
+        });
         play.setOnAction(value->{
             controller.addHealth(-0.2f);
             controller.addHappiness(0.2f);
@@ -60,4 +71,5 @@ public class DragonView {
 
     public void setHappiness(float a){happinessProgress.setProgress(a);}
     public void setHealth(float a){healthProgress.setProgress(a);}
+    public void setMoney(int a){money.setText(String.valueOf(a));}
 }

@@ -1,5 +1,6 @@
 package Controller;
 
+import Additions.AlertBox;
 import Model.DragonModel;
 import Model.MainModel;
 import View.DragonView;
@@ -22,7 +23,12 @@ public class DragonController {
         view.setHappiness(model.getHappiness());
     }
     public void addHealth(float a){
-        model.addHealth(a);
+        try{
+            model.addHealth(a);
+        }catch(DragonModel.DyingDragonException ex){
+            view.setHealth(model.getHealth());
+            AlertBox.display("Your dragon needs to be taken care of!","OK, lemme take care of him!");
+        }
         view.setHealth(model.getHealth());
     }
 
@@ -35,6 +41,15 @@ public class DragonController {
                 addHealth(-0.005f);
             }
         }
+    }
+
+    public void addMoney(int a){
+        try{
+            model.addMoney(a);
+        }catch(DragonModel.BrokeException ex){
+            AlertBox.display("You dont have enough money!","OK, lemme earn some!");
+        }
+        view.setMoney(model.getMoney());
     }
 
 }
