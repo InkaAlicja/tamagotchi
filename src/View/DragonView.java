@@ -1,5 +1,7 @@
 package View;
 
+import Additions.AdBox;
+import Additions.AlertBox;
 import Controller.DragonController;
 import Model.DragonModel;
 import javafx.geometry.Pos;
@@ -10,8 +12,10 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 public class DragonView {
     Button back, pet,play,feed,clean,ad;
@@ -76,6 +80,16 @@ public class DragonView {
         play.setOnAction(value->{
             controller.addHealth(-0.2f);
             controller.addHappiness(0.2f);
+        });
+        ad.setOnAction(value-> {
+            try {
+                 if(AdBox.display("Resources/coin.png"))
+                    controller.addMoney(20);
+                 else AlertBox.display("Can't you even wait 10s?","sorry");
+            } catch (FileNotFoundException e) {
+                AlertBox.display("No ads to show","OK");
+            }
+
         });
         scene = new Scene(mainVBox, 400, 500);
     }

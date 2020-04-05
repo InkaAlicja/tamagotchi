@@ -8,13 +8,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.concurrent.TimeUnit;
+
 public class AlertBox {
     public static void display(String message,String action){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setMinHeight(250);
-        window.setMinHeight(250);
+        window.setMinHeight(150);
+        window.setMinWidth(250);
 
         Label label = new Label();
         label.setText(message);
@@ -30,5 +32,6 @@ public class AlertBox {
         window.setScene(scene);
 
         window.showAndWait();
+
     }
 }
