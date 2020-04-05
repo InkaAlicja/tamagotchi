@@ -14,10 +14,10 @@ import javafx.scene.layout.VBox;
 import java.io.FileNotFoundException;
 
 public class DragonView {
-    Button back, pet,play,feed,clean;
+    Button back, pet,play,feed,clean,ad;
     Scene scene;
     VBox mainVBox, health, happiness;
-    HBox status;
+    HBox status,backAd;
     ProgressBar healthProgress, happinessProgress;
     DragonModel model;
     ImageView imageView;
@@ -28,27 +28,36 @@ public class DragonView {
         clean = new Button("Clean");
         pet = new Button("Pet");
         play = new Button("Play!");
+
         back = new Button("Back");
+        ad = new Button("ad");
+        backAd=new HBox(back,ad);
+        backAd.setSpacing(250);
+        backAd.setAlignment(Pos.CENTER);
 
         model = new DragonModel();
-        controller=new DragonController(this,model);
+        controller = new DragonController(this,model);
 
         imageView = new ImageView(model.image);
 
         healthProgress = new ProgressBar(model.getHealth());
         health = new VBox(new Label("Health"), healthProgress,feed,clean);
         health.setAlignment(Pos.CENTER);
+        health.setSpacing(5);
 
         happinessProgress = new ProgressBar(model.getHappiness());
         happiness = new VBox(new Label("Happiness"), happinessProgress,pet,play);
         happiness.setAlignment(Pos.CENTER);
+        happiness.setSpacing(5);
 
         money = new Label(String.valueOf(model.getMoney()));
 
         status = new HBox(health, happiness);
         status.setAlignment(Pos.CENTER);
-        mainVBox = new VBox(money,imageView, status,back);
+        status.setSpacing(20);
+        mainVBox = new VBox(backAd,money,imageView, status);
         mainVBox.setAlignment(Pos.CENTER);
+        mainVBox.setSpacing(10);
 
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
         pet.setOnAction(value->{
