@@ -1,5 +1,6 @@
 package Controller;
 
+import Additions.AlertBox;
 import Model.TicTacToeModel;
 import View.TicTacToeView;
 
@@ -51,8 +52,6 @@ public class TicTacToeController {
         view.getLabels()[i].setText("X");
         model.setTurn(model.getTurn()+1);
         view.getStack()[i].setOnMouseClicked(value-> System.out.println("don't"));
-        if (checkIfUserWon())
-            System.out.println("Nice");
     }
 
     void pcMove(){
@@ -62,20 +61,42 @@ public class TicTacToeController {
         view.getLabels()[rand].setText("O");
         model.setTurn(model.getTurn()+1);
         view.getStack()[rand].setOnMouseClicked(value-> System.out.println("don't"));
-        if (checkIfPcWon())
-            System.out.println("Loser");
 
     }
 
     public void exit(){
-
+        if (model.getGameCounter()>0) {
+            view.getPlayView().getDragonController().addHealth(-0.2f);
+            view.getPlayView().getDragonController().addHappiness(0.2f);
+        }
+        view.getPlayView().getDragonController().addMoney(10*model.getWinCounter());
+        view.getPlayView().resetScene();
     }
 
     public void click(int i){
-        if (model.getTurn()<9)
         userMove(i);
-        if (model.getTurn()<9)
-        pcMove();
+        if (checkIfUserWon()){
+            AlertBox.display("You won!!!", "Continue");
+            model.incGameCounter();
+            model.incWinCounter();
+            newGame();
+            return;
+        }
+        if (model.getTurn()<9) {
+            pcMove();
+            if (checkIfPcWon()) {
+                AlertBox.display("You lost :(((", "Continue");
+                model.incGameCounter();
+                newGame();
+                return;
+            }
+        }
+        if (model.getTurn()==9){
+            AlertBox.display("Draw", "Continue");
+            model.incGameCounter();
+            newGame();
+            return;
+        }
         System.out.println(model.getTurn());
     }
 }

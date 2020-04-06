@@ -2,6 +2,7 @@ package View;
 
 import Controller.TicTacToeController;
 import Model.TicTacToeModel;
+import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,9 +12,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class TicTacToeView {
-    Main mainView;
+    PlayView playView;
     Scene scene;
     TicTacToeModel model;
     TicTacToeController controller;
@@ -23,8 +25,8 @@ public class TicTacToeView {
     HBox[] rows;
     Button newGameButton, exitButton;
     VBox columns;
-    public TicTacToeView(Main mainView){
-        this.mainView=mainView;
+    public TicTacToeView(PlayView playView){
+        this.playView=playView;
         model = new TicTacToeModel(this);
         controller = new TicTacToeController(this, model);
     }
@@ -57,7 +59,7 @@ public class TicTacToeView {
         columns.setAlignment(Pos.CENTER);
         columns.setSpacing(10);
         scene = new Scene(columns, 400, 500);
-        mainView.stage.setScene(scene);
+        playView.getStage().setScene(scene);
     }
 
     public Label[] getLabels(){
@@ -66,5 +68,13 @@ public class TicTacToeView {
 
     public StackPane[] getStack() {
         return stack;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public PlayView getPlayView() {
+        return playView;
     }
 }

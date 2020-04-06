@@ -5,15 +5,19 @@ import Model.DragonModel;
 import Model.MainModel;
 import View.DragonView;
 import View.MainView;
+import View.PlayView;
+import View.TicTacToeView;
 import javafx.concurrent.Task;
 
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
+import static javafx.application.Application.launch;
 
 public class DragonController {
     DragonView view;
     DragonModel model;
+    PlayView playView;
     Thread clockThread;
 
     public DragonController(DragonView view, DragonModel model){this.view=view; this.model=model; clockThread=new Thread(new ClockIsTicking()); clockThread.start();}
@@ -46,6 +50,10 @@ public class DragonController {
                 return null;
             }
         }
+    }
+
+    public void play(){
+        playView = new PlayView(this.view);
     }
 
     public boolean addMoney(int a){

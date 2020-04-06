@@ -6,14 +6,16 @@ import java.util.*;
 
 public class TicTacToeModel {
     TicTacToeView view;
-    int turn;
+    int turn, winCounter, gameCounter;
     boolean userIsFirst;
     HashSet<Integer> pcSet;
     HashSet<Integer> userSet;
     HashSet<Integer> reminderSet;
     public List<List<Integer>> winScenarios = Arrays.asList(Arrays.asList(0,1,2), Arrays.asList(3,4,5),
-            Arrays.asList(6,7,8), Arrays.asList(0,3,6), Arrays.asList(1,4,7), Arrays.asList(2,5,8), Arrays.asList(0,4,8), Arrays.asList(2,3,6));
+            Arrays.asList(6,7,8), Arrays.asList(0,3,6), Arrays.asList(1,4,7), Arrays.asList(2,5,8), Arrays.asList(0,4,8), Arrays.asList(2,4,6));
     public TicTacToeModel(TicTacToeView view){
+        winCounter = 0;
+        gameCounter = 0;
         pcSet = new HashSet<>();
         userSet = new HashSet<>();
         reminderSet = new HashSet<>();
@@ -71,6 +73,22 @@ public class TicTacToeModel {
 
     public void clearUserSet(){
         userSet.clear();
+    }
+
+    public void incWinCounter(){
+        winCounter++;
+    }
+
+    public void incGameCounter(){
+        gameCounter++;
+    }
+
+    public int getWinCounter(){
+        return winCounter;
+    }
+
+    public int getGameCounter(){
+        return gameCounter;
     }
 
     public int getTurn(){

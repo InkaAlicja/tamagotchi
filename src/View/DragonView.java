@@ -27,7 +27,9 @@ public class DragonView {
     ImageView imageView,imageCoin1,imageCoin2;
     DragonController controller;
     Label money;
+    MainView mainView;
     public DragonView(MainView mainView) throws FileNotFoundException {
+        this.mainView=mainView;
         feed = new Button("Feed");
         clean = new Button("Clean");
         pet = new Button("Pet");
@@ -78,8 +80,7 @@ public class DragonView {
             controller.addHealth(0.15f);
         });
         play.setOnAction(value->{
-            controller.addHealth(-0.2f);
-            controller.addHappiness(0.2f);
+            controller.play();
         });
         ad.setOnAction(value-> {
             try {
@@ -96,7 +97,9 @@ public class DragonView {
     public DragonController getController(){
         return controller;
     }
-
+    public MainView getMainView(){
+        return mainView;
+    }
     public void setHappiness(float a){happinessProgress.setProgress(a);}
     public void setHealth(float a){healthProgress.setProgress(a);}
     public void setMoney(int a){money.setText(String.valueOf(a));}
