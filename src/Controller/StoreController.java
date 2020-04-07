@@ -16,4 +16,8 @@ public class StoreController {
     public void setImage(Image image){
         view.getMainView().getDragonView().getController().setImageAddition(image);
     }
+    public void addMoney(int money){
+        view.addMoney(money);
+        //view.getMainView().getDragonView().getController().addMoney(money); //sie zapetla ofc
+    }
 }

@@ -69,6 +69,7 @@ public class DragonController {
             return false;
         }
         view.setMoney(model.getMoney());
+        view.getMainView().getStoreView().getController().addMoney(a);
         return true;
     }
 
@@ -80,7 +81,6 @@ public class DragonController {
         if(model.getAdditions()!=image){
             model.setAdditions(image);
             view.setView(model.addition1);
-            System.out.println("new image");
         }
         else{
             FileInputStream F;
@@ -95,6 +95,10 @@ public class DragonController {
             }
 
         }
+    }
+
+    public int getMoney(){
+        return model.getMoney();
     }
 
 }

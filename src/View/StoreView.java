@@ -20,10 +20,11 @@ public class StoreView {
     Button pick1,pick2,pick3;
     Button buy1,buy2,buy3;//disappear?
     Button back;
-    HBox box1,box2,box3;
+    HBox box1,box2,box3,moneyBox;
     VBox mainBox;
     ImageView imgV1,imgV2,imgV3,coinV;
     Label money;
+    int moneyInt;
     public StoreView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
         controller = new StoreController(model,this);
@@ -51,10 +52,12 @@ public class StoreView {
         box3 = new HBox(imgV3,buy3,pick3);
         box3.setSpacing(5);
 
+        moneyInt=mainView.getDragonView().getController().getMoney();
         coinV = new ImageView(model.coin);
-        money = new Label("money",coinV);//get money how??
+        money = new Label(String.valueOf(moneyInt));//get money how??
+        moneyBox = new HBox(coinV,money);
 
-        mainBox = new VBox (money,box1,box2,box3,back);
+        mainBox = new VBox (moneyBox,box1,box2,box3,back);
         mainBox.setSpacing(5);
 
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
@@ -62,14 +65,17 @@ public class StoreView {
         buy1.setOnAction(value->{
             pick1.setDisable(false);
             buy1.setDisable(true);
+            mainView.getDragonView().getController().addMoney(-30);
         });
         buy2.setOnAction(value->{
             pick2.setDisable(false);
             buy2.setDisable(true);
+            mainView.getDragonView().getController().addMoney(-30);
         });
         buy3.setOnAction(value->{
             pick3.setDisable(false);
             buy3.setDisable(true);
+            mainView.getDragonView().getController().addMoney(-30);
         });
         pick1.setOnAction(value->{
             controller.setImage(model.img1);
@@ -104,6 +110,13 @@ public class StoreView {
     }
     public MainView getMainView(){
         return mainView;
+    }
+    public StoreController getController(){
+        return controller;
+    }
+    public void addMoney(int money){
+        moneyInt+=money;
+        this.money.setText(String.valueOf(moneyInt));
     }
 
 

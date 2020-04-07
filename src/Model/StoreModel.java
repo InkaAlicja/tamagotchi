@@ -18,7 +18,7 @@ public class StoreModel {
         img3 = new Image(imgF3);
 
         coinF = new FileInputStream("Resources/coin.png");
-        coin = new Image(coinF);
+        coin = new Image(coinF,20,20,true,false);
     }
 
 

@@ -29,6 +29,7 @@ public class PlayView{
         backButton.setOnAction(value->controller.back());
         mainVBox = new VBox(ticTacToeButton, backButton);
         mainVBox.setAlignment(Pos.CENTER);
+        mainVBox.setSpacing(15);
         scene = new Scene(mainVBox, 400, 500);
         stage = new Stage();
         stage.setScene(scene);
