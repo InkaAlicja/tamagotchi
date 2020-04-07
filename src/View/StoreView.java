@@ -78,7 +78,7 @@ public class StoreView {
             mainView.getDragonView().getController().addMoney(-30);
         });
         pick1.setOnAction(value->{
-            controller.setImage(model.img1);
+            controller.setImage(model.img1big);
             if(pick1.getText()=="pick"){
                 pick1.setText("unpick");
                 pick2.setText("pick");
@@ -87,7 +87,7 @@ public class StoreView {
             else pick1.setText("pick");
         });
         pick2.setOnAction(value->{
-            controller.setImage(model.img2);
+            controller.setImage(model.img2big);
             if(pick2.getText()=="pick"){
                 pick2.setText("unpick");
                 pick3.setText("pick");
@@ -96,7 +96,7 @@ public class StoreView {
             else pick2.setText("pick");
         });
         pick3.setOnAction(value->{
-            controller.setImage(model.img3);
+            controller.setImage(model.img3big);
             if(pick3.getText()=="pick"){
                 pick3.setText("unpick");
                 pick2.setText("pick");
