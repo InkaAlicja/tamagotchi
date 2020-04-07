@@ -34,16 +34,18 @@ public class StoreController {
     public void wearsSaddle(boolean b){model.wearsSaddle(b);}
 
 
-    public void  pickButtonAction(Button button, HashMap<Button, StoreView.type> Map){
+    public boolean  pickButtonAction(Button button, HashMap<Button, StoreView.type> Map){
         StoreView.type buttonType=Map.get(button);
         if(button.getText()=="pick") {
             Map.forEach((Button, typ) -> {
                 if (typ == buttonType) view.setButton(Button, "pick");
             });
             button.setText("unpick");
+            return true;
         }
         else{
             button.setText("pick");
+            return false;
         }
     }
 }

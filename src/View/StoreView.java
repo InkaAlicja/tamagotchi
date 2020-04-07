@@ -100,8 +100,8 @@ public class StoreView {
         });
         pick3.setOnAction(value->{
             controller.setImage(model.img3big,"back");
-            controller.pickButtonAction(pick3,Map);
-            controller.wearsSaddle(true);
+            boolean bool=controller.pickButtonAction(pick3,Map);
+            controller.wearsSaddle(bool);
         });
 
 
