@@ -11,8 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
-import java.util.EnumMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class StoreView {
     MainView mainView;
@@ -27,17 +26,10 @@ public class StoreView {
     ImageView imgV1,imgV2,imgV3,coinV;
     Label money;
     int moneyInt;
-    private static class TypeButton{
-        Button b;
-        public enum type{BACK,FACE,HEAD};
-        type typ;
 
-        public TypeButton(Button b,type typ){
-            this.b=b; this.typ=typ;
-        }
-    }
+    public enum type{BACK,FACE,HEAD};
+    HashMap<Button,type> Map;
 
-    LinkedList<TypeButton> BList;
     public StoreView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
         model = new StoreModel();
@@ -55,10 +47,10 @@ public class StoreView {
         buy2 = new Button("buy");
         buy3 = new Button("buy");
 
-        BList = new LinkedList<>();
-        BList.add(new TypeButton(pick1, TypeButton.type.HEAD));
-        BList.add(new TypeButton(pick2, TypeButton.type.HEAD));
-        BList.add(new TypeButton(pick3, TypeButton.type.BACK));
+        Map = new HashMap<>();
+        Map.put(pick1,type.HEAD);
+        Map.put(pick2,type.HEAD);
+        Map.put(pick3,type.BACK);
 
         imgV1 = new ImageView(model.img1);
         imgV2 = new ImageView(model.img2);
@@ -73,7 +65,7 @@ public class StoreView {
 
         moneyInt=mainView.getDragonView().getController().getMoney();
         coinV = new ImageView(model.coin);
-        money = new Label(String.valueOf(moneyInt));//get money how??
+        money = new Label(String.valueOf(moneyInt));
         moneyBox = new HBox(coinV,money);
 
         mainBox = new VBox (moneyBox,box1,box2,box3,back);
@@ -97,39 +89,19 @@ public class StoreView {
             controller.gotSaddle();
             mainView.getDragonView().getController().addMoney(-30);
         });
+
         pick1.setOnAction(value->{
             controller.setImage(model.img1big,"head");
-            if(pick1.getText()=="pick"){
-                for(TypeButton t : BList){
-                    if(t.typ== TypeButton.type.HEAD)t.b.setText("pick");
-                }
-                pick1.setText("unpick");
-            }
-            else pick1.setText("pick");
+            controller.pickButtonAction(pick1,Map);
         });
         pick2.setOnAction(value->{
             controller.setImage(model.img2big,"head");
-            if(pick2.getText()=="pick"){
-                for(TypeButton t : BList){
-                    if(t.typ== TypeButton.type.HEAD)t.b.setText("pick");
-                }
-                pick2.setText("unpick");
-            }
-            else pick2.setText("pick");
+            controller.pickButtonAction(pick2,Map);
         });
         pick3.setOnAction(value->{
             controller.setImage(model.img3big,"back");
-            if(pick3.getText()=="pick"){
-                for(TypeButton t : BList){
-                    if(t.typ== TypeButton.type.BACK)t.b.setText("pick");
-                }
-                pick3.setText("unpick");
-                controller.wearsSaddle(true);
-            }
-            else {
-                pick3.setText("pick");
-                controller.wearsSaddle(false);
-            }
+            controller.pickButtonAction(pick3,Map);
+            controller.wearsSaddle(true);
         });
 
 
@@ -144,6 +116,10 @@ public class StoreView {
     public void addMoney(int money){
         moneyInt+=money;
         this.money.setText(String.valueOf(moneyInt));
+    }
+
+    public void setButton(Button b,String s){
+        b.setText(s);
     }
 
 

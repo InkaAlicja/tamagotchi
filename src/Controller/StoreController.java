@@ -3,8 +3,11 @@ package Controller;
 import Model.StoreModel;
 import View.StoreView;
 import javafx.scene.image.Image;
-
+import javafx.scene.control.Button;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.function.BiConsumer;
 
 public class StoreController {
     StoreModel model;
@@ -29,4 +32,18 @@ public class StoreController {
     public void gotSaddle(){ model.gotSaddle();}
     public boolean wearsSaddle(){return model.wearsSaddle();}
     public void wearsSaddle(boolean b){model.wearsSaddle(b);}
+
+
+    public void  pickButtonAction(Button button, HashMap<Button, StoreView.type> Map){
+        StoreView.type buttonType=Map.get(button);
+        if(button.getText()=="pick") {
+            Map.forEach((Button, typ) -> {
+                if (typ == buttonType) view.setButton(Button, "pick");
+            });
+            button.setText("unpick");
+        }
+        else{
+            button.setText("pick");
+        }
+    }
 }
