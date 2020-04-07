@@ -1,5 +1,6 @@
 package View;
 
+import Model.StoreModel;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ public class MainView extends Application {
     Stage stage;
     MainMenuView menu;
     DragonView dragonView;
+    StoreView storeView;
 
     public MainView(){}
 
@@ -19,12 +21,16 @@ public class MainView extends Application {
         stage = primaryStage;
         menu = new MainMenuView(this);
         dragonView = new DragonView(this);
+        storeView = new StoreView(this);
         stage.setScene(menu.scene);
         stage.show();
     }
 
     public DragonView getDragonView() {
         return dragonView;
+    }
+    public StoreView getStoreView() {
+        return storeView;
     }
 
     public Stage getStage(){

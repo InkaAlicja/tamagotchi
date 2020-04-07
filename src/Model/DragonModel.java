@@ -3,24 +3,31 @@ package Model;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class DragonModel {
-    public Image image;
+    public Image dragon,addition1;
     public Image coinImage;
     private float health;
     private float happiness;
     private int money;
-    FileInputStream input,inputCoin;
+    FileInputStream inputDragon,inputAddition1,inputCoin;
+
     public DragonModel() throws FileNotFoundException {
         money=100;
         health=0.9f;
         happiness=0.8f;
-        input = new FileInputStream("Resources/dragon-animated.gif");
+
+        inputDragon = new FileInputStream("Resources/dragon-animated.gif");
+        dragon = new Image(inputDragon, 300, 300, true, false);
+
+        inputAddition1 = new FileInputStream("Resources/blank.png");
+        addition1 = new Image(inputAddition1,100,100,true,false);
+
         inputCoin = new FileInputStream("Resources/coin.png");
-        image = new Image(input, 300, 300, true, false);
         coinImage = new Image(inputCoin,20,20,true,false);
     }
     public static class DyingDragonException extends Exception{}
@@ -49,5 +56,11 @@ public class DragonModel {
     public void addMoney(float a)throws BrokeException{
         if(money+a>=0)money+=a;
         else throw new BrokeException();
+    }
+    public void setAdditions(Image image){
+        addition1 = image;
+    }
+    public Image getAdditions(){
+        return addition1;
     }
 }

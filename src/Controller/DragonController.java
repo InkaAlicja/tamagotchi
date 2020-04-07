@@ -8,7 +8,11 @@ import View.MainView;
 import View.PlayView;
 import View.TicTacToeView;
 import javafx.concurrent.Task;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
@@ -20,7 +24,8 @@ public class DragonController {
     PlayView playView;
     Thread clockThread;
 
-    public DragonController(DragonView view, DragonModel model){this.view=view; this.model=model; clockThread=new Thread(new ClockIsTicking()); clockThread.start();}
+    public DragonController(DragonView view, DragonModel model)
+    {this.view=view; this.model=model; clockThread=new Thread(new ClockIsTicking()); clockThread.start();}
 
     public void addHappiness(float a){
         model.addHappiness(a);
@@ -69,6 +74,27 @@ public class DragonController {
 
     public Thread getClockThread(){
         return clockThread;
+    }
+
+    public void setImageAddition(Image image){
+        if(model.getAdditions()!=image){
+            model.setAdditions(image);
+            view.setView(model.addition1);
+            System.out.println("new image");
+        }
+        else{
+            FileInputStream F;
+            Image img;
+            try {
+                F = new FileInputStream("Resources/blank.png");
+                img = new Image(F,100,100,true,false);
+                model.setAdditions(img);
+                view.setView(model.addition1);
+            } catch (FileNotFoundException e) {
+                AlertBox.display("File not found :/","ok");
+            }
+
+        }
     }
 
 }

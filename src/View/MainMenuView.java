@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 
 public class MainMenuView{
-    Button playButton, settingsButton, exitButton;
+    Button playButton, settingsButton, exitButton,storeButton;
     Scene scene;
     VBox vbox;
     MainView mainView;
@@ -28,11 +28,15 @@ public class MainMenuView{
         playButton = new Button("Play");
         settingsButton = new Button("Settings");
         exitButton = new Button("Exit");
+        storeButton = new Button("Store");
         playButton.setOnAction(value-> {
-                mainView.stage.setScene(mainView.dragonView.scene);
+                mainView.stage.setScene(mainView.getDragonView().scene);
+        });
+        storeButton.setOnAction(value-> {
+            mainView.stage.setScene(mainView.getStoreView().scene);
         });
         exitButton.setOnAction(value->controller.exit());
-        vbox = new VBox(playButton, settingsButton, exitButton);
+        vbox = new VBox(playButton, storeButton, settingsButton, exitButton);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(20);
         scene = new Scene(vbox, 400, 500);

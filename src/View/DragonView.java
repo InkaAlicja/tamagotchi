@@ -9,8 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
@@ -18,16 +20,17 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 public class DragonView {
+    MainView mainView;
+    DragonController controller;
+    DragonModel model;
     Button back, pet,play,feed,clean,ad;
     Scene scene;
     VBox mainVBox, health, happiness;
     HBox status,backAd;
     ProgressBar healthProgress, happinessProgress;
-    DragonModel model;
-    ImageView imageView,imageCoin1,imageCoin2;
-    DragonController controller;
+    ImageView imageDragon,imageAddition1,imageCoin1,imageCoin2;
     Label money;
-    MainView mainView;
+    StackPane stackPane;
     public DragonView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
         feed = new Button("Feed");
@@ -37,7 +40,10 @@ public class DragonView {
 
         model = new DragonModel();
         controller = new DragonController(this,model);
-        imageView = new ImageView(model.image);
+        imageDragon = new ImageView(model.dragon);
+        imageAddition1 = new ImageView(model.addition1);
+        stackPane = new StackPane(imageDragon,imageAddition1);
+
         imageCoin1 = new ImageView(model.coinImage);
         imageCoin2 = new ImageView(model.coinImage);
 
@@ -62,7 +68,7 @@ public class DragonView {
         status = new HBox(health, happiness);
         status.setAlignment(Pos.CENTER);
         status.setSpacing(20);
-        mainVBox = new VBox(backAd,money,imageView, status);
+        mainVBox = new VBox(backAd,money,stackPane, status);
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(10);
 
@@ -103,4 +109,5 @@ public class DragonView {
     public void setHappiness(float a){happinessProgress.setProgress(a);}
     public void setHealth(float a){healthProgress.setProgress(a);}
     public void setMoney(int a){money.setText(String.valueOf(a));}
+    public void setView(Image img){imageAddition1.setImage(img);}
 }
