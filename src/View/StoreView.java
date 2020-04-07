@@ -11,6 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
+import java.util.EnumMap;
+import java.util.LinkedList;
 
 public class StoreView {
     MainView mainView;
@@ -25,6 +27,17 @@ public class StoreView {
     ImageView imgV1,imgV2,imgV3,coinV;
     Label money;
     int moneyInt;
+    private static class TypeButton{
+        Button b;
+        public enum type{BACK,FACE,HEAD};
+        type typ;
+
+        public TypeButton(Button b,type typ){
+            this.b=b; this.typ=typ;
+        }
+    }
+
+    LinkedList<TypeButton> BList;
     public StoreView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
         controller = new StoreController(model,this);
@@ -40,6 +53,11 @@ public class StoreView {
         buy1 = new Button("buy");
         buy2 = new Button("buy");
         buy3 = new Button("buy");
+
+        BList = new LinkedList<>();
+        BList.add(new TypeButton(pick1, TypeButton.type.HEAD));
+        BList.add(new TypeButton(pick2, TypeButton.type.HEAD));
+        BList.add(new TypeButton(pick3, TypeButton.type.BACK));
 
         imgV1 = new ImageView(model.img1);
         imgV2 = new ImageView(model.img2);
@@ -78,29 +96,32 @@ public class StoreView {
             mainView.getDragonView().getController().addMoney(-30);
         });
         pick1.setOnAction(value->{
-            controller.setImage(model.img1big);
+            controller.setImage(model.img1big,"head");
             if(pick1.getText()=="pick"){
+                for(TypeButton t : BList){
+                    if(t.typ== TypeButton.type.HEAD)t.b.setText("pick");
+                }
                 pick1.setText("unpick");
-                pick2.setText("pick");
-                pick3.setText("pick");
             }
             else pick1.setText("pick");
         });
         pick2.setOnAction(value->{
-            controller.setImage(model.img2big);
+            controller.setImage(model.img2big,"head");
             if(pick2.getText()=="pick"){
+                for(TypeButton t : BList){
+                    if(t.typ== TypeButton.type.HEAD)t.b.setText("pick");
+                }
                 pick2.setText("unpick");
-                pick3.setText("pick");
-                pick1.setText("pick");
             }
             else pick2.setText("pick");
         });
         pick3.setOnAction(value->{
-            controller.setImage(model.img3big);
+            controller.setImage(model.img3big,"back");
             if(pick3.getText()=="pick"){
+                for(TypeButton t : BList){
+                    if(t.typ== TypeButton.type.BACK)t.b.setText("pick");
+                }
                 pick3.setText("unpick");
-                pick2.setText("pick");
-                pick1.setText("pick");
             }
             else pick3.setText("pick");
         });

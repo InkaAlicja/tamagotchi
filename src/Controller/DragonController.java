@@ -77,10 +77,10 @@ public class DragonController {
         return clockThread;
     }
 
-    public void setImageAddition(Image image){
-        if(model.getAdditions()!=image){
-            model.setAdditions(image);
-            view.setView(model.addition1);
+    public void setImageAdditionHead(Image image){
+        if(model.getAdditionHead()!=image){
+            model.setAdditionHead(image);
+            view.setAdditionHead(model.getAdditionHead());
         }
         else{
             FileInputStream F;
@@ -88,12 +88,47 @@ public class DragonController {
             try {
                 F = new FileInputStream("Resources/blank.png");
                 img = new Image(F,100,100,true,false);
-                model.setAdditions(img);
-                view.setView(model.addition1);
+                model.setAdditionHead(img);
+                view.setAdditionHead(model.getAdditionHead());
             } catch (FileNotFoundException e) {
                 AlertBox.display("File not found :/","ok");
             }
-
+        }
+    }
+    public void setImageAdditionFace(Image image){
+        if(model.getAdditionFace()!=image){
+            model.setAdditionFace(image);
+            view.setAdditionFace(model.getAdditionFace());
+        }
+        else{
+            FileInputStream F;
+            Image img;
+            try {
+                F = new FileInputStream("Resources/blank.png");
+                img = new Image(F,100,100,true,false);
+                model.setAdditionFace(img);
+                view.setAdditionFace(model.getAdditionFace());
+            } catch (FileNotFoundException e) {
+                AlertBox.display("File not found :/","ok");
+            }
+        }
+    }
+    public void setImageAdditionBack(Image image){
+        if(model.getAdditionBack()!=image){
+            model.setAdditionBack(image);
+            view.setAdditionBack(model.getAdditionBack());
+        }
+        else{
+            FileInputStream F;
+            Image img;
+            try {
+                F = new FileInputStream("Resources/blank.png");
+                img = new Image(F,100,100,true,false);
+                model.setAdditionBack(img);
+                view.setAdditionBack(model.getAdditionBack());
+            } catch (FileNotFoundException e) {
+                AlertBox.display("File not found :/","ok");
+            }
         }
     }
 

@@ -28,7 +28,9 @@ public class DragonView {
     VBox mainVBox, health, happiness;
     HBox status,backAd;
     ProgressBar healthProgress, happinessProgress;
-    ImageView imageDragon,imageAddition1,imageCoin1,imageCoin2;
+    ImageView imageDragon;
+    ImageView imageAdditionHead,imageAdditionFace,imageAdditionBack;
+    ImageView imageCoin1,imageCoin2;
     Label money;
     StackPane stackPane;
     public DragonView(MainView mainView) throws FileNotFoundException {
@@ -41,8 +43,10 @@ public class DragonView {
         model = new DragonModel();
         controller = new DragonController(this,model);
         imageDragon = new ImageView(model.dragon);
-        imageAddition1 = new ImageView(model.addition1);
-        stackPane = new StackPane(imageDragon,imageAddition1);
+        imageAdditionHead = new ImageView(model.getAdditionHead());
+        imageAdditionFace = new ImageView(model.getAdditionFace());
+        imageAdditionBack = new ImageView(model.getAdditionBack());
+        stackPane = new StackPane(imageDragon,imageAdditionHead,imageAdditionFace,imageAdditionBack);
 
         imageCoin1 = new ImageView(model.coinImage);
         imageCoin2 = new ImageView(model.coinImage);
@@ -109,5 +113,7 @@ public class DragonView {
     public void setHappiness(float a){happinessProgress.setProgress(a);}
     public void setHealth(float a){healthProgress.setProgress(a);}
     public void setMoney(int a){money.setText(String.valueOf(a));}
-    public void setView(Image img){imageAddition1.setImage(img);}
+    public void setAdditionHead(Image img){imageAdditionHead.setImage(img);}
+    public void setAdditionFace(Image img){imageAdditionFace.setImage(img);}
+    public void setAdditionBack(Image img){imageAdditionBack.setImage(img);}
 }

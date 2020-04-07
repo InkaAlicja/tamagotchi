@@ -13,11 +13,16 @@ public class StoreController {
         this.model=model;
         this.view=view;
     }
-    public void setImage(Image image){
-        view.getMainView().getDragonView().getController().setImageAddition(image);
-    }
     public void addMoney(int money){
         view.addMoney(money);
-        //view.getMainView().getDragonView().getController().addMoney(money); //sie zapetla ofc
     }
+    public void setImage(Image image,String where){
+        if(where.equals("head"))
+        view.getMainView().getDragonView().getController().setImageAdditionHead(image);
+        if(where.equals("face"))
+            view.getMainView().getDragonView().getController().setImageAdditionFace(image);
+        if(where.equals("back"))
+            view.getMainView().getDragonView().getController().setImageAdditionBack(image);
+    }
+
 }
