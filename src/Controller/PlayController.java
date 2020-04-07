@@ -1,5 +1,7 @@
 package Controller;
 
+import Additions.AlertBox;
+import Additions.SaddleBox;
 import View.PlayView;
 import View.TicTacToeView;
 
@@ -16,5 +18,14 @@ public class PlayController {
 
     public void playTicTacToe(){
         ticTacToeView = new TicTacToeView(view);
+    }
+
+    public void playOtherGame(){
+        if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().hasSaddle()){
+            if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().wearsSaddle())
+                ;//play
+            else SaddleBox.display("You need to wear your saddle to play");
+        }
+        else SaddleBox.display("You need to buy a saddle to play");
     }
 }

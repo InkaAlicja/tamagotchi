@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class PlayView{
     PlayController controller;
-    Button ticTacToeButton, backButton;
+    Button ticTacToeButton, otherGameButton,backButton;
     VBox mainVBox;
     DragonView dragonView;
     Stage stage;
@@ -25,9 +25,13 @@ public class PlayView{
         this.dragonView=dragonView;
         ticTacToeButton = new Button("Tic Tac Toe");
         ticTacToeButton.setOnAction(value->controller.playTicTacToe());
+
+        otherGameButton = new Button("other game");
+        otherGameButton.setOnAction(value->controller.playOtherGame());
+
         backButton = new Button("Back");
         backButton.setOnAction(value->controller.back());
-        mainVBox = new VBox(ticTacToeButton, backButton);
+        mainVBox = new VBox(ticTacToeButton,otherGameButton, backButton);
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(15);
         scene = new Scene(mainVBox, 400, 500);

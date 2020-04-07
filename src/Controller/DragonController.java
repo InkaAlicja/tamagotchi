@@ -136,4 +136,8 @@ public class DragonController {
         return model.getMoney();
     }
 
+    public DragonView getDragonView(){
+        return view;
+    }
+
 }

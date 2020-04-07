@@ -40,8 +40,9 @@ public class StoreView {
     LinkedList<TypeButton> BList;
     public StoreView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
-        controller = new StoreController(model,this);
         model = new StoreModel();
+        controller = new StoreController(model,this);
+
         back = new Button("Back");
 
         pick1 = new Button("pick");
@@ -93,6 +94,7 @@ public class StoreView {
         buy3.setOnAction(value->{
             pick3.setDisable(false);
             buy3.setDisable(true);
+            controller.gotSaddle();
             mainView.getDragonView().getController().addMoney(-30);
         });
         pick1.setOnAction(value->{
@@ -122,8 +124,12 @@ public class StoreView {
                     if(t.typ== TypeButton.type.BACK)t.b.setText("pick");
                 }
                 pick3.setText("unpick");
+                controller.wearsSaddle(true);
             }
-            else pick3.setText("pick");
+            else {
+                pick3.setText("pick");
+                controller.wearsSaddle(false);
+            }
         });
 
 

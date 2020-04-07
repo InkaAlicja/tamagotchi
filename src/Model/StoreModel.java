@@ -10,6 +10,7 @@ public class StoreModel {
     FileInputStream imgFB1,imgFB2,imgFB3;
     public Image img1,img2,img3,coin;
     public Image img1big,img2big,img3big;
+    boolean hasSaddle,wearsSaddle;
 
     public StoreModel() throws FileNotFoundException {
         imgF1 = new FileInputStream("Resources/hatSmall.png");
@@ -29,7 +30,14 @@ public class StoreModel {
 
         coinF = new FileInputStream("Resources/coin.png");
         coin = new Image(coinF,20,20,true,false);
-    }
 
+        hasSaddle=false;
+        wearsSaddle=false;
+    }
+    public boolean hasSaddle(){ return hasSaddle; }
+    public void gotSaddle(){ hasSaddle=true; }
+
+    public boolean wearsSaddle(){return wearsSaddle;}
+    public void  wearsSaddle(boolean b){wearsSaddle=b;}
 
 }
