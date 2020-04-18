@@ -15,7 +15,7 @@ public class TicTacToeController {
     public TicTacToeController(TicTacToeView view, TicTacToeModel model){
         this.view=view;
         this.model=model;
-        newGame();
+        view.setDifficultyLevelScene();
     }
 
     public void newGame() {
@@ -28,6 +28,11 @@ public class TicTacToeController {
         if (!model.getUserIsFirst()){
             pcMove();
         }
+    }
+
+    public void setDifficulty(boolean difficulty){
+            model.setDifficulty(difficulty);
+            newGame();
     }
 
     boolean checkIfPcWon(){
@@ -55,12 +60,12 @@ public class TicTacToeController {
     }
 
     void pcMove(){
-        int rand = model.getRandomFromReminder();
-        model.removeFromReminderSet(rand);
-        model.addToPcSet(rand);
-        view.getLabels()[rand].setText("O");
+        int move = model.getPcMove();
+        model.removeFromReminderSet(move);
+        model.addToPcSet(move);
+        view.getLabels()[move].setText("O");
         model.setTurn(model.getTurn()+1);
-        view.getStack()[rand].setOnMouseClicked(value-> System.out.println("don't"));
+        view.getStack()[move].setOnMouseClicked(value-> System.out.println("don't"));
 
     }
 
@@ -69,7 +74,12 @@ public class TicTacToeController {
             view.getPlayView().getDragonController().addHealth(-0.2f);
             view.getPlayView().getDragonController().addHappiness(0.2f);
         }
-        view.getPlayView().getDragonController().addMoney(10*model.getWinCounter());
+        int prize;
+        if (model.getDifficulty())
+            prize = 10*model.getWinCounter();
+        else
+            prize = 30*model.getWinCounter();
+        view.getPlayView().getDragonController().addMoney(prize);
         view.getPlayView().resetScene();
     }
 

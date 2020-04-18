@@ -6,8 +6,8 @@ import java.util.*;
 
 public class TicTacToeModel {
     TicTacToeView view;
-    int turn, winCounter, gameCounter;
-    boolean userIsFirst;
+    int turn, winCounter, gameCounter, corner;
+    boolean userIsFirst, difficulty; //diff true = easy
     HashSet<Integer> pcSet;
     HashSet<Integer> userSet;
     HashSet<Integer> reminderSet;
@@ -20,6 +20,14 @@ public class TicTacToeModel {
         userSet = new HashSet<>();
         reminderSet = new HashSet<>();
         this.view = view;
+    }
+
+    public void setDifficulty(boolean difficulty){
+        this.difficulty=difficulty;
+    }
+
+    public boolean getDifficulty(){
+        return difficulty;
     }
 
     public boolean pcSetContainsAll(Collection<?> c){
@@ -46,7 +54,42 @@ public class TicTacToeModel {
         reminderSet.remove(i);
     }
 
-    public int getRandomFromReminder(){
+    public int isUserAboutToWin(){
+        for (int i: reminderSet){
+            userSet.add(i);
+            for (Collection<Integer>c: winScenarios){
+                if (userSet.containsAll(c)){
+                    userSet.remove(i);
+                    return i;
+                }
+            }
+            userSet.remove(i);
+        }
+        return -1;
+    }
+
+    public int getPcMove(){
+        if (difficulty)
+            return getFromReminderRandom();
+        else
+            return getFromReminderHard();
+    }
+
+    public int isPcAboutToWin(){
+        for (int i: reminderSet){
+            pcSet.add(i);
+            for (Collection<Integer>c: winScenarios){
+                if (pcSet.containsAll(c)){
+                    pcSet.remove(i);
+                    return i;
+                }
+            }
+            pcSet.remove(i);
+        }
+        return -1;
+    }
+
+    public int getFromReminderRandom(){
         int rand = new Random().nextInt(reminderSet.size());
         int i=0;
         for (int k: reminderSet){
@@ -57,6 +100,31 @@ public class TicTacToeModel {
             i++;
         }
         return 0;
+    }
+
+    int choose(int i, int... A){
+        return A[i];
+    }
+
+    public int getFromReminderHard(){
+        int isItTheEnd = isPcAboutToWin();
+        if (isItTheEnd != -1)
+            return isItTheEnd;
+        int isNeedForBlock = isUserAboutToWin();
+        if (isNeedForBlock != -1){
+            reminderSet.remove(isNeedForBlock);
+            return isNeedForBlock;
+        }
+        int rand = new Random().nextInt(20);
+        if (rand==10)
+            return getFromReminderRandom();
+        if (turn==0){
+            rand = new Random().nextInt(4);
+            corner = choose(rand, 0, 2, 6, 8);
+            reminderSet.remove(corner);
+            return corner;
+        }
+        return getFromReminderRandom();
     }
 
     public void addToPcSet(int i){

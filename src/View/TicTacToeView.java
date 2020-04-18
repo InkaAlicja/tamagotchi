@@ -62,6 +62,24 @@ public class TicTacToeView {
         playView.getStage().setScene(scene);
     }
 
+    public void setDifficultyLevelScene(){
+        Button easyButton = new Button("Easy");
+        Button hardButton = new Button("Hard");
+        Button exitDifficultyLevelSceneButton = new Button("Exit");
+        easyButton.setOnAction(value-> {
+            controller.setDifficulty(true);
+        });
+        hardButton.setOnAction(value-> {
+            controller.setDifficulty(false);
+        });
+        exitDifficultyLevelSceneButton.setOnAction(value->controller.exit());
+        VBox vbox = new VBox(easyButton, hardButton, exitDifficultyLevelSceneButton);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(20);
+        Scene difficultyLevelScene = new Scene(vbox, 400, 500);
+        playView.getStage().setScene(difficultyLevelScene);
+    }
+
     public Label[] getLabels(){
         return labels;
     }
