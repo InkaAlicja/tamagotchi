@@ -39,6 +39,9 @@ public class MainMenuView{
         achievementsButton.setOnAction(value-> {
             mainView.stage.setScene(mainView.getAchievementsView().scene);
         });
+        settingsButton.setOnAction(value->{
+            mainView.stage.setScene(mainView.getSettingsView().scene);
+        });
         exitButton.setOnAction(value->controller.exit());
         vbox = new VBox(playButton, storeButton, achievementsButton, settingsButton, exitButton);
         vbox.setAlignment(Pos.CENTER);

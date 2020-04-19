@@ -16,6 +16,7 @@ public class MainView extends Application {
     StoreView storeView;
     AchievementsView achievementsView;
     MainModel mainModel;
+    SettingsView settingsView;
 
     public MainView(){
         mainModel = new MainModel(this);
@@ -28,7 +29,7 @@ public class MainView extends Application {
         dragonView = new DragonView(this);
         storeView = new StoreView(this);
         achievementsView = new AchievementsView(this);
-
+        settingsView = new SettingsView(this);
         stage.setScene(menu.scene);
         stage.show();
     }
@@ -44,6 +45,9 @@ public class MainView extends Application {
     }
     public AchievementsView getAchievementsView(){
         return achievementsView;
+    }
+    public SettingsView getSettingsView(){
+        return settingsView;
     }
 
     public Stage getStage(){
