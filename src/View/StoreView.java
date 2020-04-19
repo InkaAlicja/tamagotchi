@@ -88,7 +88,7 @@ public class StoreView {
         public ImageView imgView;
         public int cost;
 
-        public ItemBox(Map map,Image img,Image bigImage,String where,type typ,int cost,boolean isSaddle){
+        public ItemBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,int cost,boolean isSaddle){
             imgView = new ImageView(img);
             buy = new Button("buy");
             pick = new Button ("pick");

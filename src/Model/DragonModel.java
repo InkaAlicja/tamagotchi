@@ -41,12 +41,18 @@ public class DragonModel {
     public float getHealth(){
         return health;
     }
-    public void addHealth(float a) throws DyingDragonException{
-        if(health+a<=1f)health+=a;
+    public boolean addHealth(float a) throws DyingDragonException{
+        if(health>=1f && a>0)return false;
+        if(health<1f && a>=0){
+            health+=a;
+            return true;
+        }
+        health+=a;//a ujemne
         if(health<0.05f) {
             health=0.05f;
             throw new DyingDragonException();
         }
+        return true;
     }
     public float getHappiness(){
         return happiness;

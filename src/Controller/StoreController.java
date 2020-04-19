@@ -4,10 +4,7 @@ import Model.StoreModel;
 import View.StoreView;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.function.BiConsumer;
 
 public class StoreController {
     StoreModel model;

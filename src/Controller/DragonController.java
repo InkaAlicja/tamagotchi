@@ -31,14 +31,16 @@ public class DragonController {
         model.addHappiness(a);
         view.setHappiness(model.getHappiness());
     }
-    public void addHealth(float a){
+    public boolean addHealth(float a){
+        boolean canBeMore=false;
         try{
-            model.addHealth(a);
+            canBeMore=model.addHealth(a);
         }catch(DragonModel.DyingDragonException ex){
             view.setHealth(model.getHealth());
             AlertBox.display("Your dragon needs to be taken care of!","OK, lemme take care of him!");
         }
         view.setHealth(model.getHealth());
+        return canBeMore;
     }
 
     class ClockIsTicking extends Task<Void> {

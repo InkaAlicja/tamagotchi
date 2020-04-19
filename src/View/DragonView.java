@@ -81,13 +81,16 @@ public class DragonView {
             controller.addHappiness(0.05f);
         });
         feed.setOnAction(value->{
-                if(controller.addMoney(-10))
-                controller.addHealth(0.05f);
-
+                if(controller.addMoney(-10)) {
+                    if(!controller.addHealth(0.05f))
+                        controller.addMoney(10);
+                }
         });
         clean.setOnAction(value->{
-            if(controller.addMoney(-30))
-            controller.addHealth(0.15f);
+            if(controller.addMoney(-30)) {
+                if(!controller.addHealth(0.15f))
+                    controller.addMoney(30);
+            }
         });
         play.setOnAction(value->{
             controller.play();
