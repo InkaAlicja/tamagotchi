@@ -31,7 +31,7 @@ public class AchievementsView {
         map= new HashMap<>();
 
         ach1 = new Achievement("ach1","pet 5 times");
-        ach2 = new Achievement("ach2","do that");
+        ach2 = new Achievement("ach2","buy something");
         ach3 = new Achievement("ach3","do that other thing");
 
         achBox = new VBox(ach1.box,ach2.box,ach3.box);
