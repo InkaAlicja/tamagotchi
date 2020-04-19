@@ -1,5 +1,6 @@
 package View;
 
+import Model.MainModel;
 import Model.StoreModel;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -14,8 +15,11 @@ public class MainView extends Application {
     DragonView dragonView;
     StoreView storeView;
     AchievementsView achievementsView;
+    MainModel mainModel;
 
-    public MainView(){}
+    public MainView(){
+        mainModel = new MainModel(this);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -27,6 +31,9 @@ public class MainView extends Application {
 
         stage.setScene(menu.scene);
         stage.show();
+    }
+    public MainModel getMainModel(){
+        return mainModel;
     }
 
     public DragonView getDragonView() {
