@@ -29,7 +29,6 @@ public class StoreView {
     int moneyInt;
     ItemBox item1,item2,item3,item4,item5;
     TrophyBox item6,item7,item8;
-    ScrollBar scroll;
     ScrollPane pane;
 
     public enum type{BACK,FACE,HEAD};
@@ -64,8 +63,6 @@ public class StoreView {
         backBox.setMinSize(100,50);
         backBox.setAlignment(Pos.CENTER);
         topBox = new HBox(backBox,moneyBox);
-
-        scroll = new ScrollBar();
 
         mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box);
         mainBox.setSpacing(8);
