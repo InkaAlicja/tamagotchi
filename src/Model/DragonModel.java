@@ -63,10 +63,16 @@ public class DragonModel {
         if(money+a>=0)money+=a;
         else throw new BrokeException();
     }
-    public void setAdditionHead(Image image){ additionHead = image; }
-    public Image getAdditionHead(){ return additionHead; }
-    public void setAdditionFace(Image image){ additionFace = image; }
-    public Image getAdditionFace(){ return additionFace; }
-    public void setAdditionBack(Image image){ additionBack = image; }
-    public Image getAdditionBack(){ return additionBack; }
+    public void setAddition(Image image, String where){
+        if(where.equals("head")) additionHead = image;
+        if(where.equals("face")) additionFace = image;
+        if(where.equals("back")) additionBack = image;
+    }
+    public Image getAddition(String where) {
+        if(where.equals("head")) return additionHead;
+        else if(where.equals("face")) return additionFace;
+        else if(where.equals("back")) return additionBack;
+        else return null;
+    }
+
 }

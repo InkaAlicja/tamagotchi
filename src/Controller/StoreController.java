@@ -21,12 +21,7 @@ public class StoreController {
         view.addMoney(money);
     }
     public void setImage(Image image,String where){
-        if(where.equals("head"))
-        view.getMainView().getDragonView().getController().setImageAdditionHead(image);
-        if(where.equals("face"))
-            view.getMainView().getDragonView().getController().setImageAdditionFace(image);
-        if(where.equals("back"))
-            view.getMainView().getDragonView().getController().setImageAdditionBack(image);
+        view.getMainView().getDragonView().getController().setImageAddition(image,where);
     }
     public boolean hasSaddle(){return model.hasSaddle(); }
     public void gotSaddle(){ model.gotSaddle();}

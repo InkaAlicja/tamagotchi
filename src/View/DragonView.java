@@ -43,9 +43,9 @@ public class DragonView {
         model = new DragonModel();
         controller = new DragonController(this,model);
         imageDragon = new ImageView(model.dragon);
-        imageAdditionHead = new ImageView(model.getAdditionHead());
-        imageAdditionFace = new ImageView(model.getAdditionFace());
-        imageAdditionBack = new ImageView(model.getAdditionBack());
+        imageAdditionHead = new ImageView(model.getAddition("head"));
+        imageAdditionFace = new ImageView(model.getAddition("face"));
+        imageAdditionBack = new ImageView(model.getAddition("back"));
         stackPane = new StackPane(imageDragon,imageAdditionHead,imageAdditionFace,imageAdditionBack);
 
         imageCoin1 = new ImageView(model.coinImage);
@@ -113,7 +113,11 @@ public class DragonView {
     public void setHappiness(float a){happinessProgress.setProgress(a);}
     public void setHealth(float a){healthProgress.setProgress(a);}
     public void setMoney(int a){money.setText(String.valueOf(a));}
-    public void setAdditionHead(Image img){imageAdditionHead.setImage(img);}
-    public void setAdditionFace(Image img){imageAdditionFace.setImage(img);}
-    public void setAdditionBack(Image img){imageAdditionBack.setImage(img);}
+
+    public void setAddition(Image img,String where){
+        if(where.equals("head"))imageAdditionHead.setImage(img);
+        if(where.equals("face"))imageAdditionFace.setImage(img);
+        if(where.equals("back")) imageAdditionBack.setImage(img);
+    }
+
 }
