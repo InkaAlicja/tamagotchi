@@ -11,8 +11,9 @@ public class SettingsController {
     }
 
     public void setBackground(int i){
+        int old = view.getMainView().getMainModel().getMainBackgroundFillId();
         view.getMainView().getMainModel().setMainBackgroundFill(i, view.getMainView().getMainModel().getBackgroundFills()[i]);
-        view.resetBackground();
+        view.resetBackground(i, old);
         view.getMainView().getStoreView().resetBackground();
         view.getMainView().getDragonView().resetBackground();
         view.getMainView().getMainMenuView().resetBackground();

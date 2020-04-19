@@ -21,7 +21,7 @@ public class MainModel {
         backgroundFills[0][0] = new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][0] = new BackgroundFill(Color.BISQUE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][1] = new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, new Insets(5d));
-        backgroundFills[2][0] = new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY);
+        backgroundFills[2][0] = new BackgroundFill(Color.PLUM, CornerRadii.EMPTY, Insets.EMPTY);
         mainBackgroundFill = backgroundFills[0];
         mainBackgroundFillId=0;
         mainBackground = new Background(mainBackgroundFill);
@@ -40,9 +40,14 @@ public class MainModel {
         return backgroundFills.length;
     }
 
+    public int getMainBackgroundFillId(){
+        return mainBackgroundFillId;
+    }
+
     public void setMainBackgroundFill(int i, BackgroundFill... fill){
         mainBackgroundFillId = i;
         mainBackgroundFill = fill;
         mainBackground = new Background(fill);
     }
+
 }

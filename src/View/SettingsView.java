@@ -69,7 +69,12 @@ public class SettingsView {
         return backgroundOptions;
     }
 
-    public void resetBackground(){
+    public void resetBackground(int i, int old){
         mainVBox.setBackground(mainView.getMainModel().getMainBackground());
+        backgroundOptions[old]=backgroundOption(Color.GREY, old, mainView.getMainModel().getBackgroundFills()[old]);
+        backgroundOptions[i]=backgroundOption(Color.GREEN, i, mainView.getMainModel().getBackgroundFills()[i]);
+        System.out.println(i);
+        colorsHBox.getChildren().clear();
+        colorsHBox.getChildren().addAll(backgroundOptions);
     }
 }
