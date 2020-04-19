@@ -47,4 +47,11 @@ public class StoreController {
         });
     }
 
+    public void bought(){
+        if(!model.didBuy()){
+            model.bought();
+            view.getMainView().getAchievementsView().getController().achieve("ach2");
+        }
+    }
+
 }

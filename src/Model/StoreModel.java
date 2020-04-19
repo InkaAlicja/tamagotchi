@@ -9,7 +9,7 @@ import java.io.InputStream;
 public class StoreModel {
     public Image coin;
     FileInputStream coinFileInputStream;
-    boolean hasSaddle,wearsSaddle;
+    boolean hasSaddle,wearsSaddle,boughtAny;
     public Item hat,bow,saddle,flowers,medal,odznaka,trophy,zdzblo;
 
     public class Item{
@@ -41,6 +41,7 @@ public class StoreModel {
 
         hasSaddle=false;
         wearsSaddle=false;
+        boughtAny=false;
     }
     public boolean hasSaddle(){ return hasSaddle; }
     public void gotSaddle(){ hasSaddle=true; }
@@ -59,6 +60,12 @@ public class StoreModel {
         public BigImage(InputStream inputStream) {
             super(inputStream,300,300,true,false);
         }
+    }
+    public void bought(){
+        boughtAny=true;
+    }
+    public boolean didBuy(){
+        return boughtAny;
     }
 
 }

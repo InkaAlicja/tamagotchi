@@ -17,6 +17,7 @@ public class DragonModel {
     FileInputStream inputDragon;
     FileInputStream inputAdditionFace,inputAdditionHead,inputAdditionBack;
     FileInputStream inputCoin;
+    private int pet;
 
     public DragonModel() throws FileNotFoundException {
         money=100;
@@ -80,6 +81,9 @@ public class DragonModel {
         else if(where.equals("face")) return additionFace;
         else if(where.equals("back")) return additionBack;
         else return null;
+    }
+    public boolean incPet(){
+        return((++pet)==5);
     }
 
 }

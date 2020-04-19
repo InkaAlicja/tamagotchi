@@ -1,6 +1,5 @@
 package View;
 
-import Additions.AlertBox;
 import Controller.AchievementsController;
 import Model.AchievementsModel;
 import javafx.geometry.Insets;
@@ -111,5 +110,8 @@ public class AchievementsView {
     }
     public MainView getMainView(){
         return mainView;
+    }
+    public AchievementsController getController(){
+        return controller;
     }
 }

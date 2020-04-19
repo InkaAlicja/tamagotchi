@@ -2,6 +2,7 @@ package View;
 
 import Controller.StoreController;
 import Model.StoreModel;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ public class StoreView {
     Scene scene;
     Button back;
     HBox moneyBox,topBox,backBox;
-    VBox mainBox;
+    VBox mainBox,mainBoxFrame;
     ImageView coinV;
     Label money;
     int moneyInt;
@@ -60,22 +61,24 @@ public class StoreView {
         money = new Label(String.valueOf(moneyInt));
         moneyBox = new HBox(coinV,money);
         moneyBox.setAlignment(Pos.CENTER);
-        moneyBox.setMinSize(200,50);
+        moneyBox.setMinSize(230,50);
         back = new Button("Back");
         backBox = new HBox(back);
-        backBox.setMinSize(100,50);
+        backBox.setMinSize(70,40);
         backBox.setAlignment(Pos.CENTER);
         topBox = new HBox(backBox,moneyBox);
 
         mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box);
         mainBox.setSpacing(8);
-        mainBox.setMinWidth(385);
-        mainBox.setMinHeight(500);
+        mainBoxFrame = new VBox(mainBox);
+        VBox.setMargin(mainBox, new Insets(10,10,10,10));
+        mainBoxFrame.setMinWidth(385);
+        mainBoxFrame.setMinHeight(500);
 
         pane= new ScrollPane();
         pane.setStyle("-fx-font-size: 10px;");
-        mainBox.setStyle("-fx-font-size: 11px;");
-        pane.setContent(mainBox);
+        mainBoxFrame.setStyle("-fx-font-size: 11px;");
+        pane.setContent(mainBoxFrame);
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         final double SPEED = 0.01;
@@ -110,7 +113,7 @@ public class StoreView {
     }
 
     public class ItemBox{
-        public HBox box;
+        public HBox box,pictureBox;
         public Button pick,buy;
         public ImageView imgView;
         public int cost;
@@ -123,13 +126,22 @@ public class StoreView {
             map.put(pick,typ);
             this.cost=cost;
 
-            box = new HBox(imgView,buy,pick);
+            pictureBox = new HBox(imgView);
+            pictureBox.setStyle(
+                    "-fx-border-style: solid inside;" +
+                    "-fx-border-width: 2;" +
+                    "-fx-border-insets: 5;" +
+                    "-fx-border-radius: 5;" +
+                    "-fx-border-color: black;");
+
+            box = new HBox(pictureBox,buy,pick);
             box.setSpacing(5);
             box.setAlignment(Pos.CENTER_LEFT);
 
             buy.setOnAction(value->{
                 pressBuyButton(buy,pick,cost);
                 if(isSaddle)controller.gotSaddle();
+                controller.bought();
             });
             pick.setOnAction(value->{
                 controller.setImage(bigImage,where);
@@ -139,7 +151,7 @@ public class StoreView {
         }
     }
     public class TrophyBox{
-        public HBox box;
+        public HBox box,pictureBox;
         public Button pick;
         public ImageView imgView;
         public Label label;
@@ -153,7 +165,16 @@ public class StoreView {
             pick.setDisable(true);
             map.put(pick,typ);
 
-            box = new HBox(imgView,pick,label);
+            pictureBox = new HBox(imgView);
+            pictureBox.setStyle(
+                    "-fx-border-style: solid inside;" +
+                            "-fx-border-width: 2;" +
+                            "-fx-border-insets: 5;" +
+                            "-fx-border-radius: 5;" +
+                            "-fx-border-color: black;");
+
+
+            box = new HBox(pictureBox,pick,label);
             box.setSpacing(5);
             box.setAlignment(Pos.CENTER_LEFT);
 
@@ -171,7 +192,7 @@ public class StoreView {
     }
 
     public void resetBackground(){
-        mainBox.setBackground(mainView.getMainModel().getMainBackground());
+        mainBoxFrame.setBackground(mainView.getMainModel().getMainBackground());
     }
 
     public HashMap<String,TrophyBox> getTrophyMap(){

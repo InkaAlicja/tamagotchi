@@ -79,6 +79,7 @@ public class DragonView {
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
         pet.setOnAction(value->{
             controller.addHappiness(0.05f);
+            controller.pet();
         });
         feed.setOnAction(value->{
                 if(controller.addMoney(-10)) {
