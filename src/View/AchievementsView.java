@@ -1,6 +1,8 @@
 package View;
 
 import Additions.AlertBox;
+import Controller.AchievementsController;
+import Model.AchievementsModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,18 +11,27 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.util.HashMap;
+
 public class AchievementsView {
     MainView mainView;
+    AchievementsController controller;
+    AchievementsModel model;
     Scene scene;
     ScrollPane pane;
     VBox mainBox,mainBoxFrame,achBox;
     Achievement ach1,ach2,ach3;
     Button backButton;
+    HashMap<String, Achievement> map;
 
     public AchievementsView(MainView mainView){
         this.mainView = mainView;
+        model = new AchievementsModel();
+        controller = new AchievementsController(model,this);
 
-        ach1 = new Achievement("ach1","do this");
+        map= new HashMap<>();
+
+        ach1 = new Achievement("ach1","pet 5 times");
         ach2 = new Achievement("ach2","do that");
         ach3 = new Achievement("ach3","do that other thing");
 
@@ -50,15 +61,16 @@ public class AchievementsView {
         scene = new Scene(pane,400,500);
     }
 
-    public class Achievement{
+    public class Achievement {
         HBox box;
         String name;
         boolean isAchieved;
         Label label;
         Tooltip tooltip;
-        public Achievement(String name,String description){
-            this.name=name;
-            isAchieved=false;
+
+        public Achievement(String name, String description) {
+            this.name = name;
+            isAchieved = false;
             label = new Label(name);
             label.setAccessibleRoleDescription(description);
             tooltip = new Tooltip();
@@ -71,16 +83,25 @@ public class AchievementsView {
                     "-fx-border-width: 2;" +
                     "-fx-border-insets: 5;" +
                     "-fx-border-radius: 5;" +
-                    "-fx-border-color: blue;");
+                    "-fx-border-color: gray;");
+
+            map.put(name,this);
         }
-        public void achieve(){
-            isAchieved=true;
+
+        public void achieve() {
+            isAchieved = true;
             box.setStyle("-fx-padding: 10;" +
                     "-fx-border-style: solid inside;" +
                     "-fx-border-width: 2;" +
                     "-fx-border-insets: 5;" +
                     "-fx-border-radius: 5;" +
-                    "-fx-border-color: green;");
+                    "-fx-border-color: gold;");
         }
+    }
+    public HashMap<String,Achievement> getMap(){
+        return this.map;
+    }
+    public MainView getMainView(){
+        return mainView;
     }
 }

@@ -30,6 +30,7 @@ public class StoreView {
     ItemBox item1,item2,item3,item4,item5;
     TrophyBox item6,item7,item8;
     ScrollPane pane;
+    HashMap<String,TrophyBox> mapOfTrophies;
 
     public enum type{BACK,FACE,HEAD};
     HashMap<Button,type> Map;
@@ -40,6 +41,7 @@ public class StoreView {
         controller = new StoreController(model,this);
 
         Map = new HashMap<>();
+        mapOfTrophies = new HashMap<>();
 
         item1 = new ItemBox(Map,model.hat.smallImage,model.hat.bigImage,"head",type.HEAD,30,false);
         item2 = new ItemBox(Map,model.bow.smallImage,model.bow.bigImage,"head",type.HEAD,30,false);
@@ -47,10 +49,11 @@ public class StoreView {
         item4 = new ItemBox(Map,model.flowers.smallImage,model.flowers.bigImage,"back",type.BACK,40,false);
         item5 = new ItemBox(Map,model.zdzblo.smallImage,model.zdzblo.bigImage,"face",type.FACE,10,false);
 
-        item6 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,"ach");
+        item6 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,"ach1");
         item7 = new TrophyBox(Map,model.odznaka.smallImage,model.odznaka.bigImage,"back",type.BACK,"ach2");
         item8 = new TrophyBox(Map,model.trophy.smallImage,model.trophy.bigImage,"face",type.FACE,"ach3");
         //add item.box to the mainBox
+
 
         moneyInt=mainView.getDragonView().getController().getMoney();
         coinV = new ImageView(model.coin);
@@ -135,8 +138,10 @@ public class StoreView {
         public Button pick;
         public ImageView imgView;
         public Label label;
+        public String achName;
 
         public TrophyBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,String achievement){
+            achName=achievement;
             imgView = new ImageView(img);
             this.label=new Label("Required: "+achievement);
             pick = new Button ("pick");
@@ -151,10 +156,17 @@ public class StoreView {
                 controller.setImage(bigImage,where);
                 controller.pickButtonAction(pick,Map);
             });
+            mapOfTrophies.put(this.achName,this);
         }
+
         public void enableTrophy(){
             pick.setDisable(false);
+            label.setDisable(true);
         }
+    }
+
+    public HashMap<String,TrophyBox> getTrophyMap(){
+        return this.mapOfTrophies;
     }
 
 }

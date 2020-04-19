@@ -25,7 +25,6 @@ public class StoreController {
     public boolean wearsSaddle(){return model.wearsSaddle();}
     public void wearsSaddle(boolean b){model.wearsSaddle(b);}
 
-
     public boolean  pickButtonAction(Button button, HashMap<Button, StoreView.type> Map){
         StoreView.type buttonType=Map.get(button);
         if(button.getText()=="pick") {
@@ -40,4 +39,12 @@ public class StoreController {
             return false;
         }
     }
+
+    public void enableTrophy(String name){
+        HashMap<String,StoreView.TrophyBox> map=view.getTrophyMap();
+        map.forEach((trophyAchiv,trophyBox)->{
+            if(name.equals(trophyAchiv))trophyBox.enableTrophy();
+        });
+    }
+
 }
