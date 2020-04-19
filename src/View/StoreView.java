@@ -2,6 +2,7 @@ package View;
 
 import Controller.StoreController;
 import Model.StoreModel;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,14 +19,13 @@ public class StoreView {
     StoreController controller;
     StoreModel model;
     Scene scene;
-    Button pick1,pick2,pick3;
-    Button buy1,buy2,buy3;//disappear?
     Button back;
-    HBox box1,box2,box3,moneyBox;
+    HBox moneyBox,topBox,backBox;
     VBox mainBox;
-    ImageView imgV1,imgV2,imgV3,coinV;
+    ImageView coinV;
     Label money;
     int moneyInt;
+    ItemBox item1,item2,item3;
 
     public enum type{BACK,FACE,HEAD};
     HashMap<Button,type> Map;
@@ -35,75 +35,29 @@ public class StoreView {
         model = new StoreModel();
         controller = new StoreController(model,this);
 
-        back = new Button("Back");
-
-        pick1 = new Button("pick");
-        pick1.setDisable(true);//pick1.setVisible(false);
-        pick2 = new Button("pick");
-        pick2.setDisable(true);
-        pick3 = new Button("pick");
-        pick3.setDisable(true);
-        buy1 = new Button("buy");
-        buy2 = new Button("buy");
-        buy3 = new Button("buy");
-
         Map = new HashMap<>();
-        Map.put(pick1,type.HEAD);
-        Map.put(pick2,type.HEAD);
-        Map.put(pick3,type.BACK);
 
-        imgV1 = new ImageView(model.img1);
-        imgV2 = new ImageView(model.img2);
-        imgV3 = new ImageView(model.img3);
-
-        box1 = new HBox(imgV1,buy1,pick1);
-        box1.setSpacing(5);
-        box2 = new HBox(imgV2,buy2,pick2);
-        box2.setSpacing(5);
-        box3 = new HBox(imgV3,buy3,pick3);
-        box3.setSpacing(5);
+        item1 = new ItemBox(Map,model.hat.smallImage,model.hat.bigImage,"head",type.HEAD,30,false);
+        item2 = new ItemBox(Map,model.bow.smallImage,model.bow.bigImage,"head",type.HEAD,30,false);
+        item3 = new ItemBox(Map,model.saddle.smallImage,model.saddle.bigImage,"back",type.BACK,40,true);
+        //add item.box to the mainBox
 
         moneyInt=mainView.getDragonView().getController().getMoney();
         coinV = new ImageView(model.coin);
         money = new Label(String.valueOf(moneyInt));
         moneyBox = new HBox(coinV,money);
+        moneyBox.setAlignment(Pos.CENTER);
+        moneyBox.setMinSize(200,50);
+        back = new Button("Back");
+        backBox = new HBox(back);
+        backBox.setMinSize(100,50);
+        backBox.setAlignment(Pos.CENTER);
+        topBox = new HBox(backBox,moneyBox);
 
-        mainBox = new VBox (moneyBox,box1,box2,box3,back);
-        mainBox.setSpacing(5);
+        mainBox = new VBox (topBox,item1.box,item2.box,item3.box);
+        mainBox.setSpacing(8);
 
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
-
-        buy1.setOnAction(value->{
-            pick1.setDisable(false);
-            buy1.setDisable(true);
-            mainView.getDragonView().getController().addMoney(-30);
-        });
-        buy2.setOnAction(value->{
-            pick2.setDisable(false);
-            buy2.setDisable(true);
-            mainView.getDragonView().getController().addMoney(-30);
-        });
-        buy3.setOnAction(value->{
-            pick3.setDisable(false);
-            buy3.setDisable(true);
-            controller.gotSaddle();
-            mainView.getDragonView().getController().addMoney(-30);
-        });
-
-        pick1.setOnAction(value->{
-            controller.setImage(model.img1big,"head");
-            controller.pickButtonAction(pick1,Map);
-        });
-        pick2.setOnAction(value->{
-            controller.setImage(model.img2big,"head");
-            controller.pickButtonAction(pick2,Map);
-        });
-        pick3.setOnAction(value->{
-            controller.setImage(model.img3big,"back");
-            boolean bool=controller.pickButtonAction(pick3,Map);
-            controller.wearsSaddle(bool);
-        });
-
 
         scene = new Scene(mainBox,400,500);
     }
@@ -122,5 +76,40 @@ public class StoreView {
         b.setText(s);
     }
 
+    void pressBuyButton(Button buyButton,Button pickButton,int cost){
+        buyButton.setDisable(true);
+        pickButton.setDisable(false);
+        mainView.getDragonView().getController().addMoney(-cost);
+    }
+
+    public class ItemBox{
+        public HBox box;
+        public Button pick,buy;
+        public ImageView imgView;
+        public int cost;
+
+        public ItemBox(Map map,Image img,Image bigImage,String where,type typ,int cost,boolean isSaddle){
+            imgView = new ImageView(img);
+            buy = new Button("buy");
+            pick = new Button ("pick");
+            pick.setDisable(true);
+            map.put(pick,typ);
+            this.cost=cost;
+
+            box = new HBox(imgView,buy,pick);
+            box.setSpacing(5);
+            box.setAlignment(Pos.CENTER_LEFT);
+
+            buy.setOnAction(value->{
+                pressBuyButton(buy,pick,cost);
+                if(isSaddle)controller.gotSaddle();
+            });
+            pick.setOnAction(value->{
+                controller.setImage(bigImage,where);
+                boolean b=controller.pickButtonAction(pick,Map);
+                if(isSaddle)controller.wearsSaddle(b);
+            });
+        }
+    }
 
 }

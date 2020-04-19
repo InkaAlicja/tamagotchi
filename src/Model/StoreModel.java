@@ -4,32 +4,35 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class StoreModel {
-    FileInputStream imgF1,imgF2,imgF3,coinF;
-    FileInputStream imgFB1,imgFB2,imgFB3;
-    public Image img1,img2,img3,coin;
-    public Image img1big,img2big,img3big;
+    public Image coin;
+    FileInputStream coinFileInputStream;
     boolean hasSaddle,wearsSaddle;
+    public Item hat,bow,saddle;
+
+    public class Item{
+        FileInputStream fileInputStreamBig,fileInputStreamSmall;
+        public SmallImage smallImage;
+        public BigImage bigImage;
+
+        public Item(String streamBig,String streamSmall) throws FileNotFoundException {
+            fileInputStreamBig= new FileInputStream(streamBig);
+            bigImage = new BigImage(fileInputStreamBig);
+            fileInputStreamSmall = new FileInputStream(streamSmall);
+            smallImage = new SmallImage(fileInputStreamSmall);
+        }
+    }
 
     public StoreModel() throws FileNotFoundException {
-        imgF1 = new FileInputStream("Resources/hatSmall.png");
-        imgFB1 = new FileInputStream("Resources/hat.png");
-        img1 = new Image(imgF1,80,80,true,false);
-        img1big = new Image(imgFB1,300,300,true,false);
 
-        imgF2 = new FileInputStream("Resources/bowSmall.png");
-        imgFB2 = new FileInputStream("Resources/bow.png");
-        img2 = new Image(imgF2,80,80,true,false);
-        img2big = new Image(imgFB2,300,300,true,false);
+        hat = new Item ("Resources/hat.png","Resources/hatSmall.png");
+        bow = new Item ("Resources/bow.png","Resources/bowSmall.png");
+        saddle = new Item ("Resources/saddle.png","Resources/saddleSmall.png");
 
-        imgF3 = new FileInputStream("Resources/saddleSmall.png");
-        imgFB3 = new FileInputStream("Resources/saddle.png");
-        img3 = new Image(imgF3,80,80,true,false);
-        img3big = new Image(imgFB3,300,300,true,false);
-
-        coinF = new FileInputStream("Resources/coin.png");
-        coin = new Image(coinF,20,20,true,false);
+        coinFileInputStream = new FileInputStream("Resources/coin.png");
+        coin = new Image(coinFileInputStream,20,20,true,false);
 
         hasSaddle=false;
         wearsSaddle=false;
@@ -39,5 +42,18 @@ public class StoreModel {
 
     public boolean wearsSaddle(){return wearsSaddle;}
     public void  wearsSaddle(boolean b){wearsSaddle=b;}
+
+    public class SmallImage extends Image {
+
+        public SmallImage(InputStream inputStream) {
+            super(inputStream,80,80,true,false);
+        }
+    }
+    public class BigImage extends Image {
+
+        public BigImage(InputStream inputStream) {
+            super(inputStream,300,300,true,false);
+        }
+    }
 
 }
