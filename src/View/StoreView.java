@@ -25,7 +25,8 @@ public class StoreView {
     ImageView coinV;
     Label money;
     int moneyInt;
-    ItemBox item1,item2,item3;
+    ItemBox item1,item2,item3,item4,item5;
+    TrophyBox item6,item7,item8;
 
     public enum type{BACK,FACE,HEAD};
     HashMap<Button,type> Map;
@@ -40,6 +41,12 @@ public class StoreView {
         item1 = new ItemBox(Map,model.hat.smallImage,model.hat.bigImage,"head",type.HEAD,30,false);
         item2 = new ItemBox(Map,model.bow.smallImage,model.bow.bigImage,"head",type.HEAD,30,false);
         item3 = new ItemBox(Map,model.saddle.smallImage,model.saddle.bigImage,"back",type.BACK,40,true);
+        item4 = new ItemBox(Map,model.flowers.smallImage,model.flowers.bigImage,"back",type.BACK,40,false);
+        item5 = new ItemBox(Map,model.zdzblo.smallImage,model.zdzblo.bigImage,"face",type.FACE,10,false);
+
+        item6 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,"ach");
+        item7 = new TrophyBox(Map,model.odznaka.smallImage,model.odznaka.bigImage,"back",type.BACK,"ach2");
+        item8 = new TrophyBox(Map,model.trophy.smallImage,model.trophy.bigImage,"face",type.FACE,"ach3");
         //add item.box to the mainBox
 
         moneyInt=mainView.getDragonView().getController().getMoney();
@@ -54,7 +61,7 @@ public class StoreView {
         backBox.setAlignment(Pos.CENTER);
         topBox = new HBox(backBox,moneyBox);
 
-        mainBox = new VBox (topBox,item1.box,item2.box,item3.box);
+        mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box);
         mainBox.setSpacing(8);
 
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
@@ -109,6 +116,32 @@ public class StoreView {
                 boolean b=controller.pickButtonAction(pick,Map);
                 if(isSaddle)controller.wearsSaddle(b);
             });
+        }
+    }
+    public class TrophyBox{
+        public HBox box;
+        public Button pick;
+        public ImageView imgView;
+        public Label label;
+
+        public TrophyBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,String achievement){
+            imgView = new ImageView(img);
+            this.label=new Label("Required: "+achievement);
+            pick = new Button ("pick");
+            pick.setDisable(true);
+            map.put(pick,typ);
+
+            box = new HBox(imgView,pick,label);
+            box.setSpacing(5);
+            box.setAlignment(Pos.CENTER_LEFT);
+
+            pick.setOnAction(value->{
+                controller.setImage(bigImage,where);
+                controller.pickButtonAction(pick,Map);
+            });
+        }
+        public void enableTrophy(){
+            pick.setDisable(false);
         }
     }
 

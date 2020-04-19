@@ -10,7 +10,7 @@ public class StoreModel {
     public Image coin;
     FileInputStream coinFileInputStream;
     boolean hasSaddle,wearsSaddle;
-    public Item hat,bow,saddle;
+    public Item hat,bow,saddle,flowers,medal,odznaka,trophy,zdzblo;
 
     public class Item{
         FileInputStream fileInputStreamBig,fileInputStreamSmall;
@@ -30,6 +30,11 @@ public class StoreModel {
         hat = new Item ("Resources/hat.png","Resources/hatSmall.png");
         bow = new Item ("Resources/bow.png","Resources/bowSmall.png");
         saddle = new Item ("Resources/saddle.png","Resources/saddleSmall.png");
+        flowers = new Item("Resources/flowers.png","Resources/flowersSmall.png");
+        medal = new Item("Resources/medal.png","Resources/medalSmall.png");
+        odznaka = new Item("Resources/odznaka.png","Resources/odznakaSmall.png");
+        trophy = new Item("Resources/trophy.png","Resources/trophySmall.png");
+        zdzblo = new Item("Resources/zdzblo.png","Resources/zdzbloSmall.png");
 
         coinFileInputStream = new FileInputStream("Resources/coin.png");
         coin = new Image(coinFileInputStream,20,20,true,false);
