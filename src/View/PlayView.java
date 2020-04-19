@@ -34,6 +34,7 @@ public class PlayView{
         mainVBox = new VBox(ticTacToeButton,otherGameButton, backButton);
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(15);
+        resetBackground();
         scene = new Scene(mainVBox, 400, 500);
         stage = new Stage();
         stage.setScene(scene);
@@ -47,6 +48,10 @@ public class PlayView{
 
     public void resetScene(){
         stage.setScene(scene);
+    }
+
+    public void resetBackground(){
+        mainVBox.setBackground(dragonView.mainView.getMainModel().getMainBackground());
     }
 
     public DragonController getDragonController(){

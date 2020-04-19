@@ -107,6 +107,10 @@ public class DragonView {
         scene = new Scene(mainVBox, 400, 500);
     }
 
+    public void resetBackground(){
+        mainVBox.setBackground(mainView.getMainModel().getMainBackground());
+    }
+
     public DragonController getController(){
         return controller;
     }

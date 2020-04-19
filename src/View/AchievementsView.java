@@ -46,11 +46,16 @@ public class AchievementsView {
         mainBox = new VBox(backButton,achBox);
         mainBox.setSpacing(10);
         mainBoxFrame = new VBox(mainBox);
+        mainBoxFrame.setMinHeight(500);
+        mainBoxFrame.setMinWidth(385);
         VBox.setMargin(mainBox, new Insets(20,20,20,20));
 
         pane= new ScrollPane();
         pane.setContent(mainBoxFrame);
+        pane.setStyle("-fx-font-size: 10px;");
+        mainBoxFrame.setStyle("-fx-font-size: 11px;");
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         final double SPEED = 0.01;
         pane.getContent().setOnScroll(scrollEvent -> {
@@ -97,6 +102,9 @@ public class AchievementsView {
                     "-fx-border-radius: 5;" +
                     "-fx-border-color: gold;");
         }
+    }
+    public void resetBackground(){
+        mainBoxFrame.setBackground(mainView.getMainModel().getMainBackground());
     }
     public HashMap<String,Achievement> getMap(){
         return this.map;

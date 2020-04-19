@@ -69,10 +69,15 @@ public class StoreView {
 
         mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box);
         mainBox.setSpacing(8);
+        mainBox.setMinWidth(385);
+        mainBox.setMinHeight(500);
 
         pane= new ScrollPane();
+        pane.setStyle("-fx-font-size: 10px;");
+        mainBox.setStyle("-fx-font-size: 11px;");
         pane.setContent(mainBox);
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         final double SPEED = 0.01;
         pane.getContent().setOnScroll(scrollEvent -> {
             double deltaY = scrollEvent.getDeltaY() * SPEED;
@@ -163,6 +168,10 @@ public class StoreView {
             pick.setDisable(false);
             label.setDisable(true);
         }
+    }
+
+    public void resetBackground(){
+        mainBox.setBackground(mainView.getMainModel().getMainBackground());
     }
 
     public HashMap<String,TrophyBox> getTrophyMap(){

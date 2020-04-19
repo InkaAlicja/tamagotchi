@@ -107,5 +107,8 @@ public class DragonController {
     public DragonView getDragonView(){
         return view;
     }
+    public PlayView getPlayView(){
+        return playView;
+    }
 
 }

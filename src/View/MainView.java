@@ -49,6 +49,9 @@ public class MainView extends Application {
     public SettingsView getSettingsView(){
         return settingsView;
     }
+    public MainMenuView getMainMenuView(){
+        return menu;
+    }
 
     public Stage getStage(){
         return stage;

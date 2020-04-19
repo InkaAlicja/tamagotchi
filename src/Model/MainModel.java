@@ -17,7 +17,7 @@ public class MainModel {
     int mainBackgroundFillId;
     public MainModel(MainView view){
         this.view = view;
-        backgroundFills = new BackgroundFill[5][2];
+        backgroundFills = new BackgroundFill[3][2];
         backgroundFills[0][0] = new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][0] = new BackgroundFill(Color.BISQUE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][1] = new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, new Insets(5d));
@@ -36,8 +36,13 @@ public class MainModel {
         return backgroundFills;
     }
 
-    public void setMainBackgroundFill(BackgroundFill... fill){
+    public int getBackgroundFillsCount(){
+        return backgroundFills.length;
+    }
+
+    public void setMainBackgroundFill(int i, BackgroundFill... fill){
+        mainBackgroundFillId = i;
         mainBackgroundFill = fill;
-        mainBackground = new Background(mainBackgroundFill);
+        mainBackground = new Background(fill);
     }
 }

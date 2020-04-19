@@ -18,6 +18,7 @@ public class SettingsView {
     VBox mainVBox;
     Scene scene;
     StackPane[] backgroundOptions;
+    int backgroundOptionsCount;
     Button backButton;
     SettingsController controller;
     public SettingsView(MainView mainView){
@@ -27,8 +28,9 @@ public class SettingsView {
         backButton.setOnAction(value->{
             mainView.stage.setScene(mainView.menu.scene);
         });
-        backgroundOptions = new StackPane[3];
-        for (int i=0; i<3; i++){
+        backgroundOptionsCount = mainView.getMainModel().getBackgroundFillsCount();
+        backgroundOptions = new StackPane[backgroundOptionsCount];
+        for (int i=0; i<backgroundOptionsCount; i++){
             if (i==0)
                 backgroundOptions[i] = backgroundOption(Color.GREEN, i, mainView.getMainModel().getBackgroundFills()[i]);
             else
@@ -46,12 +48,12 @@ public class SettingsView {
     public StackPane backgroundOption(Color color, int i, BackgroundFill... fill){
         Pane square = new Pane();
         square.setBackground(new Background(fill));
-        square.setMaxSize(50, 50);
-        square.setMinSize(50,50);
+        square.setMaxSize(55, 55);
+        square.setMinSize(55,55);
         Pane bigSquare = new Pane();
         bigSquare.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
-        bigSquare.setMaxSize(53, 53);
-        bigSquare.setMinSize(53,53);
+        bigSquare.setMaxSize(60, 60);
+        bigSquare.setMinSize(60,60);
         StackPane temp = new StackPane(bigSquare, square);
         temp.setOnMouseClicked(value->{
             controller.setBackground(i);
@@ -61,5 +63,13 @@ public class SettingsView {
 
     public MainView getMainView(){
         return mainView;
+    }
+
+    public StackPane[] getBackgroundOptions() {
+        return backgroundOptions;
+    }
+
+    public void resetBackground(){
+        mainVBox.setBackground(mainView.getMainModel().getMainBackground());
     }
 }
