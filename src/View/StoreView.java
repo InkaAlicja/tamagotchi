@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -27,6 +29,8 @@ public class StoreView {
     int moneyInt;
     ItemBox item1,item2,item3,item4,item5;
     TrophyBox item6,item7,item8;
+    ScrollBar scroll;
+    ScrollPane pane;
 
     public enum type{BACK,FACE,HEAD};
     HashMap<Button,type> Map;
@@ -61,12 +65,23 @@ public class StoreView {
         backBox.setAlignment(Pos.CENTER);
         topBox = new HBox(backBox,moneyBox);
 
+        scroll = new ScrollBar();
+
         mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box);
         mainBox.setSpacing(8);
 
+        pane= new ScrollPane();
+        pane.setContent(mainBox);
+        pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        final double SPEED = 0.01;
+        pane.getContent().setOnScroll(scrollEvent -> {
+            double deltaY = scrollEvent.getDeltaY() * SPEED;
+            pane.setVvalue(pane.getVvalue() - deltaY);
+        });
+
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
 
-        scene = new Scene(mainBox,400,500);
+        scene = new Scene(pane,400,500);
     }
     public MainView getMainView(){
         return mainView;
