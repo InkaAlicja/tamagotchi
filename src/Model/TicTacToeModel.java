@@ -1,6 +1,8 @@
 package Model;
 
 import View.TicTacToeView;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 import java.util.*;
 
@@ -111,10 +113,8 @@ public class TicTacToeModel {
         if (isItTheEnd != -1)
             return isItTheEnd;
         int isNeedForBlock = isUserAboutToWin();
-        if (isNeedForBlock != -1){
-            reminderSet.remove(isNeedForBlock);
+        if (isNeedForBlock != -1)
             return isNeedForBlock;
-        }
         int rand = new Random().nextInt(20);
         if (rand==10)
             return getFromReminderRandom();

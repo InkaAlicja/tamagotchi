@@ -27,7 +27,7 @@ public class DragonController {
     public DragonController(DragonView view, DragonModel model)
     {this.view=view; this.model=model; clockThread=new Thread(new ClockIsTicking()); clockThread.start();}
 
-    public void addHappiness(float a){
+    public synchronized void addHappiness(float a){
         model.addHappiness(a);
         view.setHappiness(model.getHappiness());
     }
@@ -50,7 +50,9 @@ public class DragonController {
                 while (true) {
                     TimeUnit.MINUTES.sleep(5);
                     addHappiness(-0.01f);
-                    addHealth(-0.005f);
+                    try {
+                        model.addHealth(-0.005f);
+                    } catch (DragonModel.DyingDragonException ignored){ }
                 }
             }
             catch (InterruptedException e){

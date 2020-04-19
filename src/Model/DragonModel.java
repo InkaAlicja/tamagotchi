@@ -20,8 +20,8 @@ public class DragonModel {
 
     public DragonModel() throws FileNotFoundException {
         money=100;
-        health=0.9f;
-        happiness=0.8f;
+        health=0.7f;
+        happiness=0.9f;
 
         inputDragon = new FileInputStream("Resources/dragon-animated.gif");
         dragon = new Image(inputDragon, 300, 300, true, false);
@@ -41,10 +41,11 @@ public class DragonModel {
     public float getHealth(){
         return health;
     }
-    public boolean addHealth(float a) throws DyingDragonException{
+    public synchronized boolean addHealth(float a) throws DyingDragonException{
         if(health>=1f && a>0)return false;
         if(health<1f && a>=0){
             health+=a;
+            health = Float.min(1f, health);
             return true;
         }
         health+=a;//a ujemne
@@ -58,7 +59,7 @@ public class DragonModel {
         return happiness;
     }
     public void addHappiness(float a){
-        if(happiness+a<=1 && happiness+a>=0)happiness+=a;
+        if(a>=0 || happiness+a>=0) happiness = Float.min(1f, happiness+a);
     }
     public static class BrokeException extends Exception{}
 
