@@ -6,16 +6,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
+//import java.awt.*;
 
 public class SettingsView {
     MainView mainView;
     HBox colorsHBox;
-    VBox mainVBox;
+    VBox mainVBox, colorsVBox;
     Scene scene;
     StackPane[] backgroundOptions;
     int backgroundOptionsCount;
@@ -39,7 +40,8 @@ public class SettingsView {
         colorsHBox = new HBox(backgroundOptions);
         colorsHBox.setAlignment(Pos.CENTER);
         colorsHBox.setSpacing(2);
-        mainVBox = new VBox(colorsHBox, backButton);
+
+        mainVBox = new VBox(new Label("Choose background:"), colorsHBox, backButton);
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(2);
         scene = new Scene(mainVBox, 400, 500);
@@ -73,7 +75,6 @@ public class SettingsView {
         mainVBox.setBackground(mainView.getMainModel().getMainBackground());
         backgroundOptions[old]=backgroundOption(Color.GREY, old, mainView.getMainModel().getBackgroundFills()[old]);
         backgroundOptions[i]=backgroundOption(Color.GREEN, i, mainView.getMainModel().getBackgroundFills()[i]);
-        System.out.println(i);
         colorsHBox.getChildren().clear();
         colorsHBox.getChildren().addAll(backgroundOptions);
     }
