@@ -27,6 +27,8 @@ public class PlayController {
             if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().wearsSaddle()) {
                 pongView = new PongView(view);//play
                 pongView.display();
+                System.out.println(pongView.getScore());
+                view.getDragonController().addMoney(pongView.getScore()*10);
             }
             else SaddleBox.display("You need to wear your saddle to play");
         }
