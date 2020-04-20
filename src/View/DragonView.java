@@ -76,7 +76,11 @@ public class DragonView {
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(10);
 
-        back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
+        back.setOnAction(value->{
+            model.getMediaPlayerHeart().stop();
+            model.getMediaPlayerEating().stop();
+            mainView.stage.setScene(mainView.menu.scene);
+        });
         pet.setOnAction(value->{
             controller.addHappiness(0.05f);
             controller.pet();
@@ -85,6 +89,10 @@ public class DragonView {
                 if(controller.addMoney(-10)) {
                     if(!controller.addHealth(0.05f))
                         controller.addMoney(10);
+                    else {
+                        model.getMediaPlayerEating().stop();
+                        model.getMediaPlayerEating().play();
+                    }
                 }
         });
         clean.setOnAction(value->{

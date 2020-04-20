@@ -51,7 +51,10 @@ public class DragonController {
         protected Void call() throws Exception {
             try {
                 while (true) {
-                    TimeUnit.MINUTES.sleep(5);
+                    //TimeUnit.MINUTES.sleep(5);
+                    TimeUnit.MINUTES.sleep(1);
+                    model.getMediaPlayerHeart().stop();
+                    model.getMediaPlayerHeart().play();
                     addHappiness(-0.01f);
                     try {
                         model.addHealth(-0.005f);

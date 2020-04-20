@@ -11,12 +11,16 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
 import java.util.Random;
 
 import static java.lang.Math.sqrt;
@@ -35,6 +39,7 @@ public class PongView {
     boolean start;
     int score;
     double speedExc,speedInc=0.3d;
+    MediaPlayer mediaPlayer;
 
     public PongView(PlayView playView){
         this.playView=playView;
@@ -55,7 +60,7 @@ public class PongView {
         time.setCycleCount(Timeline.INDEFINITE);
 
         Button back = new Button("back");
-        back.setOnAction(value-> { time.stop();window.close();});
+        back.setOnAction(value-> { mediaPlayer.stop();time.stop();window.close();});
         HBox smallBox = new HBox(back);
         smallBox.setAlignment(Pos.CENTER);
         smallBox.setBackground(new Background(new BackgroundFill(Color.MAGENTA, CornerRadii.EMPTY, Insets.EMPTY),
@@ -64,7 +69,12 @@ public class PongView {
 
         VBox box = new VBox(canvas,smallBox);
 
-        canvas.setOnMouseClicked(e ->  start = true);
+        mediaPlayer = model.getMediaPlayer();
+
+        canvas.setOnMouseClicked(e -> {
+            start = true;
+            mediaPlayer.play();
+        });
         canvas.setOnMouseMoved(e ->  meY  = e.getY() - barHeight/2);
 
         Scene scene = new Scene(box);//new StackPane(canvas,back));
@@ -153,11 +163,13 @@ public class PongView {
                 scoreBot++;
                 start = false;
                 score=Math.max(0,scoreMe-scoreBot);
+                mediaPlayer.stop();
             }
             else if(ballX > botX + barWidth) {
                 scoreMe++;
                 start = false;
                 score=Math.max(0,scoreMe-scoreBot);
+                mediaPlayer.stop();
             }
 
             graphicsContext.fillText(scoreMe + "\t\t\t\t\t\t" + scoreBot, 300, 100);

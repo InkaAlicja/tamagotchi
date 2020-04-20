@@ -4,7 +4,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -18,6 +21,8 @@ public class DragonModel {
     FileInputStream inputAdditionFace,inputAdditionHead,inputAdditionBack;
     FileInputStream inputCoin;
     private int pet;
+    Media soundHeart,soundEating;
+    MediaPlayer mediaPlayerHeart,mediaPlayerEating;
 
     public DragonModel() throws FileNotFoundException {
         money=100;
@@ -36,6 +41,11 @@ public class DragonModel {
 
         inputCoin = new FileInputStream("Resources/coin.png");
         coinImage = new Image(inputCoin,20,20,true,false);
+
+        soundHeart = new Media(new File("Resources/heartbeatShort.mp3").toURI().toString());
+        mediaPlayerHeart = new MediaPlayer(soundHeart);
+        soundEating = new Media(new File("Resources/eating.mp3").toURI().toString());
+        mediaPlayerEating = new MediaPlayer(soundEating);
     }
     public static class DyingDragonException extends Exception{}
 
@@ -84,6 +94,12 @@ public class DragonModel {
     }
     public boolean incPet(){
         return((++pet)==5);
+    }
+    public MediaPlayer getMediaPlayerHeart(){
+        return mediaPlayerHeart;
+    }
+    public MediaPlayer getMediaPlayerEating(){
+        return mediaPlayerEating;
     }
 
 }
