@@ -107,9 +107,11 @@ public class StoreView {
     }
 
     void pressBuyButton(Button buyButton,Button pickButton,int cost){
-        buyButton.setDisable(true);
-        pickButton.setDisable(false);
-        mainView.getDragonView().getController().addMoney(-cost);
+        if(mainView.getDragonView().getController().addMoney(-cost)) {
+            buyButton.setDisable(true);
+            pickButton.setDisable(false);
+        }
+
     }
 
     public class ItemBox{

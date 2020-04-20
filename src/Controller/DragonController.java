@@ -22,10 +22,15 @@ public class DragonController {
     DragonView view;
     DragonModel model;
     PlayView playView;
-    Thread clockThread;
+    Thread clockThread,animationThread;
 
-    public DragonController(DragonView view, DragonModel model)
-    {this.view=view; this.model=model; clockThread=new Thread(new ClockIsTicking()); clockThread.start();}
+    public DragonController(DragonView view, DragonModel model) {
+        this.view=view;
+        this.model=model;
+        clockThread=new Thread(new ClockIsTicking());
+        clockThread.start();
+        animationThread=new Thread(new animTime());
+    }
 
     public synchronized void addHappiness(float a){
         model.addHappiness(a);
@@ -103,6 +108,25 @@ public class DragonController {
             } catch (FileNotFoundException e) {
                 AlertBox.display("File not found :/","ok");
             }
+        }
+    }
+    public void setAnimation(Image image){
+        model.setAddition(image,"animation");
+        view.setAddition(model.getAddition("animation"),"animation");
+        animationThread.interrupt();
+        animationThread = new Thread(new animTime());
+        animationThread.start();
+    }
+    class animTime extends Task<Void>{
+        @Override
+        protected Void call() throws Exception {
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+                model.setAddition("animation");
+                view.setAddition(model.getAddition("animation"),"animation");
+            } catch (Exception e) {return null;}
+            this.cancel();
+            return null;
         }
     }
 

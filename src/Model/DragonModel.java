@@ -12,17 +12,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class DragonModel {
-    public Image dragon,additionHead,additionFace,additionBack;
+    public Image dragon,additionHead,additionFace,additionBack,animation;
     public Image coinImage;
     private float health;
     private float happiness;
     private int money;
     FileInputStream inputDragon;
-    FileInputStream inputAdditionFace,inputAdditionHead,inputAdditionBack;
+    FileInputStream inputAdditionFace,inputAdditionHead,inputAdditionBack,inputAnimation;
     FileInputStream inputCoin;
     private int pet;
-    Media soundHeart,soundEating;
-    MediaPlayer mediaPlayerHeart,mediaPlayerEating;
+    Media soundHeart;
+    MediaPlayer mediaPlayerHeart;
 
     public DragonModel() throws FileNotFoundException {
         money=100;
@@ -38,14 +38,15 @@ public class DragonModel {
         additionHead = new Image(inputAdditionHead,100,100,true,false);
         inputAdditionBack = new FileInputStream("Resources/blank.png");
         additionBack = new Image(inputAdditionBack,100,100,true,false);
+        inputAnimation = new FileInputStream("Resources/blank.png");
+        animation = new Image(inputAnimation,100,100,true,false);
 
         inputCoin = new FileInputStream("Resources/coin.png");
         coinImage = new Image(inputCoin,20,20,true,false);
 
-        soundHeart = new Media(new File("Resources/heartbeatShort.mp3").toURI().toString());
+        soundHeart = new Media(new File("Resources/heartBeatShort.mp3").toURI().toString());
         mediaPlayerHeart = new MediaPlayer(soundHeart);
-        soundEating = new Media(new File("Resources/eating.mp3").toURI().toString());
-        mediaPlayerEating = new MediaPlayer(soundEating);
+
     }
     public static class DyingDragonException extends Exception{}
 
@@ -85,21 +86,29 @@ public class DragonModel {
         if(where.equals("head")) additionHead = image;
         if(where.equals("face")) additionFace = image;
         if(where.equals("back")) additionBack = image;
+        if(where.equals("animation")) animation = image;
+    }
+    public void setAddition(String where) throws FileNotFoundException {
+        FileInputStream input = new FileInputStream("Resources/blank.png");
+        Image image = new Image(input,100,100,true,false);
+        if(where.equals("head")) additionHead = image;
+        if(where.equals("face")) additionFace = image;
+        if(where.equals("back")) additionBack = image;
+        if(where.equals("animation")) animation = image;
     }
     public Image getAddition(String where) {
         if(where.equals("head")) return additionHead;
         else if(where.equals("face")) return additionFace;
         else if(where.equals("back")) return additionBack;
+        else if(where.equals("animation")) return animation;
         else return null;
     }
+
     public boolean incPet(){
         return((++pet)==5);
     }
     public MediaPlayer getMediaPlayerHeart(){
         return mediaPlayerHeart;
-    }
-    public MediaPlayer getMediaPlayerEating(){
-        return mediaPlayerEating;
     }
 
 }

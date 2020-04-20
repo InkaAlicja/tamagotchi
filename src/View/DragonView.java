@@ -4,6 +4,7 @@ import Additions.AdBox;
 import Additions.AlertBox;
 import Controller.DragonController;
 import Model.DragonModel;
+import Model.MainModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,35 +24,38 @@ public class DragonView {
     MainView mainView;
     DragonController controller;
     DragonModel model;
-    Button back, pet,play,feed,clean,ad;
+    Button ad;
+    MainModel.ClickButton back,pet,play,feed,clean;
     Scene scene;
     VBox mainVBox, health, happiness;
     HBox status,backAd;
     ProgressBar healthProgress, happinessProgress;
     ImageView imageDragon;
-    ImageView imageAdditionHead,imageAdditionFace,imageAdditionBack;
+    ImageView imageAdditionHead,imageAdditionFace,imageAdditionBack,imageAnimation;
     ImageView imageCoin1,imageCoin2;
     Label money;
     StackPane stackPane;
     public DragonView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
-        feed = new Button("Feed");
-        clean = new Button("Clean");
-        pet = new Button("Pet");
-        play = new Button("Play!");
-
         model = new DragonModel();
         controller = new DragonController(this,model);
+
+        feed = new MainModel.ClickButton("Feed","Resources/eating.mp3");
+        clean = new MainModel.ClickButton("Clean","Resources/bubble.mp3");
+        pet = new MainModel.ClickButton("Pet","Resources/pop.mp3","Resources/petBlinkAnimation.png");
+        play = new MainModel.ClickButton("Play!");
+
         imageDragon = new ImageView(model.dragon);
         imageAdditionHead = new ImageView(model.getAddition("head"));
         imageAdditionFace = new ImageView(model.getAddition("face"));
         imageAdditionBack = new ImageView(model.getAddition("back"));
-        stackPane = new StackPane(imageDragon,imageAdditionHead,imageAdditionFace,imageAdditionBack);
+        imageAnimation = new ImageView(model.getAddition("animation"));
+        stackPane = new StackPane(imageDragon,imageAdditionHead,imageAdditionFace,imageAdditionBack,imageAnimation);
 
         imageCoin1 = new ImageView(model.coinImage);
         imageCoin2 = new ImageView(model.coinImage);
 
-        back = new Button("Back");
+        back = new MainModel.ClickButton("Back");
         ad = new Button("ad",imageCoin1);
         backAd=new HBox(back,ad);
         backAd.setSpacing(250);
@@ -78,21 +82,17 @@ public class DragonView {
 
         back.setOnAction(value->{
             model.getMediaPlayerHeart().stop();
-            model.getMediaPlayerEating().stop();
             mainView.stage.setScene(mainView.menu.scene);
         });
         pet.setOnAction(value->{
             controller.addHappiness(0.05f);
             controller.pet();
+            controller.setAnimation(pet.image);
         });
         feed.setOnAction(value->{
                 if(controller.addMoney(-10)) {
                     if(!controller.addHealth(0.05f))
                         controller.addMoney(10);
-                    else {
-                        model.getMediaPlayerEating().stop();
-                        model.getMediaPlayerEating().play();
-                    }
                 }
         });
         clean.setOnAction(value->{
@@ -134,6 +134,7 @@ public class DragonView {
         if(where.equals("head"))imageAdditionHead.setImage(img);
         if(where.equals("face"))imageAdditionFace.setImage(img);
         if(where.equals("back")) imageAdditionBack.setImage(img);
+        if(where.equals("animation")) imageAnimation.setImage(img);
     }
 
 }
