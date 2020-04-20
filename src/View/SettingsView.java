@@ -54,8 +54,8 @@ public class SettingsView {
         square.setMinSize(55,55);
         Pane bigSquare = new Pane();
         bigSquare.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
-        bigSquare.setMaxSize(60, 60);
-        bigSquare.setMinSize(60,60);
+        bigSquare.setMaxSize(61, 61);
+        bigSquare.setMinSize(61,61);
         StackPane temp = new StackPane(bigSquare, square);
         temp.setOnMouseClicked(value->{
             controller.setBackground(i);
