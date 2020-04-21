@@ -38,7 +38,7 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
     WalkingController controller;
     MediaPlayer mediaPlayer,mediaPlayerKnock,mediaPlayerShot;
     boolean start;
-    double radiusBullet=5;
+    double radiusBullet=10;
     Player A,B;
 
 
@@ -100,8 +100,8 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
             graphicsContext.setStroke(Color.DIMGRAY);
             graphicsContext.setTextAlign(TextAlignment.CENTER);
             graphicsContext.strokeText("Click", 300, 200);
-            A.X=100;A.Y=200;A.vecX=1;A.vecY=0;A.life=100;A.bulletList.clear();
-            B.X=500;B.Y=200;B.vecX=-1;B.vecY=0;B.life=100;B.bulletList.clear();
+            A.X=100;A.Y=200;A.vecX=1;A.vecY=0;A.life=1000;A.bulletList.clear();
+            B.X=500;B.Y=200;B.vecX=-1;B.vecY=0;B.life=1000;B.bulletList.clear();
         }else{
             graphicsContext.fillText(A.life + "\t\t\t\t\t\t\t" + B.life, 300, 380);
             graphicsContext.fillOval(A.X, A.Y, A.radius, A.radius);
