@@ -23,9 +23,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import Model.WalkingModel.Bullet;
+import Model.WalkingModel.Player;
 
 import java.awt.event.KeyAdapter;
 import java.beans.EventHandler;
+import java.util.LinkedList;
 
 import static java.lang.Math.sqrt;
 
@@ -33,14 +36,17 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
     PlayView playView;
     WalkingModel model;
     WalkingController controller;
-    MediaPlayer mediaPlayer,mediaPlayerKnock;
+    MediaPlayer mediaPlayer,mediaPlayerKnock,mediaPlayerShot;
     boolean start;
-    double X,Y,radius=10,speed=20;
+    double radiusBullet=5;
+    Player A,B;
+
 
     public WalkingView(PlayView play){
         playView=play;
         model = new WalkingModel(this);
         controller = new WalkingController(model,this);
+
         this.display();
     }
     public void display() {
@@ -65,19 +71,21 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
 
         VBox box = new VBox(canvas,smallBox);
 
-        mediaPlayer = model.getMediaPlayer("click");
-        mediaPlayerKnock = model.getMediaPlayer("knock");
+        mediaPlayer = model.click.getMediaPlayer();
+        mediaPlayerKnock = model.knock.getMediaPlayer();
+        mediaPlayerShot = model.shot.getMediaPlayer();
 
         canvas.setOnMouseClicked(e -> {
             start = true;
             mediaPlayer.play();
         });
-       // canvas.setOnKeyPressed(this);
-        //canvas.setOnMouseMoved(e ->  Y  = e.getY());
 
         Scene scene = new Scene(box);
         scene.setOnKeyPressed(this);
         window.setScene(scene);
+
+        A = new Player(100,200,1,0,false);
+        B = new Player(500,200,-1,0,true);
 
         time.play();
         window.showAndWait();
@@ -92,25 +100,51 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
             graphicsContext.setStroke(Color.DIMGRAY);
             graphicsContext.setTextAlign(TextAlignment.CENTER);
             graphicsContext.strokeText("Click", 300, 200);
-            X=300;
-            Y=200;
+            A.X=100;A.Y=200;A.vecX=1;A.vecY=0;A.life=100;A.bulletList.clear();
+            B.X=500;B.Y=200;B.vecX=-1;B.vecY=0;B.life=100;B.bulletList.clear();
         }else{
-            graphicsContext.fillOval(X, Y, radius, radius);
+            graphicsContext.fillText(A.life + "\t\t\t\t\t\t\t" + B.life, 300, 380);
+            graphicsContext.fillOval(A.X, A.Y, A.radius, A.radius);
+            graphicsContext.fillOval(B.X, B.Y, B.radius, B.radius);
+            writeOut(graphicsContext,A,B);
+            writeOut(graphicsContext,B,A);
         }
+        graphicsContext.fillText(A.score + "\t\t\t\t\t" + B.score, 300, 100);
+    }
+    private void writeOut(GraphicsContext graphicsContext,Player player,Player oponent){
+        if(!player.bulletList.isEmpty()) {
+            Bullet bul = player.bulletList.get(0);
+            while (bul.x > 600 || bul.x < 0 || bul.y < 0 || bul.y > 400) {
+                player.bulletList.removeFirst();
+                if(player.bulletList.isEmpty())break;
+                else bul = player.bulletList.getFirst();
+            }
+        }
+        player.bulletList.forEach(b->{
+            b.x+=b.vectorX;
+            b.y+=b.vectorY;
+            graphicsContext.fillOval(b.x, b.y, radiusBullet, radiusBullet);
+
+            if(b.x>=oponent.X &&  b.x<=oponent.X+oponent.radius && b.y>=oponent.Y && b.y<=oponent.Y+oponent.radius) {
+                oponent.life--;//odierz my zycie
+
+                if (oponent.life == 0) {
+                    start = false;
+                    player.score++;
+                    return;
+                }
+            }
+        });
     }
     @Override
     public void handle(KeyEvent keyEvent) {
-        KeyCode keykode=keyEvent.getCode();
-        boolean XisWall=(X==0 || X==600-radius),YisWall=(Y==0 || Y==400-radius);
-        if(keykode.equals(KeyCode.A) ) X=X-speed>0 ? X-speed : 0;
-        if(keykode.equals(KeyCode.W) ) Y=Y-speed>0 ? Y-speed : 0;
-        if(keykode.equals(KeyCode.S) )Y=Y+speed<400-radius ? Y+speed : 400-radius;
-        if(keykode.equals(KeyCode.D) )X=X+speed<600-radius ? X+speed : 600-radius;
-        //System.out.println(X+ " "+Y);
-        if(((X==0 || X==600-radius) && !XisWall) ||((Y==0 || Y==400-radius) && !YisWall)){
-            mediaPlayerKnock.stop();
-            mediaPlayerKnock.play();
-        }
+        KeyCode keyCode=keyEvent.getCode();
+        if(keyCode.equals(KeyCode.A)||keyCode.equals(KeyCode.W)||keyCode.equals(KeyCode.S)||keyCode.equals(KeyCode.D))
+            A.move(keyCode,mediaPlayerKnock);
+        if(keyCode.equals(KeyCode.G)) A.shoot(keyCode,mediaPlayerShot);
+        if(keyCode.equals(KeyCode.NUMPAD8)||keyCode.equals(KeyCode.NUMPAD4)||keyCode.equals(KeyCode.NUMPAD5)||keyCode.equals(KeyCode.NUMPAD6))
+         B.move(keyCode,mediaPlayerKnock);
+        if(keyCode.equals(KeyCode.L)) B.shoot(keyCode,mediaPlayerShot);
     }
 
 }
