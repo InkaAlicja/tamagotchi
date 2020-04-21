@@ -31,19 +31,19 @@ public class WalkingModel {
         }
     }
     public static class Bullet{
-        public double x,y;
+        public double x,y,speed=6;
         public double vectorX,vectorY;
         public Bullet(double x,double y,double vecX,double vecY,double ownerRadius){
             this.x=x+ownerRadius/4;
             this.y=y+ownerRadius/4;
-            vectorX=vecX;
-            vectorY=vecY;
-            System.out.println(vectorX+ " " + vectorY);
+            vectorX=vecX*speed;
+            vectorY=vecY*speed;
+            //System.out.println(vectorX+ " " + vectorY);
         }
     }
 
     public static class Player{
-        public double X,Y,radius=30,vecX,vecY,speed=20;
+        public double X,Y,radius=25,vecX,vecY,speed=20;
         public int life,score;
         private KeyCode A,W,S,D,SHOT;
         public LinkedList<Bullet> bulletList;
