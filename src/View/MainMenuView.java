@@ -1,6 +1,7 @@
 package View;
 
 import Controller.MainMenuController;
+import Model.MainModel;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 
 public class MainMenuView{
-    Button playButton, settingsButton, exitButton,storeButton,achievementsButton;
+    MainModel.ClickButton playButton, settingsButton, exitButton,storeButton,achievementsButton;
     Scene scene;
     VBox vbox;
     MainView mainView;
@@ -25,11 +26,11 @@ public class MainMenuView{
     public MainMenuView(MainView mainView){
         this.mainView=mainView;
         controller = new MainMenuController(this);
-        playButton = new Button("Play");
-        settingsButton = new Button("Settings");
-        exitButton = new Button("Exit");
-        storeButton = new Button("Store");
-        achievementsButton = new Button("Achievements");
+        playButton = new MainModel.ClickButton("Play");
+        settingsButton = new MainModel.ClickButton("Settings");
+        exitButton = new MainModel.ClickButton("Exit");
+        storeButton = new MainModel.ClickButton("Store");
+        achievementsButton = new MainModel.ClickButton("Achievements");
         playButton.setOnAction(value-> {
                 mainView.stage.setScene(mainView.getDragonView().scene);
         });

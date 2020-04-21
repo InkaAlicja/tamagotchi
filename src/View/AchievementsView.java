@@ -2,6 +2,7 @@ package View;
 
 import Controller.AchievementsController;
 import Model.AchievementsModel;
+import Model.MainModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ public class AchievementsView {
     ScrollPane pane;
     VBox mainBox,mainBoxFrame,achBox;
     Achievement ach1,ach2,ach3;
-    Button backButton;
+    MainModel.ClickButton backButton;
     HashMap<String, Achievement> map;
 
     public AchievementsView(MainView mainView){
@@ -39,7 +40,7 @@ public class AchievementsView {
         achBox.setMinWidth(200);
         achBox.setAlignment(Pos.CENTER);
 
-        backButton = new Button("back");
+        backButton = new MainModel.ClickButton("back");
         backButton.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
 
         mainBox = new VBox(backButton,achBox);

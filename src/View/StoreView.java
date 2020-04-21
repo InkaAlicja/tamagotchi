@@ -1,6 +1,7 @@
 package View;
 
 import Controller.StoreController;
+import Model.MainModel;
 import Model.StoreModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,7 +23,7 @@ public class StoreView {
     StoreController controller;
     StoreModel model;
     Scene scene;
-    Button back;
+    MainModel.ClickButton back;
     HBox moneyBox,topBox,backBox;
     VBox mainBox,mainBoxFrame;
     ImageView coinV;
@@ -62,7 +63,7 @@ public class StoreView {
         moneyBox = new HBox(coinV,money);
         moneyBox.setAlignment(Pos.CENTER);
         moneyBox.setMinSize(230,50);
-        back = new Button("Back");
+        back = new MainModel.ClickButton("Back");
         backBox = new HBox(back);
         backBox.setMinSize(70,40);
         backBox.setAlignment(Pos.CENTER);

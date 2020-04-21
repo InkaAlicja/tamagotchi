@@ -1,6 +1,7 @@
 package View;
 
 import Controller.SettingsController;
+import Model.MainModel;
 import com.sun.tools.javac.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,12 +21,12 @@ public class SettingsView {
     Scene scene;
     StackPane[] backgroundOptions;
     int backgroundOptionsCount;
-    Button backButton;
+    MainModel.ClickButton backButton;
     SettingsController controller;
     public SettingsView(MainView mainView){
         this.mainView = mainView;
         controller = new SettingsController(this);
-        backButton = new Button("Back");
+        backButton = new MainModel.ClickButton("Back");
         backButton.setOnAction(value->{
             mainView.stage.setScene(mainView.menu.scene);
         });

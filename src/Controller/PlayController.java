@@ -5,11 +5,13 @@ import Additions.SaddleBox;
 import View.PlayView;
 import View.PongView;
 import View.TicTacToeView;
+import View.WalkingView;
 
 public class PlayController {
     PlayView view;
     TicTacToeView ticTacToeView;
     PongView pongView;
+    WalkingView walkingView;
     public PlayController(PlayView view){
         this.view=view;
     }
@@ -21,6 +23,8 @@ public class PlayController {
     public void playTicTacToe(){
         ticTacToeView = new TicTacToeView(view);
     }
+
+    public void playOtherOtherGame(){ walkingView = new WalkingView(this.view);}
 
     public void playOtherGame(){
         if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().hasSaddle()){
