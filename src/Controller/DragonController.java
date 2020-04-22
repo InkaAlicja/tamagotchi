@@ -37,7 +37,7 @@ public class DragonController {
         view.setHappiness(model.getHappiness());
     }
     public void pet(){
-        if(model.incPet())view.getMainView().getAchievementsView().getController().achieve("ach1");
+        if(model.incPet())view.getMainView().getAchievementsView().getController().achieve(1);
     }
     public boolean addHealth(float a){
         boolean canBeMore=false;

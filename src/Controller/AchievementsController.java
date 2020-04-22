@@ -13,11 +13,11 @@ public class AchievementsController {
         this.model=model;
         this.view=view;
     }
-    public void achieve(String trophyName){
-        HashMap<String, AchievementsView.Achievement> map=view.getMap();
-        map.forEach((name,ach)->{
-            if(name.equals(trophyName))ach.achieve();
+    public void achieve(Integer trophyId){
+        HashMap<Integer, AchievementsView.Achievement> map=view.getMap();
+        map.forEach((id,ach)->{
+            if(id.equals(trophyId))ach.achieve();
         });
-        view.getMainView().getStoreView().getController().enableTrophy(trophyName);
+        if(trophyId<=6)view.getMainView().getStoreView().getController().enableTrophy(trophyId);
     }
 }

@@ -26,7 +26,7 @@ public class PlayController {
 
     public void playOtherOtherGame(){ walkingView = new WalkingView(this.view);}
 
-    public void playOtherGame(){
+    public void playPong(){
         if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().hasSaddle()){
             if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().wearsSaddle()) {
                 pongView = new PongView(view);//play

@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AchievementsView {
     MainView mainView;
@@ -20,22 +21,25 @@ public class AchievementsView {
     Scene scene;
     ScrollPane pane;
     VBox mainBox,mainBoxFrame,achBox;
-    Achievement ach1,ach2,ach3;
+    Achievement ach1,ach2,ach3,ach4,ach5,ach6;
     MainModel.ClickButton backButton;
-    HashMap<String, Achievement> map;
+    HashMap<Integer, Achievement> map;
 
     public AchievementsView(MainView mainView){
         this.mainView = mainView;
         model = new AchievementsModel();
         controller = new AchievementsController(model,this);
 
-        map= new HashMap<>();
+        map= new HashMap<Integer, Achievement>();
 
-        ach1 = new Achievement("ach1","pet 5 times");
-        ach2 = new Achievement("ach2","buy something");
-        ach3 = new Achievement("ach3","do that other thing");
+        ach1 = new Achievement("Caretaker","pet 5 times",1);
+        ach2 = new Achievement("Buyer","buy something",2);
+        ach3 = new Achievement("Pong Winner","win Pong game 3 : 0",3);
+        ach4 = new Achievement("TickTackToe Winner","win TickTackToe game 3 : 0",4);
+        ach5 = new Achievement("TickTackToe Master","win TickTackToe game 3 : 0 (hard mode)",5);
+        ach6 = new Achievement("ach6","",6);
 
-        achBox = new VBox(ach1.box,ach2.box,ach3.box);
+        achBox = new VBox(ach1.box,ach2.box,ach3.box,ach4.box,ach5.box,ach6.box);
         achBox.setSpacing(10);
         achBox.setMinWidth(200);
         achBox.setAlignment(Pos.CENTER);
@@ -72,8 +76,10 @@ public class AchievementsView {
         boolean isAchieved;
         Label label;
         Tooltip tooltip;
+        int id;
 
-        public Achievement(String name, String description) {
+        public Achievement(String name, String description,int id) {
+            this.id=id;
             this.name = name;
             isAchieved = false;
             label = new Label(name);
@@ -90,7 +96,7 @@ public class AchievementsView {
                     "-fx-border-radius: 5;" +
                     "-fx-border-color: gray;");
 
-            map.put(name,this);
+            map.put(id,this);
         }
 
         public void achieve() {
@@ -102,11 +108,12 @@ public class AchievementsView {
                     "-fx-border-radius: 5;" +
                     "-fx-border-color: gold;");
         }
+        public String getName(){return name;}
     }
     public void resetBackground(){
         mainBoxFrame.setBackground(mainView.getMainModel().getMainBackground());
     }
-    public HashMap<String,Achievement> getMap(){
+    public HashMap<Integer,Achievement> getMap(){
         return this.map;
     }
     public MainView getMainView(){
@@ -115,4 +122,5 @@ public class AchievementsView {
     public AchievementsController getController(){
         return controller;
     }
+
 }

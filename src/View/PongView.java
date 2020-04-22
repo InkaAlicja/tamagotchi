@@ -170,6 +170,7 @@ public class PongView {
                 start = false;
                 score=Math.max(0,scoreMe-scoreBot);
                 mediaPlayer.stop();
+                controller.isIt3to0(scoreMe,scoreBot);
             }
 
             graphicsContext.fillText(scoreMe + "\t\t\t\t\t\t" + scoreBot, 300, 100);
@@ -180,5 +181,6 @@ public class PongView {
     public int getScore(){
         return score;
     }
+    public PlayView getPlayView(){ return playView; }
 
 }

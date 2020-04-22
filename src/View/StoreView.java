@@ -30,9 +30,9 @@ public class StoreView {
     Label money;
     int moneyInt;
     ItemBox item1,item2,item3,item4,item5;
-    TrophyBox item6,item7,item8;
+    TrophyBox item6,item7,item8,item9,item10,item11;
     ScrollPane pane;
-    HashMap<String,TrophyBox> mapOfTrophies;
+    HashMap<Integer,TrophyBox> mapOfTrophies;
 
     public enum type{BACK,FACE,HEAD};
     HashMap<Button,type> Map;
@@ -51,11 +51,14 @@ public class StoreView {
         item4 = new ItemBox(Map,model.flowers.smallImage,model.flowers.bigImage,"back",type.BACK,40,false);
         item5 = new ItemBox(Map,model.zdzblo.smallImage,model.zdzblo.bigImage,"face",type.FACE,10,false);
 
-        item6 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,"ach1");
-        item7 = new TrophyBox(Map,model.odznaka.smallImage,model.odznaka.bigImage,"back",type.BACK,"ach2");
-        item8 = new TrophyBox(Map,model.trophy.smallImage,model.trophy.bigImage,"face",type.FACE,"ach3");
-        //add item.box to the mainBox
+        item6 = new TrophyBox(Map,model.odznaka.smallImage,model.odznaka.bigImage,"back",type.BACK,2,"Buyer");
+        item7 = new TrophyBox(Map,model.odznaka2.smallImage,model.odznaka2.bigImage,"back",type.BACK,1,"Caretaker");
+        item8 = new TrophyBox(Map,model.odznaka3.smallImage,model.odznaka3.bigImage,"back",type.BACK,3,"Winner");
 
+        item9 = new TrophyBox(Map,model.odznaka4.smallImage,model.odznaka4.bigImage,"back",type.BACK,4,"TickTackToe Winner");
+        item10 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,5,"TickTackToe Master");
+        item11 = new TrophyBox(Map,model.trophy.smallImage,model.trophy.bigImage,"face",type.FACE,6,"ach6");
+        //add item.box to the mainBox
 
         moneyInt=mainView.getDragonView().getController().getMoney();
         coinV = new ImageView(model.coin);
@@ -69,7 +72,7 @@ public class StoreView {
         backBox.setAlignment(Pos.CENTER);
         topBox = new HBox(backBox,moneyBox);
 
-        mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box);
+        mainBox = new VBox (topBox,item1.box,item2.box,item3.box,item4.box,item5.box,item6.box,item7.box,item8.box,item9.box,item10.box,item11.box);
         mainBox.setSpacing(8);
         mainBoxFrame = new VBox(mainBox);
         VBox.setMargin(mainBox, new Insets(10,10,10,10));
@@ -158,12 +161,14 @@ public class StoreView {
         public Button pick;
         public ImageView imgView;
         public Label label;
-        public String achName;
+        int id;
+        String name;
 
-        public TrophyBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,String achievement){
-            achName=achievement;
+        public TrophyBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,int achievement,String name){
+            id=achievement;
+            this.name=name;
             imgView = new ImageView(img);
-            this.label=new Label("Required: "+achievement);
+            this.label=new Label("Required: "+name);
             pick = new Button ("pick");
             pick.setDisable(true);
             map.put(pick,typ);
@@ -185,7 +190,7 @@ public class StoreView {
                 controller.setImage(bigImage,where);
                 controller.pickButtonAction(pick,Map);
             });
-            mapOfTrophies.put(this.achName,this);
+            mapOfTrophies.put(id,this);
         }
 
         public void enableTrophy(){
@@ -198,7 +203,7 @@ public class StoreView {
         mainBoxFrame.setBackground(mainView.getMainModel().getMainBackground());
     }
 
-    public HashMap<String,TrophyBox> getTrophyMap(){
+    public HashMap<Integer,TrophyBox> getTrophyMap(){
         return this.mapOfTrophies;
     }
 

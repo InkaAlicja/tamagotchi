@@ -26,10 +26,10 @@ public class PlayView{
         ticTacToeButton = new Button("Tic Tac Toe");
         ticTacToeButton.setOnAction(value->controller.playTicTacToe());
 
-        otherGameButton = new Button("other game");
-        otherGameButton.setOnAction(value->controller.playOtherGame());
+        otherGameButton = new Button("Pong");
+        otherGameButton.setOnAction(value->controller.playPong());
 
-        otherOtherGameButton = new Button("other other game");
+        otherOtherGameButton = new Button("other game");
         otherOtherGameButton.setOnAction((value->controller.playOtherOtherGame()));
 
         backButton = new Button("Back");

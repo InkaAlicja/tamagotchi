@@ -40,17 +40,17 @@ public class StoreController {
         }
     }
 
-    public void enableTrophy(String name){
-        HashMap<String,StoreView.TrophyBox> map=view.getTrophyMap();
+    public void enableTrophy(Integer id){
+        HashMap<Integer,StoreView.TrophyBox> map=view.getTrophyMap();
         map.forEach((trophyAchiv,trophyBox)->{
-            if(name.equals(trophyAchiv))trophyBox.enableTrophy();
+            if(id.equals(trophyAchiv))trophyBox.enableTrophy();
         });
     }
 
     public void bought(){
         if(!model.didBuy()){
             model.bought();
-            view.getMainView().getAchievementsView().getController().achieve("ach2");
+            view.getMainView().getAchievementsView().getController().achieve(2);
         }
     }
 

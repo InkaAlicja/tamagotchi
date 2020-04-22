@@ -90,6 +90,10 @@ public class TicTacToeController {
             model.incGameCounter();
             model.incWinCounter();
             newGame();
+            if(model.getWinCounter()==model.getGameCounter() && model.getWinCounter()>=3){
+               if(model.getDifficulty()) wonThreeTimes(false);
+               else wonThreeTimes(true);
+            }
             return;
         }
         if (model.getTurn()<9) {
@@ -109,4 +113,9 @@ public class TicTacToeController {
         }
         System.out.println(model.getTurn());
     }
+    private void wonThreeTimes(boolean hard){
+        view.getPlayView().getDragonController().getDragonView().getMainView().getAchievementsView().getController().achieve(4);
+        if(hard) view.getPlayView().getDragonController().getDragonView().getMainView().getAchievementsView().getController().achieve(5);
+    }
 }
+
