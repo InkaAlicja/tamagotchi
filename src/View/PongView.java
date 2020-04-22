@@ -11,7 +11,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -19,9 +18,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.util.Random;
 
 import static java.lang.Math.sqrt;
 
@@ -128,10 +124,10 @@ public class PongView {
                 while(ballY < 5)ballY+=1;
             }
 
-            //jak w srodkowych 30% to odbij pod takim samym katem
+            //jak w srodkowych 25% to odbij pod takim samym katem
             int sides=25;
             if( ((ballX + radius > botX) && (ballY >= botY+sides) && (ballY <= botY + barHeight-sides)) ||
-                    ((ballX < meX + barWidth) && (ballY >= meY+sides) && (ballY <= meY + barHeight-sides))) {   System.out.println("hi");
+                    ((ballX < meX + barWidth) && (ballY >= meY+sides) && (ballY <= meY + barHeight-sides))) {   //System.out.println("hi");
                 double diff=(speedExc+speedInc)/(speedExc);
                 speedExc+=speedInc;
                 ballYVector *= diff ;

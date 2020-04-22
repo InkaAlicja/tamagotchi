@@ -55,9 +55,9 @@ public class StoreView {
         item7 = new TrophyBox(Map,model.odznaka2.smallImage,model.odznaka2.bigImage,"back",type.BACK,1,"Caretaker");
         item8 = new TrophyBox(Map,model.odznaka3.smallImage,model.odznaka3.bigImage,"back",type.BACK,3,"Winner");
 
-        item9 = new TrophyBox(Map,model.odznaka4.smallImage,model.odznaka4.bigImage,"back",type.BACK,4,"TickTackToe Winner");
-        item10 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,5,"TickTackToe Master");
-        item11 = new TrophyBox(Map,model.trophy.smallImage,model.trophy.bigImage,"face",type.FACE,6,"ach6");
+        item9 = new TrophyBox(Map,model.odznaka4.smallImage,model.odznaka4.bigImage,"back",type.BACK,4,"Painter");
+        item10 = new TrophyBox(Map,model.medal.smallImage,model.medal.bigImage,"back",type.BACK,5,"TickTackToe Winner");
+        item11 = new TrophyBox(Map,model.trophy.smallImage,model.trophy.bigImage,"face",type.FACE,6,"TickTackToe Master");
         //add item.box to the mainBox
 
         moneyInt=mainView.getDragonView().getController().getMoney();

@@ -35,9 +35,9 @@ public class AchievementsView {
         ach1 = new Achievement("Caretaker","pet 5 times",1);
         ach2 = new Achievement("Buyer","buy something",2);
         ach3 = new Achievement("Pong Winner","win Pong game 3 : 0",3);
-        ach4 = new Achievement("TickTackToe Winner","win TickTackToe game 3 : 0",4);
-        ach5 = new Achievement("TickTackToe Master","win TickTackToe game 3 : 0 (hard mode)",5);
-        ach6 = new Achievement("ach6","",6);
+        ach4 = new Achievement("Painter","Change background(settings)",4);
+        ach5 = new Achievement("TickTackToe Winner","win TickTackToe game 3 : 0",5);
+        ach6 = new Achievement("TickTackToe Master","win TickTackToe game 3 : 0 (hard mode)",6);
 
         achBox = new VBox(ach1.box,ach2.box,ach3.box,ach4.box,ach5.box,ach6.box);
         achBox.setSpacing(10);

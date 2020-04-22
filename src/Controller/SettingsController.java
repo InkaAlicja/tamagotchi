@@ -18,5 +18,6 @@ public class SettingsController {
         view.getMainView().getDragonView().resetBackground();
         view.getMainView().getMainMenuView().resetBackground();
         view.getMainView().getAchievementsView().resetBackground();
+        view.getMainView().getAchievementsView().getController().achieve(4);
     }
 }

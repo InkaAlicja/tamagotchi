@@ -114,8 +114,8 @@ public class TicTacToeController {
         System.out.println(model.getTurn());
     }
     private void wonThreeTimes(boolean hard){
-        view.getPlayView().getDragonController().getDragonView().getMainView().getAchievementsView().getController().achieve(4);
-        if(hard) view.getPlayView().getDragonController().getDragonView().getMainView().getAchievementsView().getController().achieve(5);
+        view.getPlayView().getDragonController().getDragonView().getMainView().getAchievementsView().getController().achieve(5);
+        if(hard) view.getPlayView().getDragonController().getDragonView().getMainView().getAchievementsView().getController().achieve(6);
     }
 }
 
