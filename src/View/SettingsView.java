@@ -17,18 +17,32 @@ import javafx.scene.shape.Rectangle;
 public class SettingsView {
     MainView mainView;
     HBox colorsHBox;
-    VBox mainVBox, colorsVBox;
+    VBox mainVBox;
     Scene scene;
     StackPane[] backgroundOptions;
     int backgroundOptionsCount;
     MainModel.ClickButton backButton;
+    Button muteButton;
     SettingsController controller;
     public SettingsView(MainView mainView){
         this.mainView = mainView;
         controller = new SettingsController(this);
         backButton = new MainModel.ClickButton("Back");
+
         backButton.setOnAction(value->{
             mainView.stage.setScene(mainView.menu.scene);
+        });
+
+        muteButton = new Button("Mute!");
+        muteButton.setOnAction(value ->{
+            if (muteButton.getText().equals("Mute!")) {
+                muteButton.setText("Unmute!");
+                controller.mute();
+            }
+            else{
+                muteButton.setText("Mute!");
+                controller.unmute();
+            }
         });
         backgroundOptionsCount = mainView.getMainModel().getBackgroundFillsCount();
         backgroundOptions = new StackPane[backgroundOptionsCount];
@@ -42,9 +56,9 @@ public class SettingsView {
         colorsHBox.setAlignment(Pos.CENTER);
         colorsHBox.setSpacing(2);
 
-        mainVBox = new VBox(new Label("Choose background:"), colorsHBox, backButton);
+        mainVBox = new VBox(new Label("Choose background:"), colorsHBox, new Label("Sound:"), muteButton, backButton);
         mainVBox.setAlignment(Pos.CENTER);
-        mainVBox.setSpacing(2);
+        mainVBox.setSpacing(5);
         scene = new Scene(mainVBox, 400, 500);
     }
 

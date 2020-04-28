@@ -123,6 +123,9 @@ public class DragonView {
     public DragonController getController(){
         return controller;
     }
+    public DragonModel getModel(){
+        return model;
+    }
     public MainView getMainView(){
         return mainView;
     }

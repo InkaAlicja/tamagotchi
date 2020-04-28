@@ -28,8 +28,10 @@ public class DragonController {
         this.view=view;
         this.model=model;
         clockThread=new Thread(new ClockIsTicking());
+        clockThread.setDaemon(true);
         clockThread.start();
         animationThread=new Thread(new animTime());
+        animationThread.setDaemon(true);
     }
 
     public synchronized void addHappiness(float a){

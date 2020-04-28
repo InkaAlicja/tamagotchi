@@ -37,7 +37,7 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
     WalkingModel model;
     WalkingController controller;
     MediaPlayer mediaPlayer,mediaPlayerKnock,mediaPlayerShot;
-    boolean start;
+    boolean start, mute;
     double radiusBullet=10;
     Player A,B;
 
@@ -70,10 +70,13 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
         smallBox.setStyle("-fx-padding: 10;");
 
         VBox box = new VBox(canvas,smallBox);
-
+        mute = playView.dragonView.mainView.getMainModel().getIsMuted();
         mediaPlayer = model.click.getMediaPlayer();
         mediaPlayerKnock = model.knock.getMediaPlayer();
         mediaPlayerShot = model.shot.getMediaPlayer();
+        mediaPlayer.setMute(mute);
+        mediaPlayerKnock.setMute(mute);
+        mediaPlayerShot.setMute(mute);
 
         canvas.setOnMouseClicked(e -> {
             start = true;

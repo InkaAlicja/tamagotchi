@@ -55,6 +55,9 @@ public class PongView {
         Timeline time = new Timeline(new KeyFrame(Duration.millis(16), e -> run(graphContext)));
         time.setCycleCount(Timeline.INDEFINITE);
 
+        mediaPlayer = model.getMediaPlayer();
+        mediaPlayer.setMute(playView.dragonView.mainView.getMainModel().getIsMuted());
+
         Button back = new Button("back");
         back.setOnAction(value-> { mediaPlayer.stop();time.stop();window.close();});
         HBox smallBox = new HBox(back);
@@ -64,8 +67,6 @@ public class PongView {
         smallBox.setStyle("-fx-padding: 10;");
 
         VBox box = new VBox(canvas,smallBox);
-
-        mediaPlayer = model.getMediaPlayer();
 
         canvas.setOnMouseClicked(e -> {
             start = true;

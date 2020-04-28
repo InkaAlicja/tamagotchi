@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.MainModel;
 import View.SettingsView;
 import javafx.scene.paint.Color;
 
@@ -19,5 +20,17 @@ public class SettingsController {
         view.getMainView().getMainMenuView().resetBackground();
         view.getMainView().getAchievementsView().resetBackground();
         view.getMainView().getAchievementsView().getController().achieve(4);
+    }
+
+    public void mute(){
+        view.getMainView().getMainModel().setIsMuted(true);
+        view.getMainView().getDragonView().getModel().getMediaPlayerHeart().setMute(true);
+        MainModel.ClickButton.setMute(true);
+    }
+
+    public void unmute(){
+        view.getMainView().getMainModel().setIsMuted(false);
+        view.getMainView().getDragonView().getModel().getMediaPlayerHeart().setMute(false);
+        MainModel.ClickButton.setMute(false);
     }
 }

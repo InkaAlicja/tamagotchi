@@ -23,8 +23,10 @@ public class MainModel {
     BackgroundFill[] mainBackgroundFill;
     BackgroundFill[][] backgroundFills;
     int mainBackgroundFillId;
+    boolean isMuted;
     public MainModel(MainView view){
         this.view = view;
+        isMuted = false;
         backgroundFills = new BackgroundFill[3][2];
         backgroundFills[0][0] = new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][0] = new BackgroundFill(Color.BISQUE, CornerRadii.EMPTY, Insets.EMPTY);
@@ -34,6 +36,14 @@ public class MainModel {
         mainBackgroundFillId=0;
         mainBackground = new Background(mainBackgroundFill);
 
+    }
+
+    public boolean getIsMuted(){
+        return isMuted;
+    }
+
+    public void setIsMuted(boolean b){
+        isMuted = b;
     }
 
     public Background getMainBackground(){
@@ -61,19 +71,23 @@ public class MainModel {
         Media soundClick;
         public MediaPlayer mediaPlayerClick;
         public Image image;
+        static boolean mute=false;
+        public static void setMute(boolean mute){
+            ClickButton.mute = mute;
+        }
         public ClickButton(String name) {
             super(name);
             soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
-            this.setOnMouseClicked(value->{mediaPlayerClick.stop();mediaPlayerClick.play();});
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
         }
         public ClickButton(String name,String sound) {
             super(name);
             soundClick = new Media(new File(sound).toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
-            this.setOnMouseClicked(value->{mediaPlayerClick.stop();mediaPlayerClick.play();});
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
         }
         public ClickButton(String name,String sound,String pic) throws FileNotFoundException {
             super(name);
@@ -82,7 +96,7 @@ public class MainModel {
             soundClick = new Media(new File(sound).toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
-            this.setOnMouseClicked(value->{mediaPlayerClick.stop();mediaPlayerClick.play();});
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
         }
     }
 
