@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -28,13 +29,13 @@ public class PongView {
 
     double barHeight = 100;
     int barWidth = 10;
-    int radius = 10;
+    int diameter = 10, radius = diameter/2;
     double ballXVector,ballYVector;
-    double meX=8, meY, botX=600-barWidth-meX, botY,ballX,ballY;
+    double meX=8, meY, botX=600-barWidth-meX, botY,ballX,ballY, ballCenterX, ballCenterY;
     int scoreMe, scoreBot;
     boolean start;
-    int score;
-    double speedExc,speedInc=0.3d;
+    int score, sides = 25;
+    double speedExc,speedInc=0.1d;
     MediaPlayer mediaPlayer;
 
     public PongView(PlayView playView){
@@ -52,7 +53,7 @@ public class PongView {
         Canvas canvas = new Canvas(600, 400);
         GraphicsContext graphContext = canvas.getGraphicsContext2D();
 
-        Timeline time = new Timeline(new KeyFrame(Duration.millis(16), e -> run(graphContext)));
+        Timeline time = new Timeline(new KeyFrame(Duration.millis(5), e -> run(graphContext)));
         time.setCycleCount(Timeline.INDEFINITE);
 
         mediaPlayer = model.getMediaPlayer();
@@ -73,6 +74,9 @@ public class PongView {
             mediaPlayer.play();
         });
         canvas.setOnMouseMoved(e ->  meY  = e.getY() - barHeight/2);
+        canvas.setCache(true);
+        //canvas.setCacheShape(true);
+        canvas.setCacheHint(CacheHint.SPEED);
 
         Scene scene = new Scene(box);//new StackPane(canvas,back));
         window.setScene(scene);
@@ -86,25 +90,14 @@ public class PongView {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font(25));
 
-        if(start){
-            ballX += ballXVector;
-            ballY += ballYVector;
-            if (ballX < 500) {
-                botY = ballY - barHeight / 2;
-            } else {
-                botY = ballY > botY + barHeight / 2 ?botY += 1 : botY - 1;
-            }
-
-            graphicsContext.fillOval(ballX, ballY, radius, radius);
-
-        }else {
+        if (!start){
             graphicsContext.setStroke(Color.WHITE);
             graphicsContext.setTextAlign(TextAlignment.CENTER);
             graphicsContext.strokeText("Click", 300, 200);
 
             ballX = 300;
             ballY = 200;
-            double min=0.5,max=5;
+            double min=0.1,max=2;
             ballYVector=0;
             ballXVector=0;
             while(ballXVector==0 || ballYVector==0 || Math.abs(ballXVector/ballYVector)<2) {
@@ -116,63 +109,131 @@ public class PongView {
             ballYVector*=signumY;
             ballXVector*=signumX;
             speedExc=sqrt(ballXVector*ballXVector+ballYVector*ballYVector);
-            System.out.println(String.valueOf(ballXVector) +" "+ String.valueOf(ballYVector)+ " "+Math.abs(ballXVector/ballYVector));
         }
+        else {
 
-            if(ballY > 400-5 || ballY < 5){
-                ballYVector *=-1;
-                while(ballY > 400-5)ballY-=1;
-                while(ballY < 5)ballY+=1;
+            ballCenterY = ballY + radius;
+            ballCenterX = ballX + radius;
+
+            if ((ballCenterY - radius + ballYVector<0 && ballYVector<0) || (ballCenterY + radius + ballYVector > 400 && ballYVector>0)){
+                ballYVector*=-1;
             }
 
-            //jak w srodkowych 25% to odbij pod takim samym katem
-            int sides=25;
-            if( ((ballX + radius > botX) && (ballY >= botY+sides) && (ballY <= botY + barHeight-sides)) ||
-                    ((ballX < meX + barWidth) && (ballY >= meY+sides) && (ballY <= meY + barHeight-sides))) {   //System.out.println("hi");
-                double diff=(speedExc+speedInc)/(speedExc);
-                speedExc+=speedInc;
-                ballYVector *= diff ;
-                ballXVector *= diff;
-                ballXVector *= -1;
-                ballX= ballX<meX+barWidth ? meX+barWidth : botX-radius;
-            }//jak po bokach bota
-            else if( ((ballX + radius > botX) && (ballY >= botY) && (ballY <= botY + barHeight))){
-                double diff=(ballY-botY)>75 ? (ballY-botY)-75: 25-(ballY-botY);
-
-                ballXVector = -1*Math.signum(ballXVector)*(sqrt(1-(diff/26)*(diff/26)));
-                ballYVector = -1*Math.signum(ballYVector)*(diff/26);
-                speedExc+=speedInc;
-                ballYVector *= speedExc;
-                ballXVector *= speedExc;
-                ballX=botX-radius;
-            }//jak po moich bokach
-            else if(((ballX < meX + barWidth) && (ballY >= meY) && (ballY <= meY + barHeight))) {
-                double diff=(ballY-meY)>75 ? (ballY-meY)-75: 25-(ballY-meY);
-
-                ballXVector = -1*Math.signum(ballXVector)*(sqrt(1-(diff/26)*(diff/26)));
-                ballYVector = -1*Math.signum(ballYVector)*(diff/26);
-                speedExc+=speedInc;
-                ballYVector *= speedExc;
-                ballXVector *= speedExc;
-                ballX=meX+barWidth;
-            }
-            else if(ballX < meX - barWidth) {
+            //me win
+            if (ballCenterX + ballXVector + radius < meX - barWidth) {
                 scoreBot++;
                 start = false;
-                score=Math.max(0,scoreMe-scoreBot);
+                score = Math.max(0, scoreMe - scoreBot);
                 mediaPlayer.stop();
-            }
-            else if(ballX > botX + barWidth) {
-                scoreMe++;
-                start = false;
-                score=Math.max(0,scoreMe-scoreBot);
-                mediaPlayer.stop();
-                controller.isIt3to0(scoreMe,scoreBot);
             }
 
-            graphicsContext.fillText(scoreMe + "\t\t\t\t\t\t" + scoreBot, 300, 100);
-            graphicsContext.fillRect(botX, botY, barWidth, barHeight);
-            graphicsContext.fillRect(meX,meY,barWidth,barHeight);
+            //bot win
+            else if (ballCenterX + ballXVector - radius > botX + barWidth) {
+                scoreMe++;
+                start = false;
+                score = Math.max(0, scoreMe - scoreBot);
+                mediaPlayer.stop();
+                controller.isIt3to0(scoreMe, scoreBot);
+            }
+
+            //jak w srodkowych 25%
+            else if (((ballCenterX + ballXVector + radius > botX) && (ballCenterX + radius <= botX) && (ballCenterY >= botY + sides) && (ballCenterY <= botY + barHeight - sides) && (ballXVector > 0)) ||
+                    ((ballCenterX + ballXVector - radius < meX + barWidth) && (ballCenterX - radius >= meX + barWidth) && (ballCenterY >= meY + sides) && (ballCenterY <= meY + barHeight - sides) && (ballXVector < 0))) {
+                System.out.println("1");
+                double diff = (speedExc + speedInc) / (speedExc);
+                speedExc += speedInc;
+                ballYVector *= diff;
+                ballXVector *= diff;
+                ballXVector *= -1;
+                //ballX= ballCenterX - radius < meX + barWidth ? meX+barWidth : botX-diameter;
+            }
+
+            //jak po bokach bota
+            else if (((ballCenterX + ballXVector + radius > botX) && (ballCenterX + radius <= botX) && (ballCenterY >= botY) && (ballCenterY <= botY + barHeight) && (ballXVector > 0))) {
+                double diff = (ballCenterY - botY) > 75 ? (ballCenterY - botY) - 75 : 25 - (ballCenterY - botY);
+                System.out.println("2");
+                ballXVector = -1 * Math.signum(ballXVector) * (sqrt(1 - (diff / 26) * (diff / 26)));
+                ballYVector = -1 * Math.signum(ballYVector) * (diff / 26);
+                speedExc += speedInc;
+                ballYVector *= speedExc;
+                ballXVector *= speedExc;
+                //ballX=botX-diameter;
+            }
+
+            //jak po moich bokach
+            else if (((ballCenterX + ballXVector - radius < meX + barWidth) && (ballCenterX - radius >= meX + barWidth) && (ballCenterY >= meY) && (ballCenterY <= meY + barHeight) && (ballXVector < 0))) {
+                double diff = (ballCenterY - meY) > 75 ? (ballCenterY - meY) - 75 : 25 - (ballCenterY - meY);
+                System.out.println("3");
+                ballXVector = -1 * Math.signum(ballXVector) * (sqrt(1 - (diff / 26) * (diff / 26)));
+                ballYVector = -1 * Math.signum(ballYVector) * (diff / 26);
+                speedExc += speedInc;
+                ballYVector *= speedExc;
+                ballXVector *= speedExc;
+                //ballX=meX+barWidth;
+            }
+
+            else if (((ballCenterY + ballYVector - (meY+barHeight))*(ballCenterY + ballYVector - (meY+barHeight))+
+                    (ballCenterX + ballXVector-(meX+barWidth))*(ballCenterX + ballXVector-(meX+barWidth))<radius*radius))
+                    {
+                System.out.println("corner");
+                ballXVector+= 1.5 * speedExc;
+                ballYVector+=speedExc;
+                speedExc=sqrt(ballXVector*ballXVector+ballYVector*ballYVector);
+                double diff = (speedExc + 3*speedInc) / (speedExc);
+                speedExc += 3*speedInc;
+                ballYVector *= diff;
+                ballXVector *= diff;
+            }
+
+            else if(((ballCenterY + ballYVector - meY)*(ballCenterY + ballYVector - meY) +
+                    (ballCenterX + ballXVector - (meX+barWidth))*(ballCenterX + ballXVector -(meX+barWidth))<radius*radius)){
+                System.out.println("corner");
+                ballXVector+= 1.5 * speedExc;
+                ballYVector-=speedExc;
+                speedExc=sqrt(ballXVector*ballXVector+ballYVector*ballYVector);
+                double diff = (speedExc + 3*speedInc) / (speedExc);
+                speedExc += 3*speedInc;
+                ballYVector *= diff;
+                ballXVector *= diff;
+            }
+
+            else if(((ballCenterY + ballYVector - (botY+barHeight))*(ballCenterY + ballYVector - (botY+barHeight))+
+                    (ballCenterX + ballXVector-(botX))*(ballCenterX + ballXVector-(botX))<radius*radius)){
+                System.out.println("corner");
+                ballXVector-= 1.5 * speedExc;
+                ballYVector+=speedExc;
+                speedExc=sqrt(ballXVector*ballXVector+ballYVector*ballYVector);
+                double diff = (speedExc + 3*speedInc) / (speedExc);
+                speedExc += 3*speedInc;
+                ballYVector *= diff;
+                ballXVector *= diff;
+            }
+
+            else if(((ballCenterY + ballYVector - botY)*(ballCenterY + ballYVector - botY) +
+                    (ballCenterX + ballXVector - (botX))*(ballCenterX + ballXVector -(botX))<radius*radius)){
+                System.out.println("corner");
+                ballXVector-= 1.5 * speedExc;
+                ballYVector-=speedExc;
+                speedExc=sqrt(ballXVector*ballXVector+ballYVector*ballYVector);
+                double diff = (speedExc + 3*speedInc) / (speedExc);
+                speedExc += 3*speedInc;
+                ballYVector *= diff;
+                ballXVector *= diff;
+            }
+
+            ballX += ballXVector;
+            ballY += ballYVector;
+            if (ballX < 500) {
+                botY = ballY - barHeight / 2;
+            } else {
+                botY = ballY > botY + barHeight / 2 ?botY += 1 : botY - 1;
+            }
+            graphicsContext.fillOval(ballX, ballY, diameter, diameter);
+        }
+
+        graphicsContext.fillText(scoreMe + "\t\t\t\t\t\t" + scoreBot, 300, 100);
+        graphicsContext.fillRect(botX, botY, barWidth, barHeight);
+        graphicsContext.fillRect(meX, meY, barWidth, barHeight);
 
     }
     public int getScore(){

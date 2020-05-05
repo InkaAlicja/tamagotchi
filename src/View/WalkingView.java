@@ -7,8 +7,10 @@ import Model.WalkingModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,13 +28,12 @@ import javafx.util.Duration;
 import Model.WalkingModel.Bullet;
 import Model.WalkingModel.Player;
 
-import java.awt.event.KeyAdapter;
-import java.beans.EventHandler;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import static java.lang.Math.sqrt;
 
-public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
+public class WalkingView{
     PlayView playView;
     WalkingModel model;
     WalkingController controller;
@@ -40,12 +41,14 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
     boolean start, mute;
     double radiusBullet=10;
     Player A,B;
+    HashSet<KeyCode> pressedKeys;
 
 
     public WalkingView(PlayView play){
         playView=play;
         model = new WalkingModel(this);
         controller = new WalkingController(model,this);
+        pressedKeys = new HashSet<>();
 
         this.display();
     }
@@ -84,7 +87,9 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
         });
 
         Scene scene = new Scene(box);
-        scene.setOnKeyPressed(this);
+        //scene.setOnKeyPressed(this);
+        scene.setOnKeyPressed(keyPressed);
+        scene.setOnKeyReleased(keyReleased);
         window.setScene(scene);
 
         A = new Player(100,200,1,0,false);
@@ -107,6 +112,8 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
             B.X=500;B.Y=200;B.vecX=-1;B.vecY=0;B.life=1000;B.bulletList.clear();
         }else{
             graphicsContext.fillText(A.life + "\t\t\t\t\t\t\t" + B.life, 300, 380);
+            for (KeyCode kc: pressedKeys)
+                calculate(kc);
             graphicsContext.fillOval(A.X, A.Y, A.radius, A.radius);
             graphicsContext.fillOval(B.X, B.Y, B.radius, B.radius);
             writeOut(graphicsContext,A,B);
@@ -116,9 +123,9 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
     }
     private void writeOut(GraphicsContext graphicsContext,Player player,Player oponent){
         if(!player.bulletList.isEmpty()) {
-            Bullet bul = player.bulletList.get(0);
+            Bullet bul = player.bulletList.getFirst();
             while (bul.x > 600 || bul.x < 0 || bul.y < 0 || bul.y > 400) {
-                player.bulletList.removeFirst();
+                player.bulletList.remove();
                 if(player.bulletList.isEmpty())break;
                 else bul = player.bulletList.getFirst();
             }
@@ -139,9 +146,7 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
             }
         });
     }
-    @Override
-    public void handle(KeyEvent keyEvent) {
-        KeyCode keyCode=keyEvent.getCode();
+    public void calculate(KeyCode keyCode) {
         if(keyCode.equals(KeyCode.A)||keyCode.equals(KeyCode.W)||keyCode.equals(KeyCode.S)||keyCode.equals(KeyCode.D))
             A.move(keyCode,mediaPlayerKnock);
         if(keyCode.equals(KeyCode.G)) A.shoot(keyCode,mediaPlayerShot);
@@ -149,5 +154,21 @@ public class WalkingView implements javafx.event.EventHandler<KeyEvent>{
          B.move(keyCode,mediaPlayerKnock);
         if(keyCode.equals(KeyCode.L)) B.shoot(keyCode,mediaPlayerShot);
     }
+
+    private EventHandler<KeyEvent> keyPressed = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent keyEvent) {
+            System.out.println("adding "+keyEvent.getCode());
+            pressedKeys.add(keyEvent.getCode());
+        }
+    };
+
+    private EventHandler<KeyEvent> keyReleased = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent keyEvent) {
+            System.out.println("removing "+keyEvent.getCode());
+            pressedKeys.remove(keyEvent.getCode());
+        }
+    };
 
 }

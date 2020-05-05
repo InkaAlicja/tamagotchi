@@ -43,7 +43,7 @@ public class WalkingModel {
     }
 
     public static class Player{
-        public double X,Y,radius=25,vecX,vecY,speed=20;
+        public double X,Y,radius=25,vecX,vecY,speed=5;
         public int life,score;
         private KeyCode A,W,S,D,SHOT;
         public LinkedList<Bullet> bulletList;
