@@ -75,6 +75,7 @@ public class SettingsView {
         StackPane temp = new StackPane(bigSquare, square);
         temp.setOnMouseClicked(value->{
             controller.setBackground(i);
+            //MainModel.ClickButton.setPictureForAll("Resources/purpleButton.png");//////////
         });
         return temp;
     }

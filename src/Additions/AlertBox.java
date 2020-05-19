@@ -23,7 +23,7 @@ public class AlertBox {
         Label label = new Label();
         label.setText(message);
 
-        MainModel.ClickButton button = new MainModel.ClickButton(action,100,30);
+        MainModel.ClickButton button = new MainModel.ClickButton(action,180,30);
         button.setOnAction(event -> window.close());
 
         VBox box = new VBox(10);

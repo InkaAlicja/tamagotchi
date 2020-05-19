@@ -71,6 +71,7 @@ public class MainModel {
         public enum COLOUR{WHITE,BEIGE,PINK}
 
         static COLOUR colour=COLOUR.WHITE;
+       // static String pictureForAll="Resources/cremeButton.png";
         static LinkedList<ClickButton> List=new LinkedList<>();//TODO: czy tak wolno?
         //public static void startList(){List=new LinkedList<>();}
 
@@ -90,55 +91,36 @@ public class MainModel {
 
         public ClickButton(String name,int width,int height) throws FileNotFoundException {
             super(name);
-            soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
-            mediaPlayerClick = new MediaPlayer(soundClick);
-
             this.setButtonBackground(width,height,"AUTO");
-
-            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
-            List.add(this);
+           /* soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
+            mediaPlayerClick = new MediaPlayer(soundClick);
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});*/
+           // List.add(this);
         }
         public ClickButton(String name,String sound,int width,int height) throws FileNotFoundException {
             super(name);
-            soundClick = new Media(new File(sound).toURI().toString());
-            mediaPlayerClick = new MediaPlayer(soundClick);
-
             this.setButtonBackground(width,height,"AUTO");
 
+            soundClick = new Media(new File(sound).toURI().toString());
+            mediaPlayerClick = new MediaPlayer(soundClick);
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
-            List.add(this);
+           // List.add(this);
         }
         public ClickButton(String name,String sound,String pic,int width,int height) throws FileNotFoundException {
             super(name);
             image = new Image(new FileInputStream(pic),300,300,true,false);
-
-            soundClick = new Media(new File(sound).toURI().toString());
-            mediaPlayerClick = new MediaPlayer(soundClick);
-
             this.setButtonBackground(width,height,"AUTO");
-
-            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
-            List.add(this);
+          //  List.add(this);
         }
         public ClickButton(String name,ImageView imgView,int width,int height) throws FileNotFoundException {
             super(name,imgView);
             this.setButtonBackground(width,height,"AUTO");
-
-            soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
-            mediaPlayerClick = new MediaPlayer(soundClick);
-
-            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
-            List.add(this);
+          //  List.add(this);
         }
         public ClickButton(String name,String pic,int width,int height,boolean b) throws FileNotFoundException {
             super(name);
             this.setButtonBackground(width,height,pic);
-
-            soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
-            mediaPlayerClick = new MediaPlayer(soundClick);
-
-            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
-            List.add(this);
+        //    List.add(this);
         }
 
         void setButtonBackground(int width,int height,String pic) throws FileNotFoundException {
@@ -149,6 +131,7 @@ public class MainModel {
                 if(colour==COLOUR.PINK)pic="Resources/purpleButton.png";
                 else pic="Resources/cremeButton.png";
             }
+           // pic=pictureForAll;
             inputStreamForButton=new FileInputStream(pic);
             imageForButton=new Image(inputStreamForButton,width,height,false,false);
             backgroundImageForButton =
