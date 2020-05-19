@@ -6,9 +6,8 @@ import View.MainView;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -68,6 +67,10 @@ public class MainModel {
         mainBackground = new Background(fill);
     }
     public static class ClickButton extends Button {
+        FileInputStream inputStreamForButton;
+        Image imageForButton;
+        BackgroundImage backgroundImageForButton;
+        Background imageViewForButton;
         Media soundClick;
         public MediaPlayer mediaPlayerClick;
         public Image image;
@@ -75,28 +78,64 @@ public class MainModel {
         public static void setMute(boolean mute){
             ClickButton.mute = mute;
         }
-        public ClickButton(String name) {
+
+        public ClickButton(String name,int width,int height) throws FileNotFoundException {
             super(name);
             soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
+            this.setButtonBackground(width,height,"Resources/button2.png");
+
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
         }
-        public ClickButton(String name,String sound) {
+        public ClickButton(String name,String sound,int width,int height) throws FileNotFoundException {
             super(name);
             soundClick = new Media(new File(sound).toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
+            this.setButtonBackground(width,height,"Resources/button2.png");
+
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
         }
-        public ClickButton(String name,String sound,String pic) throws FileNotFoundException {
+        public ClickButton(String name,String sound,String pic,int width,int height) throws FileNotFoundException {
             super(name);
             image = new Image(new FileInputStream(pic),300,300,true,false);
 
             soundClick = new Media(new File(sound).toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
+            this.setButtonBackground(width,height,"Resources/button2.png");
+
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+        }
+        public ClickButton(String name,ImageView imgView,int width,int height) throws FileNotFoundException {
+            super(name,imgView);
+            this.setButtonBackground(width,height,"Resources/button2.png");
+
+            soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
+            mediaPlayerClick = new MediaPlayer(soundClick);
+
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+        }
+        public ClickButton(String name,String pic,int width,int height,boolean b) throws FileNotFoundException {
+            super(name);
+            this.setButtonBackground(width,height,pic);
+
+            soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
+            mediaPlayerClick = new MediaPlayer(soundClick);
+
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+        }
+
+        void setButtonBackground(int width,int height,String pic) throws FileNotFoundException {
+            inputStreamForButton=new FileInputStream(pic);
+            imageForButton=new Image(inputStreamForButton,width,height,false,false);
+            backgroundImageForButton =
+                    new BackgroundImage(imageForButton, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,BackgroundSize.DEFAULT);
+            imageViewForButton=new Background(backgroundImageForButton);
+            this.setMinWidth(width);
+            this.setMinHeight(height);
+            this.setBackground(imageViewForButton);
         }
     }
 

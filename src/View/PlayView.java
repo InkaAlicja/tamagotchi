@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class PlayView{
     PlayController controller;
@@ -27,14 +28,18 @@ public class PlayView{
         ticTacToeButton.setOnAction(value->controller.playTicTacToe());
 
         otherGameButton = new Button("Pong");
-        otherGameButton.setOnAction(value->controller.playPong());
+        otherGameButton.setOnAction(value-> {
+            try {
+                controller.playPong();
+            } catch (FileNotFoundException e) { }
+        });
 
         otherOtherGameButton = new Button("other game");
         otherOtherGameButton.setOnAction((value->controller.playOtherOtherGame()));
 
         backButton = new Button("Back");
         backButton.setOnAction(value->controller.back());
-        mainVBox = new VBox(ticTacToeButton,otherGameButton,otherOtherGameButton, backButton);
+        mainVBox = new VBox(ticTacToeButton,otherGameButton, backButton);//otherOtherGameButton,
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(15);
         resetBackground();

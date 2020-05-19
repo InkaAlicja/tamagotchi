@@ -23,14 +23,14 @@ public class MainMenuView{
     VBox vbox;
     MainView mainView;
     MainMenuController controller;
-    public MainMenuView(MainView mainView){
+    public MainMenuView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
         controller = new MainMenuController(this);
-        playButton = new MainModel.ClickButton("Play");
-        settingsButton = new MainModel.ClickButton("Settings");
-        exitButton = new MainModel.ClickButton("Exit");
-        storeButton = new MainModel.ClickButton("Store");
-        achievementsButton = new MainModel.ClickButton("Achievements");
+        playButton = new MainModel.ClickButton("Play",100,50);
+        settingsButton = new MainModel.ClickButton("Settings",100,50);
+        exitButton = new MainModel.ClickButton("Exit",100,50);
+        storeButton = new MainModel.ClickButton("Store",100,50);
+        achievementsButton = new MainModel.ClickButton("Achievements",100,50);
         playButton.setOnAction(value-> {
                 mainView.stage.setScene(mainView.getDragonView().scene);
         });
@@ -46,7 +46,7 @@ public class MainMenuView{
         exitButton.setOnAction(value->controller.exit());
         vbox = new VBox(playButton, storeButton, achievementsButton, settingsButton, exitButton);
         vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(20);
+        vbox.setSpacing(10);
         scene = new Scene(vbox, 400, 500);
     }
 

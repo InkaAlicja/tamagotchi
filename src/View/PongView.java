@@ -1,6 +1,7 @@
 package View;
 
 import Controller.PongController;
+import Model.MainModel;
 import Model.PongModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,6 +20,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.FileNotFoundException;
 
 import static java.lang.Math.sqrt;
 
@@ -43,7 +46,7 @@ public class PongView {
         model = new PongModel(this);
         controller = new PongController(this, model);
     }
-    public void display() {
+    public void display() throws FileNotFoundException {
         score=0;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -59,7 +62,7 @@ public class PongView {
         mediaPlayer = model.getMediaPlayer();
         mediaPlayer.setMute(playView.dragonView.mainView.getMainModel().getIsMuted());
 
-        Button back = new Button("back");
+        MainModel.ClickButton back = new MainModel.ClickButton("back","Resources/pinkButton.png",60,30,true);
         back.setOnAction(value-> { mediaPlayer.stop();time.stop();window.close();});
         HBox smallBox = new HBox(back);
         smallBox.setAlignment(Pos.CENTER);
@@ -97,7 +100,7 @@ public class PongView {
 
             ballX = 300;
             ballY = 200;
-            double min=0.1,max=2;
+            double min=0.3,max=1.0;
             ballYVector=0;
             ballXVector=0;
             while(ballXVector==0 || ballYVector==0 || Math.abs(ballXVector/ballYVector)<2) {

@@ -66,7 +66,7 @@ public class StoreView {
         moneyBox = new HBox(coinV,money);
         moneyBox.setAlignment(Pos.CENTER);
         moneyBox.setMinSize(230,50);
-        back = new MainModel.ClickButton("Back");
+        back = new MainModel.ClickButton("Back",60,30);
         backBox = new HBox(back);
         backBox.setMinSize(70,40);
         backBox.setAlignment(Pos.CENTER);

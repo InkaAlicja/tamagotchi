@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,7 +26,7 @@ public class AchievementsView {
     MainModel.ClickButton backButton;
     HashMap<Integer, Achievement> map;
 
-    public AchievementsView(MainView mainView){
+    public AchievementsView(MainView mainView) throws FileNotFoundException {
         this.mainView = mainView;
         model = new AchievementsModel();
         controller = new AchievementsController(model,this);
@@ -44,7 +45,7 @@ public class AchievementsView {
         achBox.setMinWidth(200);
         achBox.setAlignment(Pos.CENTER);
 
-        backButton = new MainModel.ClickButton("back");
+        backButton = new MainModel.ClickButton("back",60,30);
         backButton.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
 
         mainBox = new VBox(backButton,achBox);

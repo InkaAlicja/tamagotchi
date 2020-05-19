@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.FileNotFoundException;
+
 //import java.awt.*;
 
 public class SettingsView {
@@ -21,19 +23,18 @@ public class SettingsView {
     Scene scene;
     StackPane[] backgroundOptions;
     int backgroundOptionsCount;
-    MainModel.ClickButton backButton;
-    Button muteButton;
+    MainModel.ClickButton backButton,muteButton;
     SettingsController controller;
-    public SettingsView(MainView mainView){
+    public SettingsView(MainView mainView) throws FileNotFoundException {
         this.mainView = mainView;
         controller = new SettingsController(this);
-        backButton = new MainModel.ClickButton("Back");
+        backButton = new MainModel.ClickButton("Back",60,30);
 
         backButton.setOnAction(value->{
             mainView.stage.setScene(mainView.menu.scene);
         });
 
-        muteButton = new Button("Mute!");
+        muteButton = new MainModel.ClickButton("Mute!",60,30);
         muteButton.setOnAction(value ->{
             if (muteButton.getText().equals("Mute!")) {
                 muteButton.setText("Unmute!");

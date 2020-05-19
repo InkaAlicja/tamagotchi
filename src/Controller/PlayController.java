@@ -7,6 +7,8 @@ import View.PongView;
 import View.TicTacToeView;
 import View.WalkingView;
 
+import java.io.FileNotFoundException;
+
 public class PlayController {
     PlayView view;
     TicTacToeView ticTacToeView;
@@ -26,7 +28,7 @@ public class PlayController {
 
     public void playOtherOtherGame(){ walkingView = new WalkingView(this.view);}
 
-    public void playPong(){
+    public void playPong() throws FileNotFoundException {
         if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().hasSaddle()){
             if(view.getDragonController().getDragonView().getMainView().getStoreView().getController().wearsSaddle()) {
                 pongView = new PongView(view);//play
