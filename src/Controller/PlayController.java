@@ -35,6 +35,7 @@ public class PlayController {
                 pongView.display();
                 System.out.println(pongView.getScore());
                 view.getDragonController().addMoney(pongView.getScore()*10);
+                view.getDragonController().addHealth(-0.1f);
             }
             else SaddleBox.display("You need to wear your saddle to play");
         }
