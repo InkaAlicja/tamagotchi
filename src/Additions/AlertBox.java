@@ -1,5 +1,6 @@
 package Additions;
 
+import Model.MainModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,10 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 public class AlertBox {
-    public static void display(String message,String action){
+    public static void display(String message,String action) throws FileNotFoundException {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -21,7 +23,7 @@ public class AlertBox {
         Label label = new Label();
         label.setText(message);
 
-        Button button = new Button(action);
+        MainModel.ClickButton button = new MainModel.ClickButton(action,100,30);
         button.setOnAction(event -> window.close());
 
         VBox box = new VBox(10);

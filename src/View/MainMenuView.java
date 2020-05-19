@@ -26,11 +26,11 @@ public class MainMenuView{
     public MainMenuView(MainView mainView) throws FileNotFoundException {
         this.mainView=mainView;
         controller = new MainMenuController(this);
-        playButton = new MainModel.ClickButton("Play",100,50);
-        settingsButton = new MainModel.ClickButton("Settings",100,50);
-        exitButton = new MainModel.ClickButton("Exit",100,50);
-        storeButton = new MainModel.ClickButton("Store",100,50);
-        achievementsButton = new MainModel.ClickButton("Achievements",100,50);
+        playButton = new MainModel.ClickButton("Play",110,40);
+        settingsButton = new MainModel.ClickButton("Settings",110,40);
+        exitButton = new MainModel.ClickButton("Exit",110,40);
+        storeButton = new MainModel.ClickButton("Store",110,40);
+        achievementsButton = new MainModel.ClickButton("Achievements",110,40);
         playButton.setOnAction(value-> {
                 mainView.stage.setScene(mainView.getDragonView().scene);
         });

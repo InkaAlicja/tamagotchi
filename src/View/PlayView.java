@@ -2,6 +2,7 @@ package View;
 
 import Controller.DragonController;
 import Controller.PlayController;
+import Model.MainModel;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
@@ -16,28 +17,34 @@ import java.io.FileNotFoundException;
 
 public class PlayView{
     PlayController controller;
-    Button ticTacToeButton, otherGameButton,otherOtherGameButton,backButton;
+    MainModel.ClickButton ticTacToeButton, otherGameButton,otherOtherGameButton,backButton;
     VBox mainVBox;
     DragonView dragonView;
     Stage stage;
     Scene scene;
-    public PlayView(DragonView dragonView){
+    public PlayView(DragonView dragonView) throws FileNotFoundException {
         controller = new PlayController(this);
         this.dragonView=dragonView;
-        ticTacToeButton = new Button("Tic Tac Toe");
-        ticTacToeButton.setOnAction(value->controller.playTicTacToe());
+        ticTacToeButton = new MainModel.ClickButton("Tic Tac Toe",90,30);
+        ticTacToeButton.setOnAction(value-> {
+            try {
+                controller.playTicTacToe();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
 
-        otherGameButton = new Button("Pong");
+        otherGameButton = new MainModel.ClickButton("Pong",90,30);
         otherGameButton.setOnAction(value-> {
             try {
                 controller.playPong();
             } catch (FileNotFoundException e) { }
         });
 
-        otherOtherGameButton = new Button("other game");
+        otherOtherGameButton = new MainModel.ClickButton("other game",90,30);
         otherOtherGameButton.setOnAction((value->controller.playOtherOtherGame()));
 
-        backButton = new Button("Back");
+        backButton = new MainModel.ClickButton("Back",90,30);
         backButton.setOnAction(value->controller.back());
         mainVBox = new VBox(ticTacToeButton,otherGameButton, backButton);//otherOtherGameButton,
         mainVBox.setAlignment(Pos.CENTER);

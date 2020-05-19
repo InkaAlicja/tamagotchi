@@ -1,6 +1,7 @@
 package View;
 
 import Controller.TicTacToeController;
+import Model.MainModel;
 import Model.TicTacToeModel;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -14,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class TicTacToeView {
     PlayView playView;
     Scene scene;
@@ -23,22 +26,28 @@ public class TicTacToeView {
     Rectangle[] squares;
     StackPane[] stack;
     HBox[] rows;
-    Button newGameButton, exitButton;
+    MainModel.ClickButton newGameButton, exitButton;
     VBox columns;
-    public TicTacToeView(PlayView playView){
+    public TicTacToeView(PlayView playView) throws FileNotFoundException {
         this.playView=playView;
         model = new TicTacToeModel(this);
         controller = new TicTacToeController(this, model);
     }
 
-    public void setNewScene(){
+    public void setNewScene() throws FileNotFoundException {
         stack = new StackPane[9];
         squares = new Rectangle[9];
         labels = new Label[9];
         rows = new HBox[3];
-        newGameButton = new Button("New Game!");
-        exitButton = new Button("exit");
-        newGameButton.setOnAction(value->controller.newGame());
+        newGameButton = new MainModel.ClickButton("New Game!",100,30);
+        exitButton = new MainModel.ClickButton("exit",100,30);
+        newGameButton.setOnAction(value-> {
+            try {
+                controller.newGame();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         exitButton.setOnAction(value->controller.exit());
         for (int i=0; i<9; i++){
             labels[i] = new Label();
@@ -48,7 +57,13 @@ public class TicTacToeView {
             squares[i].setFill(Color.WHITE);
             stack[i] = new StackPane(squares[i], labels[i]);
             int finalI = i;
-            stack[i].setOnMouseClicked(value->controller.click(finalI));
+            stack[i].setOnMouseClicked(value-> {
+                try {
+                    controller.click(finalI);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         for (int i=0; i<3; i++){
             rows[i] = new HBox(stack[3*i],stack[1+3*i],stack[2+3*i]);
@@ -63,15 +78,23 @@ public class TicTacToeView {
         playView.getStage().setScene(scene);
     }
 
-    public void setDifficultyLevelScene(){
-        Button easyButton = new Button("Easy");
-        Button hardButton = new Button("Hard");
-        Button exitDifficultyLevelSceneButton = new Button("Exit");
+    public void setDifficultyLevelScene() throws FileNotFoundException {
+        MainModel.ClickButton easyButton = new MainModel.ClickButton("Easy",60,30);
+        MainModel.ClickButton hardButton = new MainModel.ClickButton("Hard",60,30);
+        MainModel.ClickButton exitDifficultyLevelSceneButton = new MainModel.ClickButton("Exit",60,30);
         easyButton.setOnAction(value-> {
-            controller.setDifficulty(true);
+            try {
+                controller.setDifficulty(true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         hardButton.setOnAction(value-> {
-            controller.setDifficulty(false);
+            try {
+                controller.setDifficulty(false);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         exitDifficultyLevelSceneButton.setOnAction(value->controller.exit());
         VBox vbox = new VBox(easyButton, hardButton, exitDifficultyLevelSceneButton);

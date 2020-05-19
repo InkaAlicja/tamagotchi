@@ -120,14 +120,14 @@ public class StoreView {
 
     public class ItemBox{
         public HBox box,pictureBox;
-        public Button pick,buy;
+        public MainModel.ClickButton pick,buy;
         public ImageView imgView;
         public int cost;
 
-        public ItemBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,int cost,boolean isSaddle){
+        public ItemBox(HashMap<Button,type> map,Image img,Image bigImage,String where,type typ,int cost,boolean isSaddle) throws FileNotFoundException {
             imgView = new ImageView(img);
-            buy = new Button("buy");
-            pick = new Button ("pick");
+            buy = new MainModel.ClickButton("buy",40,25);
+            pick = new MainModel.ClickButton ("pick",45,25);
             pick.setDisable(true);
             map.put(pick,typ);
             this.cost=cost;

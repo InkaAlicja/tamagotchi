@@ -110,7 +110,9 @@ public class DragonView {
                     controller.addMoney(20);
                  else AlertBox.display("Can't you even wait 10s?","sorry");
             } catch (FileNotFoundException e) {
-                AlertBox.display("No ads to show","OK");
+                try {
+                    AlertBox.display("No ads to show","OK");
+                } catch (FileNotFoundException fileNotFoundException) {}
             }
         });
         scene = new Scene(mainVBox, 400, 500);

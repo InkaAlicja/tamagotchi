@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 
 public class MainModel {
     MainView view;
@@ -67,6 +68,12 @@ public class MainModel {
         mainBackground = new Background(fill);
     }
     public static class ClickButton extends Button {
+        public enum COLOUR{WHITE,BEIGE,PINK}
+
+        static COLOUR colour=COLOUR.WHITE;
+        static LinkedList<ClickButton> List=new LinkedList<>();//TODO: czy tak wolno?
+        //public static void startList(){List=new LinkedList<>();}
+
         FileInputStream inputStreamForButton;
         Image imageForButton;
         BackgroundImage backgroundImageForButton;
@@ -75,6 +82,8 @@ public class MainModel {
         public MediaPlayer mediaPlayerClick;
         public Image image;
         static boolean mute=false;
+        int width,height;
+
         public static void setMute(boolean mute){
             ClickButton.mute = mute;
         }
@@ -84,18 +93,20 @@ public class MainModel {
             soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
-            this.setButtonBackground(width,height,"Resources/button2.png");
+            this.setButtonBackground(width,height,"AUTO");
 
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+            List.add(this);
         }
         public ClickButton(String name,String sound,int width,int height) throws FileNotFoundException {
             super(name);
             soundClick = new Media(new File(sound).toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
-            this.setButtonBackground(width,height,"Resources/button2.png");
+            this.setButtonBackground(width,height,"AUTO");
 
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+            List.add(this);
         }
         public ClickButton(String name,String sound,String pic,int width,int height) throws FileNotFoundException {
             super(name);
@@ -104,18 +115,20 @@ public class MainModel {
             soundClick = new Media(new File(sound).toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
-            this.setButtonBackground(width,height,"Resources/button2.png");
+            this.setButtonBackground(width,height,"AUTO");
 
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+            List.add(this);
         }
         public ClickButton(String name,ImageView imgView,int width,int height) throws FileNotFoundException {
             super(name,imgView);
-            this.setButtonBackground(width,height,"Resources/button2.png");
+            this.setButtonBackground(width,height,"AUTO");
 
             soundClick = new Media(new File("Resources/buttonClick.mp3").toURI().toString());
             mediaPlayerClick = new MediaPlayer(soundClick);
 
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+            List.add(this);
         }
         public ClickButton(String name,String pic,int width,int height,boolean b) throws FileNotFoundException {
             super(name);
@@ -125,9 +138,17 @@ public class MainModel {
             mediaPlayerClick = new MediaPlayer(soundClick);
 
             this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
+            List.add(this);
         }
 
         void setButtonBackground(int width,int height,String pic) throws FileNotFoundException {
+            this.width=width;
+            this.height=height;
+            if(pic.equals("AUTO")){
+                if(colour==COLOUR.BEIGE)pic="Resources/pinkishButton.png";
+                if(colour==COLOUR.PINK)pic="Resources/purpleButton.png";
+                else pic="Resources/cremeButton.png";
+            }
             inputStreamForButton=new FileInputStream(pic);
             imageForButton=new Image(inputStreamForButton,width,height,false,false);
             backgroundImageForButton =
@@ -136,6 +157,18 @@ public class MainModel {
             this.setMinWidth(width);
             this.setMinHeight(height);
             this.setBackground(imageViewForButton);
+        }
+        public static void setColour(COLOUR col){
+            String pic;
+            if(colour==COLOUR.BEIGE)pic="Resources/pinkishButton.png";
+            if(colour==COLOUR.PINK)pic="Resources/purpleButton.png";
+            else pic="Resources/cremeButton.png";
+            String picture=pic;
+            List.forEach(button-> {
+                try {
+                    button.setButtonBackground(button.width,button.height, picture);
+                } catch (FileNotFoundException e) {}
+            });
         }
     }
 

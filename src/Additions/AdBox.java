@@ -1,6 +1,7 @@
 package Additions;
 
 
+import Model.MainModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,7 +25,7 @@ public class AdBox {
         ImageView imageView = new ImageView(image);
         window.initModality(Modality.APPLICATION_MODAL);
 
-        Button button = new Button("close");
+        MainModel.ClickButton button = new MainModel.ClickButton("close",70,30);
         button.setOnAction(event -> window.close());
 
 

@@ -4,6 +4,7 @@ import Additions.AlertBox;
 import Model.TicTacToeModel;
 import View.TicTacToeView;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.Random;
 
@@ -12,13 +13,13 @@ import static java.lang.Thread.sleep;
 public class TicTacToeController {
     TicTacToeView view;
     TicTacToeModel model;
-    public TicTacToeController(TicTacToeView view, TicTacToeModel model){
+    public TicTacToeController(TicTacToeView view, TicTacToeModel model) throws FileNotFoundException {
         this.view=view;
         this.model=model;
         view.setDifficultyLevelScene();
     }
 
-    public void newGame() {
+    public void newGame() throws FileNotFoundException {
         for (int i=0; i<9; i++) model.addToReminderSet(i);
         model.setUserIsFirst(new Random().nextBoolean());
         model.setTurn(0);
@@ -30,7 +31,7 @@ public class TicTacToeController {
         }
     }
 
-    public void setDifficulty(boolean difficulty){
+    public void setDifficulty(boolean difficulty) throws FileNotFoundException {
             model.setDifficulty(difficulty);
             newGame();
     }
@@ -83,7 +84,7 @@ public class TicTacToeController {
         view.getPlayView().resetScene();
     }
 
-    public void click(int i){
+    public void click(int i) throws FileNotFoundException {
         userMove(i);
         if (checkIfUserWon()){
             AlertBox.display("You won!!!", "Continue");

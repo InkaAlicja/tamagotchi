@@ -47,7 +47,9 @@ public class DragonController {
             canBeMore=model.addHealth(a);
         }catch(DragonModel.DyingDragonException ex){
             view.setHealth(model.getHealth());
-            AlertBox.display("Your dragon needs to be taken care of!","OK, lemme take care of him!");
+            try {
+                AlertBox.display("Your dragon needs to be taken care of!","OK, lemme take care of him!");
+            } catch (FileNotFoundException e) {}
         }
         view.setHealth(model.getHealth());
         return canBeMore;
@@ -75,14 +77,18 @@ public class DragonController {
     }
 
     public void play(){
-        playView = new PlayView(this.view);
+        try {
+            playView = new PlayView(this.view);
+        } catch (FileNotFoundException e) { }
     }
 
     public boolean addMoney(int a){
         try{
             model.addMoney(a);
         }catch(DragonModel.BrokeException ex){
-            AlertBox.display("You dont have enough money!","OK, lemme earn some!");
+            try {
+                AlertBox.display("You dont have enough money!","OK, lemme earn some!");
+            } catch (FileNotFoundException e) {}
             return false;
         }
         view.setMoney(model.getMoney());
@@ -108,7 +114,9 @@ public class DragonController {
                 model.setAddition(img,where);
                 view.setAddition(model.getAddition(where),where);
             } catch (FileNotFoundException e) {
-                AlertBox.display("File not found :/","ok");
+                try {
+                    AlertBox.display("File not found :/","ok");
+                } catch (FileNotFoundException fileNotFoundException) { }
             }
         }
     }

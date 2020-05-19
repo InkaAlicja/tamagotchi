@@ -22,7 +22,7 @@ public class PlayController {
         view.getStage().close();
     }
 
-    public void playTicTacToe(){
+    public void playTicTacToe() throws FileNotFoundException {
         ticTacToeView = new TicTacToeView(view);
     }
 
