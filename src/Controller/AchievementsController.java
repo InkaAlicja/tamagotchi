@@ -20,4 +20,5 @@ public class AchievementsController {
         });
         if(trophyId<=6)view.getMainView().getStoreView().getController().enableTrophy(trophyId);
     }
+    public AchievementsModel getModel(){return model;}
 }

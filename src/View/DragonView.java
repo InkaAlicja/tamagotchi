@@ -3,6 +3,7 @@ package View;
 import Additions.AdBox;
 import Additions.AlertBox;
 import Controller.DragonController;
+import Model.AchievementsModel;
 import Model.DragonModel;
 import Model.MainModel;
 import javafx.geometry.Insets;
@@ -17,7 +18,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.concurrent.TimeUnit;
 
 public class DragonView {
@@ -35,9 +39,13 @@ public class DragonView {
     ImageView imageCoin1,imageCoin2;
     Label money;
     StackPane stackPane;
-    public DragonView(MainView mainView) throws FileNotFoundException {
+    public DragonView(MainView mainView) throws IOException, ClassNotFoundException {
         this.mainView=mainView;
         model = new DragonModel();
+       // ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/dragmodel.bin"));
+       // model = (DragonModel) objectInputStream.readObject();
+        //objectInputStream.close();
+
         controller = new DragonController(this,model);
 
         feed = new MainModel.ClickButton("Feed","Resources/eating.mp3",60,30);
@@ -115,6 +123,7 @@ public class DragonView {
                 } catch (FileNotFoundException fileNotFoundException) {}
             }
         });
+        resetBackground();
         scene = new Scene(mainVBox, 400, 500);
     }
 

@@ -11,7 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -26,9 +29,16 @@ public class AchievementsView {
     MainModel.ClickButton backButton;
     HashMap<Integer, Achievement> map;
 
-    public AchievementsView(MainView mainView) throws FileNotFoundException {
+    public AchievementsView(MainView mainView) throws IOException, ClassNotFoundException {
         this.mainView = mainView;
-        model = new AchievementsModel();
+        try {
+            ObjectInputStream objectInputStream =
+                    new ObjectInputStream(new FileInputStream("src/data/achmodel.bin"));
+            model = (AchievementsModel) objectInputStream.readObject();
+            objectInputStream.close();
+        }catch(Exception e) {
+             model = new AchievementsModel();
+        }
         controller = new AchievementsController(model,this);
 
         map= new HashMap<Integer, Achievement>();
@@ -67,7 +77,7 @@ public class AchievementsView {
             double deltaY = scrollEvent.getDeltaY() * SPEED;
             pane.setVvalue(pane.getVvalue() - deltaY);
         });
-
+        resetBackground();
         scene = new Scene(pane,400,500);
     }
 
@@ -96,12 +106,13 @@ public class AchievementsView {
                     "-fx-border-insets: 5;" +
                     "-fx-border-radius: 5;" +
                     "-fx-border-color: gray;");
-
+            if(model.isAch(id))this.achieve();
             map.put(id,this);
         }
 
         public void achieve() {
             isAchieved = true;
+            model.setAchToTrue(id);
             box.setStyle("-fx-padding: 10;" +
                     "-fx-border-style: solid inside;" +
                     "-fx-border-width: 2;" +
@@ -123,5 +134,6 @@ public class AchievementsView {
     public AchievementsController getController(){
         return controller;
     }
+    public AchievementsModel getModel(){return model;}
 
 }

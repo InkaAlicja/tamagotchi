@@ -16,12 +16,13 @@ import javafx.stage.StageStyle;
 
 import javax.swing.text.html.ImageView;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import static javafx.application.Application.launch;
 
 public class Main{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         MainView view = new MainView();
         MainModel model = new MainModel(view);
 

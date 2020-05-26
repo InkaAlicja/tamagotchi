@@ -47,6 +47,7 @@ public class MainMenuView{
         vbox = new VBox(playButton, storeButton, achievementsButton, settingsButton, exitButton);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
+        resetBackground();
         scene = new Scene(vbox, 400, 500);
     }
 

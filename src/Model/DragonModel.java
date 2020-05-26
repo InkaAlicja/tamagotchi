@@ -10,8 +10,9 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
-public class DragonModel {
+public class DragonModel implements Serializable {
     public Image dragon,additionHead,additionFace,additionBack,animation;
     public Image coinImage;
     private float health;

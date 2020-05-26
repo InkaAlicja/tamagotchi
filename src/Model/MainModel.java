@@ -12,28 +12,36 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.LinkedList;
 
-public class MainModel {
-    MainView view;
-    Background mainBackground;
-    BackgroundFill[] mainBackgroundFill;
-    BackgroundFill[][] backgroundFills;
+public class MainModel implements Serializable {
+    transient MainView view;
+    transient Background mainBackground;
+    transient BackgroundFill[] mainBackgroundFill;
+    transient BackgroundFill[][] backgroundFills;
     int mainBackgroundFillId;
     boolean isMuted;
-    public MainModel(MainView view){
+    public MainModel(MainView view) throws IOException, ClassNotFoundException {
         this.view = view;
-        isMuted = false;
         backgroundFills = new BackgroundFill[3][2];
         backgroundFills[0][0] = new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][0] = new BackgroundFill(Color.BISQUE, CornerRadii.EMPTY, Insets.EMPTY);
         backgroundFills[1][1] = new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, new Insets(5d));
         backgroundFills[2][0] = new BackgroundFill(Color.PLUM, CornerRadii.EMPTY, Insets.EMPTY);
-        mainBackgroundFill = backgroundFills[0];
-        mainBackgroundFillId=0;
+
+        try{
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/settmodel.bin"));
+            MainModel model = (MainModel) objectInputStream.readObject();
+            objectInputStream.close();
+            isMuted = model.isMuted;
+            mainBackgroundFillId=model.mainBackgroundFillId;
+        }catch(Exception e){
+            isMuted=false;
+            mainBackgroundFillId=0;
+        }
+
+        mainBackgroundFill = backgroundFills[mainBackgroundFillId];
         mainBackground = new Background(mainBackgroundFill);
 
     }
@@ -109,6 +117,9 @@ public class MainModel {
         public ClickButton(String name,String sound,String pic,int width,int height) throws FileNotFoundException {
             super(name);
             image = new Image(new FileInputStream(pic),300,300,true,false);
+            soundClick = new Media(new File(sound).toURI().toString());
+            mediaPlayerClick = new MediaPlayer(soundClick);
+            this.setOnMouseClicked(value->{mediaPlayerClick.setMute(mute);mediaPlayerClick.stop();mediaPlayerClick.play();});
             this.setButtonBackground(width,height,"AUTO");
           //  List.add(this);
         }

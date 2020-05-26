@@ -60,6 +60,7 @@ public class SettingsView {
         mainVBox = new VBox(new Label("Choose background:"), colorsHBox, new Label("Sound:"), muteButton, backButton);
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(5);
+        this.resetBackground(mainView.mainModel.getMainBackgroundFillId(),0);
         scene = new Scene(mainVBox, 400, 500);
     }
 

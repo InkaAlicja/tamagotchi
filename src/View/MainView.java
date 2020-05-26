@@ -1,5 +1,7 @@
 package View;
 
+import Model.AchievementsModel;
+import Model.DragonModel;
 import Model.MainModel;
 import Model.StoreModel;
 import javafx.application.Application;
@@ -7,6 +9,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 public class MainView extends Application {
@@ -19,7 +23,11 @@ public class MainView extends Application {
     SettingsView settingsView;
 
     public MainView(){
-        mainModel = new MainModel(this);
+        try {
+            mainModel = new MainModel(this);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -32,6 +40,14 @@ public class MainView extends Application {
         settingsView = new SettingsView(this);
         stage.setScene(menu.scene);
         stage.show();
+    }
+    @Override
+    public void stop() throws IOException {
+        System.out.println("Stage is closing");
+        // Save file
+        writeModel("src/data/achmodel.bin",this.getAchievementsView().getModel());
+        writeModel("src/data/settmodel.bin",this.mainModel);
+        writeModel("src/data/test.bin",this.getStoreView().getModel());//strmodel.bin
     }
     public MainModel getMainModel(){
         return mainModel;
@@ -59,5 +75,12 @@ public class MainView extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    void writeModel(String file,Object mod) throws IOException {
+        ObjectOutputStream objectOutputStream =
+                new ObjectOutputStream(new FileOutputStream(file));
+        objectOutputStream.writeObject(mod);
+        objectOutputStream.close();
     }
 }

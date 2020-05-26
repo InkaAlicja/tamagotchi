@@ -116,7 +116,7 @@ public class DragonController {
             } catch (FileNotFoundException e) {
                 try {
                     AlertBox.display("File not found :/","ok");
-                } catch (FileNotFoundException fileNotFoundException) { }
+                } catch (FileNotFoundException fileNotFoundException) { System.out.println("ERROR LOADING ALERTBOX");}
             }
         }
     }
