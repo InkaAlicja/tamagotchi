@@ -35,6 +35,10 @@ public class SettingsView {
         });
 
         muteButton = new MainModel.ClickButton("Mute!",60,30);
+        if(mainView.getMainModel().getIsMuted()){
+            muteButton.setText("Unmute!");
+            controller.mute();
+        }
         muteButton.setOnAction(value ->{
             if (muteButton.getText().equals("Mute!")) {
                 muteButton.setText("Unmute!");

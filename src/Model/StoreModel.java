@@ -18,11 +18,13 @@ public class StoreModel implements Serializable {
         transient FileInputStream fileInputStreamBig,fileInputStreamSmall;
         transient public SmallImage smallImage;
         transient public BigImage bigImage;
+        String bigImageString;
         boolean bought;
         boolean wearing;
         boolean won;//for trophies
 
         public Item(String streamBig,String streamSmall) throws FileNotFoundException {
+            bigImageString = streamBig;
             fileInputStreamBig= new FileInputStream(streamBig);
             bigImage = new BigImage(fileInputStreamBig);
             fileInputStreamSmall = new FileInputStream(streamSmall);
@@ -33,6 +35,7 @@ public class StoreModel implements Serializable {
         }
         public SmallImage smallImg(){return smallImage;}
         public BigImage bigImg(){return bigImage;}
+        public String bigImgString(){return bigImageString;}
 
         public boolean bought(){return bought;}
         public void buy(){bought=true;}

@@ -33,7 +33,7 @@ public class AchievementsView {
         this.mainView = mainView;
         try {
             ObjectInputStream objectInputStream =
-                    new ObjectInputStream(new FileInputStream("src/data/achmodel.bin"));
+                    new ObjectInputStream(new FileInputStream("src/data/achievementsModel.bin"));
             model = (AchievementsModel) objectInputStream.readObject();
             objectInputStream.close();
         }catch(Exception e) {
@@ -112,7 +112,7 @@ public class AchievementsView {
 
         public void achieve() {
             isAchieved = true;
-            model.setAchToTrue(id);
+            //model.setAchToTrue(id); controller to robi
             box.setStyle("-fx-padding: 10;" +
                     "-fx-border-style: solid inside;" +
                     "-fx-border-width: 2;" +

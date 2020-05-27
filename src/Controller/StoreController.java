@@ -17,8 +17,8 @@ public class StoreController {
     public void addMoney(int money){
         view.addMoney(money);
     }
-    public void setImage(Image image,String where){
-        view.getMainView().getDragonView().getController().setImageAddition(image,where);
+    public void setImage(Image image,String imgString,String where){
+        view.getMainView().getDragonView().getController().setImageAddition(image,imgString,where);
     }
     public boolean hasSaddle(){return model.hasSaddle(); }
     public void gotSaddle(){ model.gotSaddle();}
@@ -27,7 +27,7 @@ public class StoreController {
 
     public boolean  pickButtonAction(StoreView.ItemButton button, HashMap<StoreView.ItemButton, StoreView.type> Map){
         StoreView.type buttonType=Map.get(button);
-        if(button.getText()=="pick") {
+        if(button.getText().equals("pick")) {
             Map.forEach((Button, typ) -> {
                 if (typ == buttonType) {
                     view.setButton(Button, "pick");

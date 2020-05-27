@@ -22,6 +22,7 @@ public class MainModel implements Serializable {
     transient BackgroundFill[][] backgroundFills;
     int mainBackgroundFillId;
     boolean isMuted;
+
     public MainModel(MainView view) throws IOException, ClassNotFoundException {
         this.view = view;
         backgroundFills = new BackgroundFill[3][2];
@@ -31,7 +32,7 @@ public class MainModel implements Serializable {
         backgroundFills[2][0] = new BackgroundFill(Color.PLUM, CornerRadii.EMPTY, Insets.EMPTY);
 
         try{
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/settmodel.bin"));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/mainModel.bin"));
             MainModel model = (MainModel) objectInputStream.readObject();
             objectInputStream.close();
             isMuted = model.isMuted;

@@ -100,18 +100,19 @@ public class DragonController {
         return clockThread;
     }
 
-    public void setImageAddition(Image image,String where){
-        if(model.getAddition(where)!=image){
-            model.setAddition(image,where);
+    public void setImageAddition(Image image,String bigImgString,String where){
+       // if(model.getAddition(where)!=image){
+        if(!model.getAdditionString(where).equals(bigImgString)){
+            model.setAddition(image,bigImgString,where);
             view.setAddition(model.getAddition(where),where);
         }
         else{
             FileInputStream F;
             Image img;
             try {
-                F = new FileInputStream("Resources/blank.png");
-                img = new Image(F,100,100,true,false);
-                model.setAddition(img,where);
+               // F = new FileInputStream("Resources/blank.png");
+               // img = new Image(F,100,100,true,false);
+                model.setAddition(where);
                 view.setAddition(model.getAddition(where),where);
             } catch (FileNotFoundException e) {
                 try {
@@ -121,7 +122,7 @@ public class DragonController {
         }
     }
     public void setAnimation(Image image){
-        model.setAddition(image,"animation");
+        model.setAnimation(image);
         view.setAddition(model.getAddition("animation"),"animation");
         animationThread.interrupt();
         animationThread = new Thread(new animTime());

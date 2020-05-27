@@ -14,6 +14,7 @@ public class AchievementsController {
         this.view=view;
     }
     public void achieve(Integer trophyId){
+        model.setAchToTrue(trophyId);
         HashMap<Integer, AchievementsView.Achievement> map=view.getMap();
         map.forEach((id,ach)->{
             if(id.equals(trophyId))ach.achieve();

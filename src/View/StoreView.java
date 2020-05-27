@@ -44,7 +44,7 @@ public class StoreView {
         this.mainView=mainView;
         model = new StoreModel();
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/test.bin"));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/storeModel.bin"));
             StoreModel tempModel = (StoreModel) objectInputStream.readObject();
             objectInputStream.close();
             copyInfo(model,tempModel);
@@ -162,7 +162,6 @@ public class StoreView {
 
             if(myItem.isWearing()){
                // controller.setImage(item.bigImg(),where); // to nas wyblankuje bo juz zaladowalismy w DragonModelu co ma byc
-                                                            // (dragon view moze byc wczesniej odpalony)
                 controller.pickButtonAction(pick,Map);//wear sa juz dobrze ustawione
             }
 
@@ -189,7 +188,7 @@ public class StoreView {
             });
             pick.setOnAction(value->{
                 //myItem.wear();
-                controller.setImage(myItem.bigImg(),where);
+                controller.setImage(myItem.bigImg(),myItem.bigImgString(),where);
                 boolean b=controller.pickButtonAction(pick,Map);
                 if(isSaddle)controller.wearsSaddle(b);
             });
@@ -216,7 +215,7 @@ public class StoreView {
             else label.setDisable(true);
 
             if(myItem.isWearing()){
-                controller.setImage(item.bigImg(),where);
+                controller.setImage(item.bigImg(),item.bigImgString(),where);
                 controller.pickButtonAction(pick,Map);
             }
             map.put(pick,typ);
@@ -235,7 +234,7 @@ public class StoreView {
             box.setAlignment(Pos.CENTER_LEFT);
 
             pick.setOnAction(value->{
-                controller.setImage(item.bigImg(),where);
+                controller.setImage(myItem.bigImg(),myItem.bigImgString(),where);
                 controller.pickButtonAction(pick,Map);
             });
             mapOfTrophies.put(id,this);

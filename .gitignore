@@ -94,3 +94,6 @@ fabric.properties
 
 #classes
 *.class
+
+#binary files
+*.bin

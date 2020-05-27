@@ -4,6 +4,7 @@ import Model.AchievementsModel;
 import Model.DragonModel;
 import Model.MainModel;
 import Model.StoreModel;
+import data.Data;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ public class MainView extends Application {
     AchievementsView achievementsView;
     MainModel mainModel;
     SettingsView settingsView;
+    Data data;
 
     public MainView(){
         try {
@@ -33,6 +35,7 @@ public class MainView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
+        data = new Data();
         menu = new MainMenuView(this);
         dragonView = new DragonView(this);
         storeView = new StoreView(this);
@@ -45,9 +48,10 @@ public class MainView extends Application {
     public void stop() throws IOException {
         System.out.println("Stage is closing");
         // Save file
-        writeModel("src/data/achmodel.bin",this.getAchievementsView().getModel());
-        writeModel("src/data/settmodel.bin",this.mainModel);
-        writeModel("src/data/test.bin",this.getStoreView().getModel());//strmodel.bin
+        writeModel("src/data/achievementsModel.bin",this.getAchievementsView().getModel());
+        writeModel("src/data/mainModel.bin",this.mainModel);
+        writeModel("src/data/storeModel.bin",this.getStoreView().getModel());
+        writeModel("src/data/data.bin",data);
     }
     public MainModel getMainModel(){
         return mainModel;
@@ -68,6 +72,7 @@ public class MainView extends Application {
     public MainMenuView getMainMenuView(){
         return menu;
     }
+    public Data getData(){return data;}
 
     public Stage getStage(){
         return stage;

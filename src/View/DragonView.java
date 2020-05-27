@@ -41,10 +41,7 @@ public class DragonView {
     StackPane stackPane;
     public DragonView(MainView mainView) throws IOException, ClassNotFoundException {
         this.mainView=mainView;
-        model = new DragonModel();
-       // ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/data/dragmodel.bin"));
-       // model = (DragonModel) objectInputStream.readObject();
-        //objectInputStream.close();
+        model = new DragonModel(this);
 
         controller = new DragonController(this,model);
 

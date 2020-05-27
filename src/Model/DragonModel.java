@@ -1,5 +1,6 @@
 package Model;
 
+import View.DragonView;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 
 public class DragonModel implements Serializable {
+    DragonView view;
     public Image dragon,additionHead,additionFace,additionBack,animation;
     public Image coinImage;
     private float health;
@@ -25,20 +27,21 @@ public class DragonModel implements Serializable {
     Media soundHeart;
     MediaPlayer mediaPlayerHeart;
 
-    public DragonModel() throws FileNotFoundException {
-        money=100;
-        health=0.7f;
-        happiness=0.9f;
+    public DragonModel(DragonView view) throws FileNotFoundException {
+        this.view=view;
+        money=view.getMainView().getData().money;
+        health=view.getMainView().getData().health;
+        happiness=view.getMainView().getData().happiness;
 
         inputDragon = new FileInputStream("Resources/dragon-animated.gif");
         dragon = new Image(inputDragon, 300, 300, true, false);
 
-        inputAdditionFace = new FileInputStream("Resources/blank.png");
-        additionFace = new Image(inputAdditionFace,100,100,true,false);
-        inputAdditionHead = new FileInputStream("Resources/blank.png");
-        additionHead = new Image(inputAdditionHead,100,100,true,false);
-        inputAdditionBack = new FileInputStream("Resources/blank.png");
-        additionBack = new Image(inputAdditionBack,100,100,true,false);
+        inputAdditionFace = new FileInputStream(view.getMainView().getData().facePic);
+        additionFace = new Image(inputAdditionFace,300,300,true,false);
+        inputAdditionHead = new FileInputStream(view.getMainView().getData().headPic);
+        additionHead = new Image(inputAdditionHead,300,300,true,false);
+        inputAdditionBack = new FileInputStream(view.getMainView().getData().backPic);
+        additionBack = new Image(inputAdditionBack,300,300,true,false);
         inputAnimation = new FileInputStream("Resources/blank.png");
         animation = new Image(inputAnimation,100,100,true,false);
 
@@ -59,13 +62,16 @@ public class DragonModel implements Serializable {
         if(health<1f && a>=0){
             health+=a;
             health = Float.min(1f, health);
+            view.getMainView().getData().health=this.health;
             return true;
         }
         health+=a;//a ujemne
         if(health<0.05f) {
             health=0.05f;
+            view.getMainView().getData().health=this.health;
             throw new DyingDragonException();
         }
+        view.getMainView().getData().health=this.health;
         return true;
     }
     public float getHappiness(){
@@ -73,6 +79,7 @@ public class DragonModel implements Serializable {
     }
     public void addHappiness(float a){
         if(a>=0 || happiness+a>=0) happiness = Float.min(1f, happiness+a);
+        view.getMainView().getData().happiness=this.happiness;
     }
     public static class BrokeException extends Exception{}
 
@@ -82,19 +89,23 @@ public class DragonModel implements Serializable {
     public void addMoney(float a)throws BrokeException{
         if(money+a>=0)money+=a;
         else throw new BrokeException();
+        view.getMainView().getData().money=this.money;
     }
-    public void setAddition(Image image, String where){
-        if(where.equals("head")) additionHead = image;
-        if(where.equals("face")) additionFace = image;
-        if(where.equals("back")) additionBack = image;
-        if(where.equals("animation")) animation = image;
+    public void setAddition(Image image, String imgString,String where){
+        if(where.equals("head")) {additionHead = image;view.getMainView().getData().headPic=imgString;}
+        if(where.equals("face")) {additionFace = image;view.getMainView().getData().facePic=imgString;}
+        if(where.equals("back")) {additionBack = image;view.getMainView().getData().backPic=imgString;}
+       // if(where.equals("animation")) animation = image;
+    }
+    public void setAnimation(Image img){
+        animation = img;
     }
     public void setAddition(String where) throws FileNotFoundException {
         FileInputStream input = new FileInputStream("Resources/blank.png");
-        Image image = new Image(input,100,100,true,false);
-        if(where.equals("head")) additionHead = image;
-        if(where.equals("face")) additionFace = image;
-        if(where.equals("back")) additionBack = image;
+        Image image = new Image(input,300,300,true,false);
+        if(where.equals("head")) {additionHead = image;view.getMainView().getData().headPic="Resources/blank.png";}
+        if(where.equals("face")) {additionFace = image;view.getMainView().getData().facePic="Resources/blank.png";}
+        if(where.equals("back")) {additionBack = image;view.getMainView().getData().backPic="Resources/blank.png";}
         if(where.equals("animation")) animation = image;
     }
     public Image getAddition(String where) {
@@ -102,6 +113,12 @@ public class DragonModel implements Serializable {
         else if(where.equals("face")) return additionFace;
         else if(where.equals("back")) return additionBack;
         else if(where.equals("animation")) return animation;
+        else return null;
+    }
+    public String getAdditionString(String where){
+        if(where.equals("head")) return view.getMainView().getData().headPic;
+        else if(where.equals("face")) return view.getMainView().getData().facePic;
+        else if(where.equals("back")) return view.getMainView().getData().backPic;
         else return null;
     }
 
