@@ -1,6 +1,8 @@
 package View;
 
 import Controller.PongController;
+import Controller.PongControllerInterface;
+import Controller.PongMultiController;
 import Model.MainModel;
 import Model.PongModel;
 import javafx.animation.KeyFrame;
@@ -21,15 +23,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
+import java.net.Socket;
 
 import static java.lang.Math.sqrt;
 
 public class PongView {
     PlayView playView;
     PongModel model;
-    PongController controller;
+    PongControllerInterface controller;
 
+    String text;
     double barHeight = 100;
     int barWidth = 10;
     int diameter = 10, radius = diameter/2;
@@ -40,13 +46,24 @@ public class PongView {
     int score, sides = 25;
     double speedExc,speedInc=0.1d;
     MediaPlayer mediaPlayer;
+    int duration;
 
     public PongView(PlayView playView){
         this.playView=playView;
         model = new PongModel(this);
         controller = new PongController(this, model);
+        duration=5;
     }
+
+    public PongView(PlayView playView, DataInputStream in, DataOutputStream out, Socket clientSocket, int id) {
+        this.playView = playView;
+        model = new PongModel(this);
+        controller = new PongMultiController(this, model, in, out, clientSocket, id);
+        duration=20;
+    }
+
     public void display() throws FileNotFoundException {
+        text = "Click";
         score=0;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -56,14 +73,14 @@ public class PongView {
         Canvas canvas = new Canvas(600, 400);
         GraphicsContext graphContext = canvas.getGraphicsContext2D();
 
-        Timeline time = new Timeline(new KeyFrame(Duration.millis(5), e -> run(graphContext)));
+        Timeline time = new Timeline(new KeyFrame(Duration.millis(duration), e -> run(graphContext)));
         time.setCycleCount(Timeline.INDEFINITE);
 
         mediaPlayer = model.getMediaPlayer();
         mediaPlayer.setMute(playView.dragonView.mainView.getMainModel().getIsMuted());
 
         MainModel.ClickButton back = new MainModel.ClickButton("back","Resources/pinkButton.png",60,30,true);
-        back.setOnAction(value-> { mediaPlayer.stop();time.stop();window.close();});
+        back.setOnAction(value-> { controller.backButton();mediaPlayer.stop();time.stop();window.close();});
         HBox smallBox = new HBox(back);
         smallBox.setAlignment(Pos.CENTER);
         smallBox.setBackground(new Background(new BackgroundFill(Color.MAGENTA, CornerRadii.EMPTY, Insets.EMPTY),
@@ -73,10 +90,10 @@ public class PongView {
         VBox box = new VBox(canvas,smallBox);
 
         canvas.setOnMouseClicked(e -> {
-            start = true;
+            controller.start();
             mediaPlayer.play();
         });
-        canvas.setOnMouseMoved(e ->  meY  = e.getY() - barHeight/2);
+        canvas.setOnMouseMoved(e ->  controller.getMouse(e, barHeight));
         canvas.setCache(true);
         //canvas.setCacheShape(true);
         canvas.setCacheHint(CacheHint.SPEED);
@@ -96,21 +113,11 @@ public class PongView {
         if (!start){
             graphicsContext.setStroke(Color.WHITE);
             graphicsContext.setTextAlign(TextAlignment.CENTER);
-            graphicsContext.strokeText("Click", 300, 200);
+            graphicsContext.strokeText(text, 300, 200);
 
             ballX = 300;
             ballY = 200;
-            double min=0.3,max=1.0;
-            ballYVector=0;
-            ballXVector=0;
-            while(ballXVector==0 || ballYVector==0 || Math.abs(ballXVector/ballYVector)<2) {
-                ballXVector = Math.random() * (max - min +1) + min;
-                ballYVector = Math.random() * (max - min +1) + min;
-            }
-            int signumY= Math.random()*(1 + 1)  < 0.5f ? 1: -1;
-            int signumX= Math.random()*(1 + 1)  < 0.5f ? 1: -1;
-            ballYVector*=signumY;
-            ballXVector*=signumX;
+            controller.setRandomNumbers(scoreMe-scoreBot);
             speedExc=sqrt(ballXVector*ballXVector+ballYVector*ballYVector);
         }
         else {
@@ -128,6 +135,7 @@ public class PongView {
                 start = false;
                 score = Math.max(0, scoreMe - scoreBot);
                 mediaPlayer.stop();
+                controller.endOfRound();
             }
 
             //bot win
@@ -137,6 +145,7 @@ public class PongView {
                 score = Math.max(0, scoreMe - scoreBot);
                 mediaPlayer.stop();
                 controller.isIt3to0(scoreMe, scoreBot);
+                controller.endOfRound();
             }
 
             //jak w srodkowych 25%
@@ -226,11 +235,8 @@ public class PongView {
 
             ballX += ballXVector;
             ballY += ballYVector;
-            if (ballX < 500) {
-                botY = ballY - barHeight / 2;
-            } else {
-                botY = ballY > botY + barHeight / 2 ?botY += 1 : botY - 1;
-            }
+            controller.getOtherPersonMove();
+            controller.sendMyMove();
             graphicsContext.fillOval(ballX, ballY, diameter, diameter);
         }
 
@@ -244,4 +250,32 @@ public class PongView {
     }
     public PlayView getPlayView(){ return playView; }
 
+    public void setBallXVector(double ballXVector){
+        this.ballXVector = ballXVector;
+    }
+    public void setBallYVector(double ballYVector){
+        this.ballYVector = ballYVector;
+    }
+
+    public void setLeftY(double y) { meY = y; }
+    public void setRightY(double y) { botY = y; }
+    public double getLeftY() { return meY; }
+    public double getRightY() { return botY; }
+
+    public int getLeftScore(){
+        return scoreMe;
+    }
+    public int getRightScore(){
+        return scoreBot;
+    }
+    public void setStart(boolean b) {
+        start = b;
+    }
+    public void setText(String s){
+        text = s;
+    }
+
+    public double getBarHeight(){return barHeight;}
+    public double getBallX(){return ballX;}
+    public double getBallY(){return ballY;}
 }

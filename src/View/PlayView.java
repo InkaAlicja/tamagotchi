@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 
 public class PlayView{
     PlayController controller;
-    MainModel.ClickButton ticTacToeButton, otherGameButton,otherOtherGameButton,backButton;
+    MainModel.ClickButton ticTacToeButton, otherGameButton,otherOtherGameButton,backButton, pongOnlineButton;
     VBox mainVBox;
     DragonView dragonView;
     Stage stage;
@@ -44,9 +44,12 @@ public class PlayView{
         otherOtherGameButton = new MainModel.ClickButton("other game",90,30);
         otherOtherGameButton.setOnAction((value->controller.playOtherOtherGame()));
 
+        pongOnlineButton = new MainModel.ClickButton("Join Lobby", 90, 30);
+        pongOnlineButton.setOnAction(v->controller.setLogin());
+
         backButton = new MainModel.ClickButton("Back",90,30);
         backButton.setOnAction(value->controller.back());
-        mainVBox = new VBox(ticTacToeButton,otherGameButton, backButton);//otherOtherGameButton,
+        mainVBox = new VBox(ticTacToeButton,otherGameButton, pongOnlineButton, backButton);//otherOtherGameButton,
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(15);
         resetBackground();
