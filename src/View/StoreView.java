@@ -213,13 +213,13 @@ public class StoreView {
             this.name=name;
             imgView = new ImageView(item.smallImg());
             this.label=new Label("Required: "+name);
-            pick = new ItemButton("pick",45,25, item);
+            pick = new ItemButton("pick","Resources/buttonClick.mp3",45,25, item);
             mainView.getMainModel().addButton(pick);
             if(!myItem.didWeWin())pick.setDisable(true);
             else label.setDisable(true);
 
             if(myItem.isWearing()){
-                controller.setImage(item.bigImg(),item.bigImgString(),where);
+                //controller.setImage(item.bigImg(),item.bigImgString(),where);// to nas wyblankuje bo juz zaladowalismy w DragonModelu co ma byc
                 controller.pickButtonAction(pick,Map);
             }
             map.put(pick,typ);
@@ -238,7 +238,7 @@ public class StoreView {
             box.setAlignment(Pos.CENTER_LEFT);
 
             pick.setOnAction(value->{
-               // controller.setImage(myItem.bigImg(),myItem.bigImgString(),where); // to nas wyblankuje bo juz zaladowalismy w DragonModelu co ma byc
+                controller.setImage(myItem.bigImg(),myItem.bigImgString(),where);
                 controller.pickButtonAction(pick,Map);
             });
             mapOfTrophies.put(id,this);
