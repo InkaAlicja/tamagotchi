@@ -22,7 +22,6 @@ public class TicTacToeView {
     Scene scene;
     TicTacToeModel model;
     TicTacToeController controller;
-    Label[] labels;
     Rectangle[] squares;
     StackPane[] stack;
     HBox[] rows;
@@ -37,7 +36,6 @@ public class TicTacToeView {
     public void setNewScene() throws FileNotFoundException {
         stack = new StackPane[9];
         squares = new Rectangle[9];
-        labels = new Label[9];
         rows = new HBox[3];
         newGameButton = new MainModel.ClickButton("New Game!",80,40);
         exitButton = new MainModel.ClickButton("exit",80,40);
@@ -50,12 +48,11 @@ public class TicTacToeView {
         });
         exitButton.setOnAction(value->controller.exit());
         for (int i=0; i<9; i++){
-            labels[i] = new Label();
             squares[i] = new Rectangle();
             squares[i].setHeight(60);
             squares[i].setWidth(60);
             squares[i].setFill(Color.WHITE);
-            stack[i] = new StackPane(squares[i], labels[i]);
+            stack[i] = new StackPane(squares[i]);
             int finalI = i;
             stack[i].setOnMouseClicked(value-> {
                 try {
@@ -105,9 +102,6 @@ public class TicTacToeView {
         playView.getStage().setScene(difficultyLevelScene);
     }
 
-    public Label[] getLabels(){
-        return labels;
-    }
 
     public StackPane[] getStack() {
         return stack;

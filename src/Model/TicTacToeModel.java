@@ -2,9 +2,12 @@ package Model;
 
 import View.TicTacToeView;
 import javafx.animation.PauseTransition;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
 import java.util.*;
 
 public class TicTacToeModel {
@@ -15,6 +18,8 @@ public class TicTacToeModel {
     HashSet<Integer> userSet;
     HashSet<Integer> reminderSet;
     Background background;
+    ImageView pcImageView, userImageView;
+
     public List<List<Integer>> winScenarios = Arrays.asList(Arrays.asList(0,1,2), Arrays.asList(3,4,5),
             Arrays.asList(6,7,8), Arrays.asList(0,3,6), Arrays.asList(1,4,7), Arrays.asList(2,5,8), Arrays.asList(0,4,8), Arrays.asList(2,4,6));
     public TicTacToeModel(TicTacToeView view){
@@ -28,6 +33,22 @@ public class TicTacToeModel {
     }
 
     public Background getBackground() {return background;}
+
+    public ImageView getPcImageView(){
+        try {
+            return new ImageView(new Image(new FileInputStream("Resources/ticTacToePc.png"), 60, 60, true, false));
+        } catch (Exception e){
+            return new ImageView();
+        }
+    }
+
+    public ImageView getUserImageView(){
+        try {
+            return new ImageView(new Image(new FileInputStream("Resources/ticTacToeUser.png"), 60, 60, true, false));
+        } catch (Exception e){
+            return new ImageView();
+        }
+    }
 
     public void setDifficulty(boolean difficulty){
         this.difficulty=difficulty;

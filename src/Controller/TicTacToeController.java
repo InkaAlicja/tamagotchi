@@ -55,7 +55,7 @@ public class TicTacToeController {
     void userMove(int i){
         model.addToUserSet(i);
         model.removeFromReminderSet(i);
-        view.getLabels()[i].setText("X");
+        view.getStack()[i].getChildren().add(model.getUserImageView());
         model.setTurn(model.getTurn()+1);
         view.getStack()[i].setOnMouseClicked(value-> System.out.println("don't"));
     }
@@ -64,7 +64,7 @@ public class TicTacToeController {
         int move = model.getPcMove();
         model.removeFromReminderSet(move);
         model.addToPcSet(move);
-        view.getLabels()[move].setText("O");
+        view.getStack()[move].getChildren().add(model.getPcImageView());
         model.setTurn(model.getTurn()+1);
         view.getStack()[move].setOnMouseClicked(value-> System.out.println("don't"));
 
