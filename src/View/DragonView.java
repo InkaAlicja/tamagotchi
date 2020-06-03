@@ -111,12 +111,12 @@ public class DragonView {
         });
         ad.setOnAction(value-> {
             try {
-                 if(AdBox.display("Resources/socks.gif"))
+                 if(AdBox.display("Resources/socksPNG.gif", getMainView().getMainModel().getMainBackground()))
                     controller.addMoney(20);
-                 else AlertBox.display("Can't you even wait 10s?","sorry");
+                 else AlertBox.display("Can't you even wait 10s?","sorry", mainView.getMainModel().getMainBackground());
             } catch (FileNotFoundException e) {
                 try {
-                    AlertBox.display("No ads to show","OK");
+                    AlertBox.display("No ads to show","OK", mainView.getMainModel().getMainBackground());
                 } catch (FileNotFoundException fileNotFoundException) {}
             }
         });

@@ -100,6 +100,7 @@ public class PongView {
 
         Scene scene = new Scene(box);//new StackPane(canvas,back));
         window.setScene(scene);
+        window.setOnCloseRequest(v->controller.backButton());
 
         time.play();
         window.showAndWait();

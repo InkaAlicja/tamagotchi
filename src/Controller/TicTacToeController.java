@@ -87,7 +87,7 @@ public class TicTacToeController {
     public void click(int i) throws FileNotFoundException {
         userMove(i);
         if (checkIfUserWon()){
-            AlertBox.display("You won!!!", "Continue");
+            AlertBox.display("You won!!!", "Continue", model.getBackground());
             model.incGameCounter();
             model.incWinCounter();
             newGame();
@@ -100,14 +100,14 @@ public class TicTacToeController {
         if (model.getTurn()<9) {
             pcMove();
             if (checkIfPcWon()) {
-                AlertBox.display("You lost :(((", "Continue");
+                AlertBox.display("You lost :(((", "Continue", model.getBackground());
                 model.incGameCounter();
                 newGame();
                 return;
             }
         }
         if (model.getTurn()==9){
-            AlertBox.display("Draw", "Continue");
+            AlertBox.display("Draw", "Continue", model.getBackground());
             model.incGameCounter();
             newGame();
             return;

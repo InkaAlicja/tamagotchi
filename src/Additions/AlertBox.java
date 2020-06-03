@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 public class AlertBox {
-    public static void display(String message,String action) throws FileNotFoundException {
+    public static void display(String message, String action, Background background) throws FileNotFoundException {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -29,6 +30,7 @@ public class AlertBox {
         VBox box = new VBox(10);
         box.getChildren().addAll(label,button);
         box.setAlignment(Pos.CENTER);
+        box.setBackground(background);
 
         Scene scene = new Scene(box);
         window.setScene(scene);

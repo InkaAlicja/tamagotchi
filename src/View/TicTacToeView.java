@@ -39,8 +39,8 @@ public class TicTacToeView {
         squares = new Rectangle[9];
         labels = new Label[9];
         rows = new HBox[3];
-        newGameButton = new MainModel.ClickButton("New Game!",100,30);
-        exitButton = new MainModel.ClickButton("exit",100,30);
+        newGameButton = new MainModel.ClickButton("New Game!",80,40);
+        exitButton = new MainModel.ClickButton("exit",80,40);
         newGameButton.setOnAction(value-> {
             try {
                 controller.newGame();
@@ -79,9 +79,9 @@ public class TicTacToeView {
     }
 
     public void setDifficultyLevelScene() throws FileNotFoundException {
-        MainModel.ClickButton easyButton = new MainModel.ClickButton("Easy",60,30);
-        MainModel.ClickButton hardButton = new MainModel.ClickButton("Hard",60,30);
-        MainModel.ClickButton exitDifficultyLevelSceneButton = new MainModel.ClickButton("Exit",60,30);
+        MainModel.ClickButton easyButton = new MainModel.ClickButton("Easy",100,50);
+        MainModel.ClickButton hardButton = new MainModel.ClickButton("Hard",100,50);
+        MainModel.ClickButton exitDifficultyLevelSceneButton = new MainModel.ClickButton("Exit",100,50);
         easyButton.setOnAction(value-> {
             try {
                 controller.setDifficulty(true);
@@ -99,7 +99,7 @@ public class TicTacToeView {
         exitDifficultyLevelSceneButton.setOnAction(value->controller.exit());
         VBox vbox = new VBox(easyButton, hardButton, exitDifficultyLevelSceneButton);
         vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(20);
+        vbox.setSpacing(10);
         vbox.setBackground(playView.dragonView.mainView.getMainModel().getMainBackground());
         Scene difficultyLevelScene = new Scene(vbox, 400, 500);
         playView.getStage().setScene(difficultyLevelScene);

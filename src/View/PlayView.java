@@ -23,9 +23,9 @@ public class PlayView{
     Stage stage;
     Scene scene;
     public PlayView(DragonView dragonView) throws FileNotFoundException {
-        controller = new PlayController(this);
         this.dragonView=dragonView;
-        ticTacToeButton = new MainModel.ClickButton("Tic Tac Toe",90,30);
+        controller = new PlayController(this);
+        ticTacToeButton = new MainModel.ClickButton("Tic Tac Toe",100,50);
         ticTacToeButton.setOnAction(value-> {
             try {
                 controller.playTicTacToe();
@@ -34,24 +34,24 @@ public class PlayView{
             }
         });
 
-        otherGameButton = new MainModel.ClickButton("Pong",90,30);
+        otherGameButton = new MainModel.ClickButton("Pong",100,50);
         otherGameButton.setOnAction(value-> {
             try {
                 controller.playPong();
             } catch (FileNotFoundException e) { }
         });
 
-        otherOtherGameButton = new MainModel.ClickButton("other game",90,30);
+        otherOtherGameButton = new MainModel.ClickButton("other game",100,50);
         otherOtherGameButton.setOnAction((value->controller.playOtherOtherGame()));
 
-        pongOnlineButton = new MainModel.ClickButton("Join Lobby", 90, 30);
+        pongOnlineButton = new MainModel.ClickButton("Join Lobby", 100, 50);
         pongOnlineButton.setOnAction(v->controller.setLogin());
 
-        backButton = new MainModel.ClickButton("Back",90,30);
+        backButton = new MainModel.ClickButton("Back",100,50);
         backButton.setOnAction(value->controller.back());
         mainVBox = new VBox(ticTacToeButton,otherGameButton, pongOnlineButton, backButton);//otherOtherGameButton,
         mainVBox.setAlignment(Pos.CENTER);
-        mainVBox.setSpacing(15);
+        mainVBox.setSpacing(10);
         resetBackground();
         scene = new Scene(mainVBox, 400, 500);
         stage = new Stage();

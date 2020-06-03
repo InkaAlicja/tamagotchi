@@ -48,7 +48,7 @@ public class DragonController {
         }catch(DragonModel.DyingDragonException ex){
             view.setHealth(model.getHealth());
             try {
-                AlertBox.display("Your dragon needs to be taken care of!","OK, lemme take care of him!");
+                AlertBox.display("Your dragon needs to be taken care of!","OK, lemme take care of him!", view.getMainView().getMainModel().getMainBackground());
             } catch (FileNotFoundException e) {}
         }
         view.setHealth(model.getHealth());
@@ -87,7 +87,7 @@ public class DragonController {
             model.addMoney(a);
         }catch(DragonModel.BrokeException ex){
             try {
-                AlertBox.display("You dont have enough money!","OK, lemme earn some!");
+                AlertBox.display("You dont have enough money!","OK, lemme earn some!", view.getMainView().getMainModel().getMainBackground());
             } catch (FileNotFoundException e) {}
             return false;
         }
@@ -116,7 +116,7 @@ public class DragonController {
                 view.setAddition(model.getAddition(where),where);
             } catch (FileNotFoundException e) {
                 try {
-                    AlertBox.display("File not found :/","ok");
+                    AlertBox.display("File not found :/","ok", view.getMainView().getMainModel().getMainBackground());
                 } catch (FileNotFoundException fileNotFoundException) { System.out.println("ERROR LOADING ALERTBOX");}
             }
         }

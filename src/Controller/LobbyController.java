@@ -8,10 +8,7 @@ import javafx.scene.image.Image;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.Arrays;
 
@@ -23,8 +20,11 @@ public class LobbyController {
     PongView pongView;
     private DataOutputStream out;
     private DataInputStream in;
+    boolean amIChallenging;
+    String whoAmIChallenging;
     public LobbyController(LobbyView lobbyView, String name) throws IOException {
         this.lobbyView = lobbyView;
+        amIChallenging = false;
         clientSocket = new Socket("localhost", 25565); //23.100.59.188
         out = new DataOutputStream(clientSocket.getOutputStream());
         in = new DataInputStream(clientSocket.getInputStream());
@@ -50,6 +50,9 @@ public class LobbyController {
     public void challenge(String i){
         try {
             out.writeUTF("CHALLENGE "+i);
+            whoAmIChallenging = i;
+            amIChallenging = true;
+            lobbyView.disableOrEnableButtons(i, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,7 +82,11 @@ public class LobbyController {
                     }
                     if (temp.startsWith("ADD")) {
                         String finalTemp = temp;
-                        Platform.runLater(()->lobbyView.addButton(finalTemp.substring(4)));
+                        Platform.runLater(()-> {
+                            try {
+                                lobbyView.addButton(finalTemp.substring(4));
+                            } catch (FileNotFoundException e) { }
+                        });
                     }
                     if (temp.startsWith("REMOVE")) {
                         String finalTemp1 = temp;
@@ -87,7 +94,11 @@ public class LobbyController {
                     }
                     if (temp.startsWith("INVITATION")){
                         String finalTemp2 = temp;
-                        Platform.runLater(()->lobbyView.showInvitation(finalTemp2.substring(11)));
+                        Platform.runLater(()-> {
+                            try {
+                                lobbyView.showInvitation(finalTemp2.substring(11));
+                            } catch (FileNotFoundException e) { }
+                        });
                     }
                     if (temp.startsWith("ACCEPTED")){
                         out.writeUTF("GO "+temp.substring(9));
@@ -109,13 +120,24 @@ public class LobbyController {
                         break;
                     }
                 } catch (IOException e) {
-                    System.out.println("lol it broke");
                     //e.printStackTrace();
                     return null;
                 }
             }
             return null;
         }
+    }
+
+    public boolean getAmIChallenging(){
+        return amIChallenging;
+    }
+
+    public String getWhoAmIChallenging(){
+        return whoAmIChallenging;
+    }
+
+    public void setAmIChallenging(boolean b){
+        amIChallenging = b;
     }
 }
 

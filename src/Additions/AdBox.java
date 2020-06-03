@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -18,20 +19,20 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class AdBox {
-    public static boolean display(String imageName) throws FileNotFoundException {
+    public static boolean display(String imageName, Background background) throws FileNotFoundException {
         Stage window = new Stage();
         FileInputStream input = new FileInputStream(imageName);
         Image image = new Image(input, 300, 300, true, false);
         ImageView imageView = new ImageView(image);
         window.initModality(Modality.APPLICATION_MODAL);
 
-        MainModel.ClickButton button = new MainModel.ClickButton("close",70,30);
+        MainModel.ClickButton button = new MainModel.ClickButton("close",60,30);
         button.setOnAction(event -> window.close());
-
 
         VBox box = new VBox(imageView,button);
 
         box.setAlignment(Pos.CENTER);
+        box.setBackground(background);
 
         Scene scene = new Scene(box);
         window.setScene(scene);

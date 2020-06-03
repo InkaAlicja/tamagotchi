@@ -139,9 +139,16 @@ public class MainModel implements Serializable {
             this.width=width;
             this.height=height;
             if(pic.equals("AUTO")){
-                if(colour==COLOUR.BEIGE)pic="Resources/pinkishButton.png";
-                if(colour==COLOUR.PINK)pic="Resources/purpleButton.png";
-                else pic="Resources/cremeButton.png";
+                if (width/height>=3){
+                    if(colour==COLOUR.BEIGE)pic="Resources/pinkishButton.png";
+                    if(colour==COLOUR.PINK)pic="Resources/purpleButton.png";
+                    else pic="Resources/longCremeButton.png";
+                }
+                else {
+                    if (colour == COLOUR.BEIGE) pic = "Resources/pinkishButton.png";
+                    if (colour == COLOUR.PINK) pic = "Resources/purpleButton.png";
+                    else pic = "Resources/cremeButton.png";
+                }
             }
            // pic=pictureForAll;
             inputStreamForButton=new FileInputStream(pic);

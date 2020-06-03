@@ -1,13 +1,13 @@
 package Controller;
 
 import Additions.AlertBox;
-import Additions.SaddleBox;
 import View.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,8 +20,11 @@ public class PlayController {
     PongView pongView;
     WalkingView walkingView;
     LobbyView lobbyView;
+    Background background;
+    
     public PlayController(PlayView view){
         this.view=view;
+        background = view.getDragonController().getDragonView().getMainView().getMainModel().getMainBackground();
     }
 
     public void back(){
@@ -41,13 +44,23 @@ public class PlayController {
         login.setMaxSize(80,15);
         Button loginButton = new Button("Join!");
         loginButton.setOnAction(v->{
-            if (!login.getText().equals("")) {
-                lobbyView = new LobbyView(view, login.getText());
+            try {
+                if (login.getText().equals(""))
+                    AlertBox.display("Name can't be empty", "Ok", background);
+                else if (login.getText().length()>10)
+                    AlertBox.display("Name is too long", "Ok", background);
+                else {
+                    lobbyView = new LobbyView(view, login.getText());
+                    loginStage.close();
+                }
+            } catch (FileNotFoundException e){
                 loginStage.close();
             }
         });
         VBox vBox = new VBox(label, login, loginButton);
         vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(5);
+        vBox.setBackground(background);
         Scene loginScene = new Scene(vBox, 250, 150);
         loginStage.setScene(loginScene);
         loginStage.initModality(Modality.WINDOW_MODAL);
@@ -63,8 +76,8 @@ public class PlayController {
                 view.getDragonController().addMoney(pongView.getScore()*10);
                 view.getDragonController().addHealth(-0.1f);
             }
-            else SaddleBox.display("You need to wear your saddle to play");
+            else AlertBox.display("You need to wear your saddle to play", "Back", background);
         }
-        else SaddleBox.display("You need to buy a saddle to play");
+        else AlertBox.display("You need to buy a saddle to play", "Back", background);
     }
 }
