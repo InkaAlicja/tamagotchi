@@ -23,10 +23,6 @@ import static javafx.application.Application.launch;
 public class Main{
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        MainView view = new MainView();
-        MainModel model = new MainModel(view);
-
-        MainController controller = new MainController(view, model);
         MainView.main(args);
     }
 

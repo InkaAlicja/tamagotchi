@@ -2,7 +2,6 @@ package View;
 
 import Controller.SettingsController;
 import Model.MainModel;
-import com.sun.tools.javac.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

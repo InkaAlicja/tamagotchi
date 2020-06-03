@@ -98,7 +98,7 @@ public class AchievementsView {
             label.setAccessibleRoleDescription(description);
             tooltip = new Tooltip();
             tooltip.setText(description);
-            tooltip.setShowDelay(Duration.seconds(0.5f));
+            //tooltip.setShowDelay(Duration.seconds(0.5f));
             label.setTooltip(tooltip);
             box = new HBox(label);
             box.setStyle("-fx-padding: 10;" +
