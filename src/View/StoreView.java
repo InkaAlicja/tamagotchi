@@ -104,6 +104,7 @@ public class StoreView {
         });
 
         back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
+        mainView.getMainModel().addButton(back);
         resetBackground();
         scene = new Scene(pane,400,500);
     }
@@ -155,7 +156,9 @@ public class StoreView {
             myItem=item;
             imgView = new ImageView(myItem.smallImg());
             buy = new ItemButton("buy","Resources/buttonClick.mp3",40,25,myItem);
+            mainView.getMainModel().addButton(buy);
             pick = new  ItemButton("pick","Resources/buttonClick.mp3",45,25,myItem);
+            mainView.getMainModel().addButton(pick);
 
             if(item.bought())buy.setDisable(true);
             else pick.setDisable(true);
@@ -211,6 +214,7 @@ public class StoreView {
             imgView = new ImageView(item.smallImg());
             this.label=new Label("Required: "+name);
             pick = new ItemButton("pick",45,25, item);
+            mainView.getMainModel().addButton(pick);
             if(!myItem.didWeWin())pick.setDisable(true);
             else label.setDisable(true);
 

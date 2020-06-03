@@ -13,6 +13,8 @@ public class SettingsController {
 
     public void setBackground(int i){
         int old = view.getMainView().getMainModel().getMainBackgroundFillId();
+        MainModel.ClickButton.setColour(view.getMainView().getMainModel().getColours()[i]);
+        view.getMainView().getMainModel().resetButtons();
         view.getMainView().getMainModel().setMainBackgroundFill(i, view.getMainView().getMainModel().getBackgroundFills()[i]);
         view.resetBackground(i, old);
         view.getMainView().getStoreView().resetBackground();

@@ -46,9 +46,13 @@ public class DragonView {
         controller = new DragonController(this,model);
 
         feed = new MainModel.ClickButton("Feed","Resources/eating.mp3",60,30);
+        mainView.getMainModel().addButton(feed);
         clean = new MainModel.ClickButton("Clean","Resources/bubble.mp3",60,30);
+        mainView.getMainModel().addButton(clean);
         pet = new MainModel.ClickButton("Pet","Resources/pop.mp3","Resources/petBlinkAnimation.png",60,30);
+        mainView.getMainModel().addButton(pet);
         play = new MainModel.ClickButton("Play!",60,30);
+        mainView.getMainModel().addButton(play);
 
         imageDragon = new ImageView(model.dragon);
         imageAdditionHead = new ImageView(model.getAddition("head"));
@@ -61,7 +65,9 @@ public class DragonView {
         imageCoin2 = new ImageView(model.coinImage);
 
         back = new MainModel.ClickButton("Back",60,30);
+        mainView.getMainModel().addButton(back);
         ad = new MainModel.ClickButton("ad",imageCoin1,60,30);
+        mainView.getMainModel().addButton(ad);
         backAd=new HBox(back,ad);
         backAd.setSpacing(250);
         backAd.setAlignment(Pos.CENTER);

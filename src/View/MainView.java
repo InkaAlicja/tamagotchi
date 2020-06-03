@@ -8,6 +8,7 @@ import data.Data;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -26,6 +27,7 @@ public class MainView extends Application {
 
     public MainView(){
         try {
+            setUserAgentStylesheet(STYLESHEET_CASPIAN);
             mainModel = new MainModel(this);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

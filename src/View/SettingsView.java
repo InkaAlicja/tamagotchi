@@ -29,12 +29,14 @@ public class SettingsView {
         this.mainView = mainView;
         controller = new SettingsController(this);
         backButton = new MainModel.ClickButton("Back",60,30);
+        mainView.getMainModel().addButton(backButton);
 
         backButton.setOnAction(value->{
             mainView.stage.setScene(mainView.menu.scene);
         });
 
         muteButton = new MainModel.ClickButton("Mute!",60,30);
+        mainView.getMainModel().addButton(muteButton);
         if(mainView.getMainModel().getIsMuted()){
             muteButton.setText("Unmute!");
             controller.mute();

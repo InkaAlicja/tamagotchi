@@ -1,12 +1,14 @@
 package Controller;
 
 import Additions.AlertBox;
+import Model.MainModel;
 import View.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -40,9 +42,14 @@ public class PlayController {
     public void setLogin(){
         Stage loginStage = new Stage();
         Label label = new Label("Username:");
-        TextArea login = new TextArea();
-        login.setMaxSize(80,15);
-        Button loginButton = new Button("Join!");
+        TextField login = new TextField();
+        login.setMaxSize(100,15);
+        Button loginButton;
+        try {
+            loginButton = new MainModel.ClickButton("Join!", 60, 30);
+        } catch(Exception e){
+           loginButton = new Button("Join!");
+        }
         loginButton.setOnAction(v->{
             try {
                 if (login.getText().equals(""))

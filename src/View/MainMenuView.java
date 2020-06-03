@@ -27,10 +27,15 @@ public class MainMenuView{
         this.mainView=mainView;
         controller = new MainMenuController(this);
         playButton = new MainModel.ClickButton("Play",100,50);
+        mainView.getMainModel().addButton(playButton);
         settingsButton = new MainModel.ClickButton("Settings",100,50);
+        mainView.getMainModel().addButton(settingsButton);
         exitButton = new MainModel.ClickButton("Exit",100,50);
+        mainView.getMainModel().addButton(exitButton);
         storeButton = new MainModel.ClickButton("Store",100,50);
+        mainView.getMainModel().addButton(storeButton);
         achievementsButton = new MainModel.ClickButton("Achievements",100,50);
+        mainView.getMainModel().addButton(achievementsButton);
         playButton.setOnAction(value-> {
                 mainView.stage.setScene(mainView.getDragonView().scene);
         });
