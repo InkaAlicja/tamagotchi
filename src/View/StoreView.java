@@ -234,7 +234,7 @@ public class StoreView {
             box.setAlignment(Pos.CENTER_LEFT);
 
             pick.setOnAction(value->{
-                controller.setImage(myItem.bigImg(),myItem.bigImgString(),where);
+               // controller.setImage(myItem.bigImg(),myItem.bigImgString(),where); // to nas wyblankuje bo juz zaladowalismy w DragonModelu co ma byc
                 controller.pickButtonAction(pick,Map);
             });
             mapOfTrophies.put(id,this);
