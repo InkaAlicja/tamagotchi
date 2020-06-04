@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class DragonModel implements Serializable {
     DragonView view;
@@ -30,8 +31,8 @@ public class DragonModel implements Serializable {
     public DragonModel(DragonView view) throws FileNotFoundException {
         this.view=view;
         money=view.getMainView().getData().money;
-        health=view.getMainView().getData().health;
-        happiness=view.getMainView().getData().happiness;
+        health=recalculate(view.getMainView().getData().time,view.getMainView().getData().health);
+        happiness=recalculate(view.getMainView().getData().time,view.getMainView().getData().happiness);
 
         inputDragon = new FileInputStream("Resources/dragon-animated.gif");
         dragon = new Image(inputDragon, 300, 300, true, false);
@@ -51,6 +52,12 @@ public class DragonModel implements Serializable {
         soundHeart = new Media(new File("Resources/heartBeatShort.mp3").toURI().toString());
         mediaPlayerHeart = new MediaPlayer(soundHeart);
 
+    }
+    float recalculate(Timestamp oldTime,float value){
+        long newTime = new Timestamp(System.currentTimeMillis()).getTime();
+        System.out.println(value);
+        System.out.println((value-(float)(newTime-oldTime.getTime())/(1000*60*60*48)));
+        return value-(float)(newTime-oldTime.getTime())/(1000*60*60*48);
     }
     public static class DyingDragonException extends Exception{}
 

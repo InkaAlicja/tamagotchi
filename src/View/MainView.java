@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class MainView extends Application {
@@ -47,12 +52,15 @@ public class MainView extends Application {
         stage.show();
     }
     @Override
-    public void stop() throws IOException {
+    public void stop() throws IOException, ParseException {
         System.out.println("Stage is closing");
         // Save file
         writeModel("src/data/achievementsModel.bin",this.getAchievementsView().getModel());
         writeModel("src/data/mainModel.bin",this.mainModel);
         writeModel("src/data/storeModel.bin",this.getStoreView().getModel());
+
+        data.time = new Timestamp(System.currentTimeMillis());
+        System.out.println(data.time);
         writeModel("src/data/data.bin",data);
     }
     public MainModel getMainModel(){
