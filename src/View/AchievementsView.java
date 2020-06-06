@@ -56,7 +56,10 @@ public class AchievementsView {
         achBox.setAlignment(Pos.CENTER);
 
         backButton = new MainModel.ClickButton("back",60,30);
-        backButton.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
+        backButton.setOnAction(value->{
+            mainView.stage.setTitle("Tamagotchi");
+            mainView.stage.setScene(mainView.menu.scene);
+        });
         mainView.getMainModel().addButton(backButton);
 
         mainBox = new VBox(backButton,achBox);

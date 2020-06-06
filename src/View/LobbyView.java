@@ -35,13 +35,17 @@ public class LobbyView {
             return;
         }
         backButton = new MainModel.ClickButton("Back", 72,36);
-        backButton.setOnAction(value->controller.back());
+        backButton.setOnAction(value->{
+            playView.getStage().setTitle("Play");
+            controller.back();
+        });
         mainVBox = new VBox(backButton);
         mainVBox.setAlignment(Pos.CENTER);
         mainVBox.setSpacing(5);
         mainVBox.setBackground(background);
         scene = new Scene(mainVBox, 400, 500);
         map = new HashMap<>();
+        playView.getStage().setTitle("Lobby");
         playView.getStage().setScene(scene);
     }
 

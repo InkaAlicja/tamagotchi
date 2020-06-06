@@ -46,7 +46,10 @@ public class TicTacToeView {
                 e.printStackTrace();
             }
         });
-        exitButton.setOnAction(value->controller.exit());
+        exitButton.setOnAction(value->{
+            playView.stage.setTitle("Play");
+            controller.exit();
+        });
         for (int i=0; i<9; i++){
             squares[i] = new Rectangle();
             squares[i].setHeight(60);

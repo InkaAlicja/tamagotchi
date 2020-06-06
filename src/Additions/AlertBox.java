@@ -34,6 +34,7 @@ public class AlertBox {
 
         Scene scene = new Scene(box,250,150);
         window.setScene(scene);
+        window.setTitle("Error");
         window.setResizable(false);
 
 

@@ -103,7 +103,10 @@ public class StoreView {
             pane.setVvalue(pane.getVvalue() - deltaY);
         });
 
-        back.setOnAction(value->mainView.stage.setScene(mainView.menu.scene));
+        back.setOnAction(value->{
+            mainView.stage.setTitle("Tamagotchi");
+            mainView.stage.setScene(mainView.menu.scene);
+        });
         mainView.getMainModel().addButton(back);
         resetBackground();
         scene = new Scene(pane,400,500);

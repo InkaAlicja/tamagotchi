@@ -31,6 +31,7 @@ public class SettingsView {
         mainView.getMainModel().addButton(backButton);
 
         backButton.setOnAction(value->{
+            mainView.stage.setTitle("Tamagotchi");
             mainView.stage.setScene(mainView.menu.scene);
         });
 

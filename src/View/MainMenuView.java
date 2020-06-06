@@ -40,12 +40,15 @@ public class MainMenuView{
                 mainView.stage.setScene(mainView.getDragonView().scene);
         });
         storeButton.setOnAction(value-> {
+            mainView.stage.setTitle("Store");
             mainView.stage.setScene(mainView.getStoreView().scene);
         });
         achievementsButton.setOnAction(value-> {
+            mainView.stage.setTitle("Achievements");
             mainView.stage.setScene(mainView.getAchievementsView().scene);
         });
         settingsButton.setOnAction(value->{
+            mainView.stage.setTitle("Settings");
             mainView.stage.setScene(mainView.getSettingsView().scene);
         });
         exitButton.setOnAction(value->controller.exit());

@@ -25,6 +25,7 @@ public class AdBox {
         Image image = new Image(input, 300, 300, true, false);
         ImageView imageView = new ImageView(image);
         window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("AD");
 
         MainModel.ClickButton button = new MainModel.ClickButton("close",60,30);
         button.setOnAction(event -> window.close());
