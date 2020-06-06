@@ -1,5 +1,6 @@
 package Controller;
 
+import Additions.AlertBox;
 import View.LobbyView;
 import View.PongView;
 import javafx.application.Platform;
@@ -77,7 +78,12 @@ public class LobbyController {
                     System.out.println("got out");
                     temp = in.readUTF();
                     if (temp.equals("TAKEN")){
-                        Platform.runLater(()->back());
+                        Platform.runLater(()->{
+                            back();
+                            try {
+                                AlertBox.display("Name taken!", "ok", lobbyView.getPlayView().getDragonController().getDragonView().getMainView().getMainModel().getMainBackground());
+                            } catch (FileNotFoundException e) { }
+                        });
                         break;
                     }
                     if (temp.startsWith("ADD")) {

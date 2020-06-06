@@ -18,7 +18,7 @@ public class PongMultiController implements PongControllerInterface {
     PongView view;
     PongModel model;
     double endOfRound = Double.MAX_VALUE;
-    double lastMove = 0d;
+    volatile double lastMove = 0d;
     private DataOutputStream out;
     private DataInputStream in;
     Thread check;
@@ -84,7 +84,7 @@ public class PongMultiController implements PongControllerInterface {
                         }
                     }
                     if (str.equals("OPPONENT LEFT")){
-                        out.writeDouble(endOfRound);
+                        //out.writeDouble(endOfRound);
                         out.writeUTF("STOP");
                         out.writeUTF("LEAVE");
                         out.writeUTF("CLOSE");
@@ -170,12 +170,12 @@ public class PongMultiController implements PongControllerInterface {
     public void setRandomNumbers(int i){
         double root = Math.sqrt(Math.abs(i)+1);
         if (i<0) {
-            view.setBallXVector(3*root);
-            view.setBallYVector(4*root);
+            view.setBallXVector(5*root);
+            view.setBallYVector(6*root);
         }
         else{
-            view.setBallXVector(-3*root);
-            view.setBallYVector(-4*root);
+            view.setBallXVector(-5*root);
+            view.setBallYVector(-6*root);
         }
     }
 

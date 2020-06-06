@@ -59,7 +59,7 @@ public class PongView {
         this.playView = playView;
         model = new PongModel(this);
         controller = new PongMultiController(this, model, in, out, clientSocket, id);
-        duration=20;
+        duration=30;
     }
 
     public void display() throws FileNotFoundException {
@@ -92,7 +92,8 @@ public class PongView {
         VBox box = new VBox(canvas,smallBox);
 
         canvas.setOnMouseClicked(e -> {
-            controller.start();
+            if (!start)
+                controller.start();
             mediaPlayer.play();
         });
         canvas.setOnMouseMoved(e ->  controller.getMouse(e, barHeight));
