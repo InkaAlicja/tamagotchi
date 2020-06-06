@@ -67,8 +67,10 @@ public class PongView {
         score=0;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setMinHeight(400);
+        window.setMinHeight(450);
         window.setMinWidth(600);
+        window.setResizable(false);
+        window.setTitle("Pong!");
 
         Canvas canvas = new Canvas(600, 400);
         GraphicsContext graphContext = canvas.getGraphicsContext2D();

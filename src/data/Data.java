@@ -40,6 +40,8 @@ public class Data implements Serializable {
             facePic="Resources/blank.png";
             headPic="Resources/blank.png";
             backPic="Resources/blank.png";
+
+            time = new Timestamp(System.currentTimeMillis());
         }
 
 

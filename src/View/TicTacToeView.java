@@ -72,6 +72,7 @@ public class TicTacToeView {
         columns.setSpacing(10);
         columns.setBackground(playView.dragonView.mainView.getMainModel().getMainBackground());
         scene = new Scene(columns, 400, 500);
+        playView.getStage().setTitle("TicTacToe");
         playView.getStage().setScene(scene);
     }
 
@@ -93,7 +94,10 @@ public class TicTacToeView {
                 e.printStackTrace();
             }
         });
-        exitDifficultyLevelSceneButton.setOnAction(value->controller.exit());
+        exitDifficultyLevelSceneButton.setOnAction(value->{
+            playView.getStage().setTitle("Play");
+            controller.exit();
+        });
         VBox vbox = new VBox(easyButton, hardButton, exitDifficultyLevelSceneButton);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);

@@ -42,6 +42,9 @@ public class MainView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
+        stage.setResizable(false);
+        stage.setTitle("Tamagotchi");
+
         data = new Data();
         menu = new MainMenuView(this);
         dragonView = new DragonView(this);

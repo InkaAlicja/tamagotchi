@@ -57,6 +57,8 @@ public class PlayView{
         stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.setTitle("Play");
         stage.showAndWait();
     }
 

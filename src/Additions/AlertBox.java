@@ -32,8 +32,10 @@ public class AlertBox {
         box.setAlignment(Pos.CENTER);
         box.setBackground(background);
 
-        Scene scene = new Scene(box);
+        Scene scene = new Scene(box,250,150);
         window.setScene(scene);
+        window.setResizable(false);
+
 
         window.showAndWait();
 
