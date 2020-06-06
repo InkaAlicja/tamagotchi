@@ -41,6 +41,7 @@ public class PongMultiController implements PongControllerInterface {
     public void start(){
         try {
             if (!start) {
+                System.out.println("Start");
                 out.writeUTF("START");
             }
         } catch(Exception e){

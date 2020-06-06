@@ -52,7 +52,7 @@ public class LobbyView {
     public void showInvitation(String id) throws FileNotFoundException {
         if (!controller.getAmIChallenging()) {
             removeButton(id);
-            MainModel.ClickButton temp = new MainModel.ClickButton("Accept invitation from " + id, 180, 36);
+            MainModel.ClickButton temp = new MainModel.ClickButton("Accept " + id, 180, 36);
             temp.setOnAction(value -> controller.acceptInvitation(id));
             map.put(id, temp);
             mainVBox.getChildren().add(temp);

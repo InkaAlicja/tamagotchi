@@ -156,6 +156,7 @@ public class Server {
                         System.out.println(temp);
                         while(!temp.equals("STOP")) {
                             if (temp.equals("START")) {
+                                System.out.println(name);
                                 counters.get(name).incrementAndGet();
                                 counters.get(opName).incrementAndGet();
                                 while (counters.get(name).get() % 2 != 0) { }
@@ -177,6 +178,7 @@ public class Server {
                                     System.out.println(d);
                                 }
                             }
+                            in.readDouble();
                             temp = in.readUTF();
                         }
                         temp = in.readUTF();

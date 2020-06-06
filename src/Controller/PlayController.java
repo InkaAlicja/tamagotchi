@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -68,6 +69,11 @@ public class PlayController {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(5);
         vBox.setBackground(background);
+        Button finalLoginButton = loginButton;
+        vBox.setOnKeyPressed(v->{
+            if (v.getCode().equals(KeyCode.ENTER))
+                finalLoginButton.fire();
+        });
         Scene loginScene = new Scene(vBox, 250, 150);
         loginStage.setScene(loginScene);
         loginStage.initModality(Modality.WINDOW_MODAL);
