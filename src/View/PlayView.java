@@ -41,9 +41,6 @@ public class PlayView{
             } catch (FileNotFoundException e) { }
         });
 
-        otherOtherGameButton = new MainModel.ClickButton("other game",100,50);
-        otherOtherGameButton.setOnAction((value->controller.playOtherOtherGame()));
-
         pongOnlineButton = new MainModel.ClickButton("Join Lobby", 100, 50);
         pongOnlineButton.setOnAction(v->controller.setLogin());
 

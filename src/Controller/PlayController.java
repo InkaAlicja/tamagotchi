@@ -21,7 +21,6 @@ public class PlayController {
     PlayView view;
     TicTacToeView ticTacToeView;
     PongView pongView;
-    WalkingView walkingView;
     LobbyView lobbyView;
     Background background;
     
@@ -37,8 +36,6 @@ public class PlayController {
     public void playTicTacToe() throws FileNotFoundException {
         ticTacToeView = new TicTacToeView(view);
     }
-
-    public void playOtherOtherGame(){ walkingView = new WalkingView(this.view);}
 
     public void setLogin(){
         Stage loginStage = new Stage();
