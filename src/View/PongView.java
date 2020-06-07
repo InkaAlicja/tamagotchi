@@ -67,8 +67,8 @@ public class PongView {
         score=0;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setMinHeight(450);
-        window.setMinWidth(600);
+        //window.setMinHeight(450);
+       // window.setMinWidth(600);
         window.setResizable(false);
         window.setTitle("Pong!");
 
@@ -90,6 +90,9 @@ public class PongView {
         smallBox.setStyle("-fx-padding: 10;");
         smallBox.setMaxHeight(50);
         smallBox.setMinHeight(50);
+        smallBox.setMinWidth(600);
+        smallBox.setMinWidth(600);
+
 
         VBox box = new VBox(canvas,smallBox);
 
