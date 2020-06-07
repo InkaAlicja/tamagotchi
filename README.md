@@ -8,4 +8,6 @@ Użytkownik ma za zadanie utrzymać odpowni poziom życia swojego zwierzątka za
 Aplikacja będzie zawierać proste animacje, efekty dźwiękowe, mini-gry oraz tabelę osiągnięć.
 Wprowadzona będzie także waluta, zdobywana poprzez mini-gry oraz osiągnięcia, którą będzie można wymienić w sklepie na wariacje elementów animacji. 
 # Uruchomienie
-W celu uruchomienia samej gry bez serwera wystarczy uruchomić plik Tamagotchi.jar. 
+W celu uruchomienia samej gry bez serwera wystarczy uruchomić plik Tamagotchi.jar. Plik ten powinien
+znajdować się w folderze z folderami Resources oraz src/data. Aby uruchomić serwer wystarczy skompilować
+i uruchomić Server.java z folderu src/Additions.
