@@ -88,6 +88,8 @@ public class PongView {
         smallBox.setBackground(new Background(new BackgroundFill(Color.MAGENTA, CornerRadii.EMPTY, Insets.EMPTY),
                 new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, new Insets(5d))));
         smallBox.setStyle("-fx-padding: 10;");
+        smallBox.setMaxHeight(50);
+        smallBox.setMinHeight(50);
 
         VBox box = new VBox(canvas,smallBox);
 
