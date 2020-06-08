@@ -8,8 +8,8 @@ Użytkownik ma za zadanie utrzymać odpowni poziom życia swojego zwierzątka za
 Aplikacja będzie zawierać proste animacje, efekty dźwiękowe, mini-gry oraz tabelę osiągnięć.
 Wprowadzona będzie także waluta, zdobywana poprzez mini-gry oraz osiągnięcia, którą będzie można wymienić w sklepie na wariacje elementów animacji. 
 # Uruchomienie
-W celu uruchomienia samej gry bez serwera wystarczy uruchomić plik Tamagotchi.jar. Plik ten powinien
-znajdować się w folderze z folderami Resources oraz src/data. Aby uruchomić serwer wystarczy skompilować
+W celu uruchomienia samej gry bez serwera wystarczy uruchomić plik Tamagotchi.jar znajdujący się w odpowiednim zipie. Jak wspominaliśmy podczas prezentacji niektóre wersje ubuntu mają problem z klasą Media, z tego względu stworzyliśmy również wersję bez dźwięków(TamagotchiFinalNoMediaForUbuntu). Podstawowa wersja działająca całkowienie na Windows10 oraz działająca do dwóch uruchomionych instancji na Ubuntu 16.04 znajduje się w pliku TamagotchiFinal. Nie ma jednak potrzeby uruchamiania więcej niż dówch instancji, gra przewidzana jest na jedną. 
+By poprawnie działać plik ten powinien znajdować się w folderze z folderami Resources oraz src/data. Aby uruchomić serwer wystarczy skompilować
 i uruchomić Server.java z folderu src/Additions.
 #Wkład pracy zespołu
 Ze względu na ustalony podział pracy oraz specyfikę projektu-klasy ściśle ze osobą współpracują-każda osoba tworząc fragmet kodu
